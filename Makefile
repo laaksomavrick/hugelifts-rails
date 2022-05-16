@@ -16,7 +16,7 @@ replant:
 
 .PHONY: serve
 serve:
-	@bundler exec rails s
+	@bin/dev
 
 .PHONY: console
 console:
