@@ -33,4 +33,8 @@ class Exercise < ApplicationRecord
   def self.default_exercises
     DEFAULT_EXERCISE_NAMES.map { |name| new(name:) }
   end
+
+  def self.default_exercise_names
+    DEFAULT_EXERCISE_NAMES
+  end
 end
