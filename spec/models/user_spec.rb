@@ -3,5 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'creates exercises on creation' do
+    user = create(:user)
+    expect(user.exercises.length).to eq Exercise.default_exercises.length
+  end
 end
