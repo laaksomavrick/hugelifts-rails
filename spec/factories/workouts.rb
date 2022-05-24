@@ -6,5 +6,6 @@ FactoryBot.define do
   factory :workout do
     name { workout_names.sample }
     active { false }
+    association :user, factory: :user
   end
 end

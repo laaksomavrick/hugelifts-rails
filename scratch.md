@@ -6,6 +6,8 @@
 * workout_day
 - id
 - workout_id
+- name
+- ordinal
 
 * workout_day_exercise
 - id
