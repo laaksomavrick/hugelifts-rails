@@ -1,0 +1,7 @@
+<h1>workouts</h1>
+
+<ul>
+  <% @workouts.each do |workout| %>
+    <li><%= link_to workout.name, workout%></li>
+  <% end %>
+</ul>
