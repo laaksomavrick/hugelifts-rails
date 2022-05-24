@@ -3,12 +3,15 @@
 - name
 - is_active
 
-* workout_exercise
+* workout_day
 - id
 - workout_id
+
+* workout_day_exercise
+- id
+- workout_day_id
 - exercise_id
 - metadata jsonb { sets, reps, weight }
-
 
 => daily workout (later)
 - daily_workout_exercise
