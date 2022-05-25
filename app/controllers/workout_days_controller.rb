@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WorkoutDaysController < ApplicationController
   def show
     workout_day_id = params[:id]

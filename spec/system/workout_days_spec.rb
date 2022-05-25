@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Workout Days', type: :system do
   let!(:user) { create(:user) }
-  let!(:workout) { create(:workout, user: user)}
-  let!(:workout_day) { create(:workout_day, workout: workout)}
+  let!(:workout) { create(:workout, user:) }
+  let!(:workout_day) { create(:workout_day, workout:) }
 
   describe 'show page' do
     it 'redirects non-authenticated users' do
