@@ -6,7 +6,10 @@ Rails.application.routes.draw do
 
   root to: redirect('todays_workout')
 
-  resources :workouts, only: %i[index show]
+  resources :workouts, only: %i[index show] do
+    resources :workout_days, only: %i[show]
+  end
+
   resources :todays_workout, only: [:index]
   resources :exercises, only: [:index]
 end

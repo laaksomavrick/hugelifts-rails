@@ -7,6 +7,6 @@ class WorkoutsController < ApplicationController
 
   def show
     workout_id = params[:id]
-    @workout = Workout.find_by(id: workout_id)
+    @workout = Workout.includes(:workout_days).find_by(id: workout_id)
   end
 end

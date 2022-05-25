@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Today\'s Workout', type: :system do
   let!(:user) { create(:user) }
-  let!(:workout) { create(:workout, user: user)}
 
   describe 'index page' do
     it 'redirects non-authenticated users' do

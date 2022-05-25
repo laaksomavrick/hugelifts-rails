@@ -1,3 +1,11 @@
 <h1>workout</h1>
 
 <p><%= @workout.name %></p>
+
+<p>days</p>
+
+<ul>
+  <% @workout.days.each do |day| %>
+    <li><%= link_to day.name, workout_workout_day_path(@workout, day) %></li>
+  <% end %>
+</ul>
