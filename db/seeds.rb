@@ -9,5 +9,9 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 user = User.create!(email: 'laakso.mavrick@gmail.com', password: 'Qweqwe1!')
-user.workouts.create!(name: 'PPL', active: true)
-user.workouts.create!(name: 'Full Body', active: false)
+
+ppl = user.workouts.create!(name: 'PPL', active: true)
+
+ppl.workout_days.create!(name: 'Push', ordinal: 0)
+ppl.workout_days.create!(name: 'Pull', ordinal: 1)
+ppl.workout_days.create!(name: 'Legs', ordinal: 2)
