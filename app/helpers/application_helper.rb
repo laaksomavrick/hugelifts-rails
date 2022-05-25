@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def nav_link_class
-    'text-black-500 px-3 py-2 rounded-md text-sm font-medium'
+
+  def layout_class
+    "max-w-4xl mx-auto px-2 sm:px-6 lg:px-8"
   end
 
   def nav_link_to(text, path, opts = {})
