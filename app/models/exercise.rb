@@ -2,6 +2,7 @@
 
 class Exercise < ApplicationRecord
   belongs_to :user
+  has_many :daily_workout_exercises, dependent: :destroy
 
   DEFAULT_EXERCISE_NAMES = [
     'Barbell Bench Press',

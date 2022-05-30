@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_25_023406) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_30_184115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "daily_workout_exercises", force: :cascade do |t|
+    t.bigint "workout_day_id", null: false
+    t.bigint "exercise_id", null: false
+    t.jsonb "meta", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_daily_workout_exercises_on_exercise_id"
+    t.index ["workout_day_id"], name: "index_daily_workout_exercises_on_workout_day_id"
+  end
 
   create_table "exercises", force: :cascade do |t|
     t.string "name"
