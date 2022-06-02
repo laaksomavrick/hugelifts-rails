@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DailyWorkoutExercise < ApplicationRecord
+class WorkoutDayExercise < ApplicationRecord
   belongs_to :workout_day
   belongs_to :exercise
   store_accessor :meta, :sets, :reps, :weight, :unit

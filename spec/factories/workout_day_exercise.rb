@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :daily_workout_exercise do
+  factory :workout_day_exercise do
     exercise factory: :exercise
     workout_day factory: :workout_day
     sets { Faker::Number.between(from: 3, to: 5) }

@@ -14,16 +14,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_30_184115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "daily_workout_exercises", force: :cascade do |t|
-    t.bigint "workout_day_id", null: false
-    t.bigint "exercise_id", null: false
-    t.jsonb "meta", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["exercise_id"], name: "index_daily_workout_exercises_on_exercise_id"
-    t.index ["workout_day_id"], name: "index_daily_workout_exercises_on_workout_day_id"
-  end
-
   create_table "exercises", force: :cascade do |t|
     t.string "name"
     t.bigint "user_id"
@@ -42,6 +32,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_30_184115) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "workout_day_exercises", force: :cascade do |t|
+    t.bigint "workout_day_id", null: false
+    t.bigint "exercise_id", null: false
+    t.jsonb "meta", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_workout_day_exercises_on_exercise_id"
+    t.index ["workout_day_id"], name: "index_workout_day_exercises_on_workout_day_id"
   end
 
   create_table "workout_days", force: :cascade do |t|
