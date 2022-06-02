@@ -1,3 +1,19 @@
-<h1>workout day</h1>
+<div class="flex items-center mb-4">
+  <div class="text-3xl font-medium"><%= @workout_day.name %></div>
+  <div class="flex ml-auto">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
+  </div>
+</div>
 
-<p><%= @workout_day.name %></p>
+<div class="space-y-2">
+  <% @workout_day.workout_day_exercises.each do |wde| %>
+    <div class="border-2 p-2">
+      <div class="font-medium">
+        <%= wde.exercise.name %>
+      </div>
+      <div>sets: <%= wde.sets %></div>
+      <div>reps: <%= wde.reps %></div>
+      <div>weight: <%= wde.weight %></div>
+    </div>
+  <% end %>
+</div>
