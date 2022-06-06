@@ -1,1 +1,20 @@
 <p>create workout day exercise</p>
+
+<%= form_with class: "flex flex-col" do |form| %>
+  <%= form.label :workout, "Workout:" %>
+  <%= form.text_field :workout, readonly: true, value: @workout.name, class: "read-only:bg-gray-100"  %>
+
+  <%= form.label :workout_day, "Workout day:" %>
+  <%= form.text_field :workout_day, readonly: true, value: @workout_day.name, class: "read-only:bg-gray-100"  %>
+
+  <%= form.label :exercise, "Exercise:" %>
+  <%= form.select :exercise, @exercises %>
+
+  <%= form.label :sets, "Sets:" %>
+  <%= form.select :sets, @sets, selected: 4 %>
+
+  <%= form.label :reps, "Reps:" %>
+  <%= form.select :reps, @reps, selected: 10 %>
+
+  <%= form.submit "Save", class: create_button_class("mt-2") %>
+<% end %>
