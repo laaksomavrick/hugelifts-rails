@@ -5,11 +5,11 @@ module ApplicationHelper
     'max-w-4xl mx-auto px-2 sm:px-6 lg:px-8'
   end
 
-  def default_button_class(css_class_string = "")
+  def default_button_class(css_class_string = '')
     "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer #{css_class_string}"
   end
 
-  def create_button_class(css_class_string = "")
+  def create_button_class(css_class_string = '')
     "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded cursor-pointer #{css_class_string}"
   end
 

@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   root to: redirect('todays_workout')
 
   resources :workouts, only: %i[index show] do
-    resources :workout_days, path: "days", only: %i[show] do
-      resources :workout_day_exercises, path: "exercises", only: [:new]
+    resources :workout_days, path: 'days', only: %i[show] do
+      resources :workout_day_exercises, only: %i[new create]
     end
   end
 
