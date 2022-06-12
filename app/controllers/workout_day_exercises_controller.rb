@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../forms/workout_day_exercise_form.rb'
+require_relative '../forms/workout_day_exercise_form'
 
 class WorkoutDayExercisesController < ApplicationController
   def new

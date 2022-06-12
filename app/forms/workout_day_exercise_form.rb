@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 class WorkoutDayExerciseForm
   include ActiveModel::Model
   attr_reader :workout_id, :workout_day_id
+
   delegate :errors, to: :workout_day_exercise
 
   def initialize(workout_id:, workout_day_id:, current_user_id:)
@@ -24,8 +27,6 @@ class WorkoutDayExerciseForm
   def workout_day_exercise
     @workout_day_exercise ||= WorkoutDayExercise.new
   end
-
-  attr_writer :workout_day_exercise
 
   def workout_options
     [[workout.name, workout.id]]
@@ -73,7 +74,7 @@ class WorkoutDayExerciseForm
 
     exercise = Exercise.find(exercise_id)
 
-    self.workout_day_exercise = WorkoutDayExercise.create(
+    @workout_day_exercise = WorkoutDayExercise.create(
       workout_day:,
       exercise:,
       sets:,
@@ -82,6 +83,6 @@ class WorkoutDayExerciseForm
       unit:
     )
 
-    workout_day_exercise.save
+    @workout_day_exercise.save
   end
 end
