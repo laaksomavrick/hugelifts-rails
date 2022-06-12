@@ -1,38 +1,37 @@
-<p>create workout day exercise</p>
-
-<%= form_with model: @workout_day_exercise, url: workout_workout_day_workout_day_exercises_path(@workout.id, @workout_day.id), class: "flex flex-col" do |form| %>
-  <% if @workout_day_exercise.errors.any? %>
-    <% @workout_day_exercise.errors.full_messages.each do |msg| %>
-      <div class="alert p-4 mb-4 mt-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert" ><%= msg %></div>
+<div class="pt-4">
+<%= form_with model: @form,
+              url: workout_workout_day_workout_day_exercises_path(@form.workout_id, @form.workout_day_id),
+              class: "flex flex-col" do |form| %>
+  <% if @form.errors.any? %>
+    <% @form.errors.full_messages.each do |msg| %>
+      <%= render 'shared/error_alert', msg: msg %>
     <% end %>
   <% end %>
 
   <%= form.label :workout, "Workout:" %>
-  <%= form.select :workout, [[@workout.name, @workout.id]], {}, disabled: true %>
-  <%= form.hidden_field :workout, value: @workout.id %>
+  <%= form.select :workout, @form.workout_options, {}, disabled: true %>
+  <%= form.hidden_field :workout, value: @form.workout_id %>
 
   <%= form.label :workout_day, "Workout day:" %>
-  <%= form.select :workout_day, [[@workout_day.name, @workout_day.id]], {}, disabled: true %>
-  <%= form.hidden_field :workout_day, value: @workout_day.id %>
+  <%= form.select :workout_day, @form.workout_day_options, {}, disabled: true %>
+  <%= form.hidden_field :workout_day, value: @form.workout_day_id %>
 
   <%= form.label :exercise, "Exercise:" %>
-  <%= form.select :exercise, current_user.exercises.map { |e| [e.name, e.id ]} %>
+  <%= form.select :exercise, @form.exercise_options %>
 
   <%= form.label :sets, "Sets:" %>
-  <%= form.select :sets, [*1..5], selected: 4 %>
+  <%= form.select :sets, @form.set_options, selected: @form.default_selected_set %>
 
   <%= form.label :reps, "Reps:" %>
-  <%= form.select :reps, [*1..15], selected: 10 %>
+  <%= form.select :reps, @form.rep_options, selected: @form.default_selected_reps %>
 
   <%= form.label :weight, "Weight:" %>
-  <%= form.number_field :weight, value: 135 %>
-
+  <%= form.number_field :weight, value: @form.default_weight %>
 
   <%= form.label :unit, "Unit:" %>
-  <%= form.select :unit, ["lb"], {}, disabled: true %>
+  <%= form.select :unit, @form.default_unit, {}, disabled: true %>
   <%= form.hidden_field :unit, value: "lb" %>
-
-
 
   <%= form.submit "Save", class: create_button_class("mt-2") %>
 <% end %>
+</div>

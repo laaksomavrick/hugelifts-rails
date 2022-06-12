@@ -1,42 +1,27 @@
 # frozen_string_literal: true
 
+require_relative '../forms/workout_day_exercise_form.rb'
+
 class WorkoutDayExercisesController < ApplicationController
   def new
+    params = new_workout_day_exercise_params
     workout_id = params[:workout_id]
     workout_day_id = params[:workout_day_id]
+    current_user_id = current_user.id
 
-    @workout = Workout.find(workout_id)
-    @workout_day = WorkoutDay.find(workout_day_id)
-
-    @workout_day_exercise = WorkoutDayExercise.new
+    @form = WorkoutDayExerciseForm.new(workout_id:, workout_day_id:, current_user_id:)
   end
 
   def create
-    params = workout_day_exercise_params
+    params = create_workout_day_exercise_params
 
     workout_id = params[:workout].to_i
     workout_day_id = params[:workout_day].to_i
-    exercise_id = params[:exercise].to_i
+    current_user_id = current_user.id
 
-    sets = params[:sets].to_i
-    reps = params[:reps].to_i
-    weight = params[:weight].to_i
-    unit = params[:unit]
+    @form = WorkoutDayExerciseForm.new(workout_id:, workout_day_id:, current_user_id:)
 
-    @workout = Workout.find(workout_id)
-    @workout_day = WorkoutDay.find(workout_day_id)
-    @exercise = Exercise.find(exercise_id)
-
-    @workout_day_exercise = WorkoutDayExercise.create(
-      workout_day: @workout_day,
-      exercise: @exercise,
-      sets:,
-      reps:,
-      weight:,
-      unit:
-    )
-
-    saved = @workout_day_exercise.save
+    saved = @form.process(params)
 
     if saved == false
       render 'new', status: :unprocessable_entity
@@ -47,7 +32,11 @@ class WorkoutDayExercisesController < ApplicationController
 
   private
 
-  def workout_day_exercise_params
-    params.require(:workout_day_exercise).permit(:workout, :workout_day, :exercise, :sets, :reps, :weight, :unit)
+  def new_workout_day_exercise_params
+    params.permit(:workout_id, :workout_day_id)
+  end
+
+  def create_workout_day_exercise_params
+    params.require(:workout_day_exercise_form).permit(:workout, :workout_day, :exercise, :sets, :reps, :weight, :unit)
   end
 end
