@@ -1,7 +1,7 @@
 <div class="flex items-center mb-4">
   <div class="text-3xl font-medium"><%= @workout_day.name %></div>
   <div class="flex ml-auto">
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
+    <%= link_to "Add", new_workout_workout_day_workout_day_exercise_path(@workout_day.workout.id, @workout_day.id), class: default_button_class %>
   </div>
 </div>
 

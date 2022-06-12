@@ -18,7 +18,7 @@ RSpec.describe 'Workout Days', type: :system do
     it 'shows a workout\'s days' do
       sign_in user
       visit workout_workout_day_path(workout, workout_day)
-      expect(page).to have_current_path("/workouts/#{workout.id}/workout_days/#{workout_day.id}")
+      expect(page).to have_current_path("/workouts/#{workout.id}/days/#{workout_day.id}")
       expect(page).to have_content(workout_day.name)
       expect(page).to have_content(workout_day_exercise.exercise.name)
     end
