@@ -2,14 +2,16 @@
 
 class WorkoutDayExerciseForm
   include ActiveModel::Model
-  attr_reader :workout_id, :workout_day_id
+  attr_reader :workout_id, :workout_day_id, :workout_day_exercise_id
 
   delegate :errors, to: :workout_day_exercise
 
-  def initialize(workout_id:, workout_day_id:, current_user_id:)
+  def initialize(workout_id:, workout_day_id:, current_user_id:, workout_day_exercise: nil)
     @workout_id = workout_id
     @workout_day_id = workout_day_id
     @current_user_id = current_user_id
+    @workout_day_exercise = workout_day_exercise
+    @workout_day_exercise_id = workout_day_exercise ? workout_day_exercise.id : nil
   end
 
   def workout
@@ -41,24 +43,37 @@ class WorkoutDayExerciseForm
     exercises.map { |e| [e.name, e.id] }
   end
 
+  def selected_exercise
+    return exercise_options.first if @workout_day_exercise.exercise.nil?
+
+    exercise = @workout_day_exercise.exercise
+    exercise.id
+  end
+
   def set_options
     [*1..5]
   end
 
-  def default_selected_set
-    4
+  def selected_sets
+    return 4 if @workout_day_exercise.exercise.nil?
+
+    @workout_day_exercise.sets
   end
 
   def rep_options
     [*1..15]
   end
 
-  def default_selected_reps
-    10
+  def selected_reps
+    return 10 if @workout_day_exercise.exercise.nil?
+
+    @workout_day_exercise.reps
   end
 
-  def default_weight
-    135
+  def selected_weight
+    return 135 if @workout_day_exercise.exercise.nil?
+
+    @workout_day_exercise.weight
   end
 
   def default_unit
@@ -74,15 +89,24 @@ class WorkoutDayExerciseForm
 
     exercise = Exercise.find(exercise_id)
 
-    @workout_day_exercise = WorkoutDayExercise.create(
-      workout_day:,
-      exercise:,
-      sets:,
-      reps:,
-      weight:,
-      unit:
-    )
-
-    @workout_day_exercise.save
+    if @workout_day_exercise_id
+      @workout_day_exercise.update(
+        exercise:,
+        sets:,
+        reps:,
+        weight:,
+        unit:
+      )
+    else
+      @workout_day_exercise = WorkoutDayExercise.create(
+        workout_day:,
+        exercise:,
+        sets:,
+        reps:,
+        weight:,
+        unit:
+      )
+      @workout_day_exercise.save
+    end
   end
 end

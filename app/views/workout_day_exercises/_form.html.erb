@@ -1,0 +1,40 @@
+<% method = method || :post %>
+
+<%= form_with model: model,
+              url: url,
+              method: method,
+              class: "flex flex-col" do |form| %>
+  <% if model.errors.any? %>
+    <% model.errors.full_messages.each do |msg| %>
+      <%= render 'shared/error_alert', msg: msg %>
+    <% end %>
+  <% end %>
+
+  <%= form.hidden_field :workout_day_exercise, value: model.workout_day_exercise_id %>
+
+  <%= form.label :workout, "Workout:" %>
+  <%= form.select :workout, model.workout_options, {}, disabled: true %>
+  <%= form.hidden_field :workout, value: model.workout_id %>
+
+  <%= form.label :workout_day, "Workout day:" %>
+  <%= form.select :workout_day, model.workout_day_options, {}, disabled: true %>
+  <%= form.hidden_field :workout_day, value: model.workout_day_id %>
+
+  <%= form.label :exercise, "Exercise:" %>
+  <%= form.select :exercise, model.exercise_options, selected: model.selected_exercise %>
+
+  <%= form.label :sets, "Sets:" %>
+  <%= form.select :sets, model.set_options, selected: model.selected_sets %>
+
+  <%= form.label :reps, "Reps:" %>
+  <%= form.select :reps, model.rep_options, selected: model.selected_reps %>
+
+  <%= form.label :weight, "Weight:" %>
+  <%= form.number_field :weight, value: model.selected_weight %>
+
+  <%= form.label :unit, "Unit:" %>
+  <%= form.select :unit, model.default_unit, {}, disabled: true %>
+  <%= form.hidden_field :unit, value: "lb" %>
+
+  <%= form.submit "Save", class: create_button_class("mt-2") %>
+<% end %>
