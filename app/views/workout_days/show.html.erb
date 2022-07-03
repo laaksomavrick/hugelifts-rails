@@ -8,12 +8,14 @@
 <div class="space-y-2">
   <% @workout_day.workout_day_exercises.each do |wde| %>
     <div class="border-2 p-2">
+    <%= link_to edit_workout_workout_day_workout_day_exercise_path(@workout_day.workout.id, @workout_day.id, wde.id) do %>
       <div class="font-medium">
         <%= wde.exercise.name %>
       </div>
       <div>sets: <%= wde.sets %></div>
       <div>reps: <%= wde.reps %></div>
       <div>weight: <%= wde.weight %></div>
+    <% end %>
     </div>
   <% end %>
 </div>
