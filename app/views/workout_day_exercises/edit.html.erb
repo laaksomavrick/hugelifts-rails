@@ -1,5 +1,9 @@
 <div class="pt-4">
   <h2>Update workout day exercise</h2>
+  <%= button_to "Delete",
+                workout_workout_day_workout_day_exercise_path(@form.workout_id, @form.workout_day_id, @form.workout_day_exercise_id),
+                method: :delete,
+                class: delete_button_class %>
   <%= render 'workout_day_exercises/form',
              model: @form,
              method: :patch,
