@@ -13,6 +13,10 @@ module ApplicationHelper
     "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded cursor-pointer #{css_class_string}"
   end
 
+  def delete_button_class(css_class_string = '')
+    "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer #{css_class_string}"
+  end
+
   def nav_link_to(text, path, opts = {})
     is_active = current_page?(path)
     opts[:class] ||= "#{is_active ? 'text-black-700' : 'text-gray-500'} px-3 py-2 rounded-md text-sm font-medium"

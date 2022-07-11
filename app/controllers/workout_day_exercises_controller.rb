@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: authorization logic (e.g. policy on this resource) with pundit
+
 class WorkoutDayExercisesController < ApplicationController
   def new
     params = new_workout_day_exercise_params
@@ -60,6 +62,20 @@ class WorkoutDayExercisesController < ApplicationController
     end
   end
 
+  def destroy
+    params = destroy_workout_day_exercise_params
+    workout_id = params[:workout_id].to_i
+    workout_day_id = params[:workout_day_id].to_i
+    workout_day_exercise_id = params[:id].to_i
+
+    workout_day_exercise = WorkoutDayExercise.find(workout_day_exercise_id)
+
+    workout_day_exercise.destroy
+
+    flash[:notice] = "Successfully deleted #{workout_day_exercise.exercise.name}"
+    redirect_to(workout_workout_day_path(workout_id, workout_day_id))
+  end
+
   private
 
   def new_workout_day_exercise_params
@@ -77,5 +93,9 @@ class WorkoutDayExercisesController < ApplicationController
   def update_workout_day_exercise_params
     params.require(:workout_day_exercise_form).permit(:workout, :workout_day, :workout_day_exercise, :exercise, :sets,
                                                       :reps, :weight, :unit)
+  end
+
+  def destroy_workout_day_exercise_params
+    params.permit(:workout_id, :workout_day_id, :id)
   end
 end

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :workouts, only: %i[index show] do
     resources :workout_days, path: 'days', only: %i[show] do
-      resources :workout_day_exercises, only: %i[new create edit update]
+      resources :workout_day_exercises, only: %i[new create edit update destroy]
     end
   end
 
