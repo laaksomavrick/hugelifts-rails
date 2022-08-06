@@ -41,7 +41,7 @@ RSpec.describe 'Workout Day Exercises', type: :system do
       submit_button = find('input[name="commit"]')
       submit_button.click
 
-      expect(page).to have_current_path("/workouts/#{workout.id}/days/#{workout_day.id}")
+      expect(page).to have_current_path("/workouts/#{workout.id}/days/#{workout_day.id}/edit")
       expect(page).to have_content(workout_day_exercise.exercise.name)
     end
   end
@@ -85,7 +85,7 @@ RSpec.describe 'Workout Day Exercises', type: :system do
       submit_button = find('input[name="commit"]')
       submit_button.click
 
-      expect(page).to have_current_path("/workouts/#{workout.id}/days/#{workout_day.id}")
+      expect(page).to have_current_path("/workouts/#{workout.id}/days/#{workout_day.id}/edit")
       expect(page).to have_content('Barbell Bench Press')
       expect(page).to have_content('5')
       expect(page).to have_content('8')

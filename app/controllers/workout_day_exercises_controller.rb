@@ -26,7 +26,7 @@ class WorkoutDayExercisesController < ApplicationController
     if saved == false
       render 'new', status: :unprocessable_entity
     else
-      redirect_to(workout_workout_day_path(workout_id, workout_day_id))
+      redirect_to(edit_workout_workout_day_path(workout_id, workout_day_id))
     end
   end
 
@@ -58,7 +58,7 @@ class WorkoutDayExercisesController < ApplicationController
     if saved == false
       render 'new', status: :unprocessable_entity
     else
-      redirect_to(workout_workout_day_path(workout_id, workout_day_id))
+      redirect_to(edit_workout_workout_day_path(workout_id, workout_day_id))
     end
   end
 
@@ -73,7 +73,7 @@ class WorkoutDayExercisesController < ApplicationController
     workout_day_exercise.destroy
 
     flash[:notice] = "Successfully deleted #{workout_day_exercise.exercise.name}"
-    redirect_to(workout_workout_day_path(workout_id, workout_day_id))
+    redirect_to(edit_workout_workout_day_path(workout_id, workout_day_id))
   end
 
   private
