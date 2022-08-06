@@ -26,8 +26,8 @@ class WorkoutDaysController < ApplicationController
     if saved == false
       render 'edit', status: :unprocessable_entity
     else
-      flash[:notice] = 'Successfully saved.'
-      redirect_to(workout_workout_day_path)
+      flash[:notice] = 'Successfully saved'
+      redirect_to(edit_workout_workout_day_path)
     end
   end
 
