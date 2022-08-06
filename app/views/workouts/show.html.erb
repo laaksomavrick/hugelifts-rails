@@ -6,6 +6,6 @@
 
 <ul>
   <% @workout.days.each do |day| %>
-    <li><%= link_to day.name, workout_workout_day_path(@workout, day) %></li>
+    <li><%= link_to day.name, edit_workout_workout_day_path(@workout, day) %></li>
   <% end %>
 </ul>
