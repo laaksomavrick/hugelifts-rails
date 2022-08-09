@@ -2,6 +2,11 @@
   <div class="text-3xl font-medium">Workout Day</div>
 </div>
 
+<div class="flex items-center mb-4">
+  <div class="text-2xl font-medium mr-auto">Details</div>
+  <%= button_to 'Delete', workout_workout_day_path, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete #{@workout_day.name}?" } }, class: delete_button_class %>
+</div>
+
 <%= form_with model: @workout_day,
               url: workout_workout_day_path,
               method: :patch,
@@ -11,10 +16,6 @@
       <%= render 'shared/error_alert', msg: msg %>
     <% end %>
   <% end %>
-
-  <div class="flex items-center mb-4">
-    <div class="text-2xl font-medium">Details</div>
-  </div>
 
   <div class="flex flex-col mb-4">
     <%= form.label :workout, "Workout:", class: 'mb-2' %>

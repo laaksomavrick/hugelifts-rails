@@ -31,7 +31,24 @@ class WorkoutDaysController < ApplicationController
     end
   end
 
+  def destroy
+    params = destroy_workout_day_params
+    workout_id = params[:workout_id].to_i
+    workout_day_id = params[:id].to_i
+
+    workout_day = WorkoutDay.find_by(id: workout_day_id)
+    workout_day.destroy
+
+    flash[:notice] = 'Successfully deleted workout day'
+
+    redirect_to(workout_path(workout_id))
+  end
+
   private
+
+  def destroy_workout_day_params
+    params.permit(:id, :workout_id)
+  end
 
   def update_workout_day_params
     params.require(:workout_day).permit(:workout, :name, :workout_day)
