@@ -6,7 +6,6 @@ RSpec.describe 'Workout Days', type: :system do
   let!(:user) { create(:user) }
   let!(:workout) { create(:workout, user:) }
   let!(:workout_day) { create(:workout_day, workout:) }
-  let!(:workout_day_exercise) { create(:workout_day_exercise, workout_day:) }
 
   describe 'edit page' do
     it 'redirects non-authenticated users' do
@@ -38,5 +37,17 @@ RSpec.describe 'Workout Days', type: :system do
 
       expect(page).to have_content('Successfully saved')
     end
+  end
+
+  it 'can delete a workout day' do
+    sign_in user
+    visit edit_workout_workout_day_path(workout, workout_day)
+
+    accept_confirm do
+      click_button 'Delete'
+    end
+
+    expect(page).to have_content('Successfully deleted workout day')
+    expect(page).not_to have_content(workout_day.name)
   end
 end
