@@ -97,7 +97,9 @@ RSpec.describe 'Workout Day Exercises', type: :system do
 
       visit edit_workout_workout_day_workout_day_exercise_path(workout.id, workout_day.id, workout_day_exercise.id)
 
-      click_button 'Delete'
+      accept_confirm do
+        click_button 'Delete'
+      end
 
       expect(page).to have_content("Successfully deleted #{workout_day_exercise.exercise.name}")
     end
