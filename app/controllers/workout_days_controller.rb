@@ -41,7 +41,7 @@ class WorkoutDaysController < ApplicationController
 
     flash[:notice] = 'Successfully deleted workout day'
 
-    redirect_to(workout_path(workout_id))
+    redirect_to(edit_workout_path(workout_id))
   end
 
   private

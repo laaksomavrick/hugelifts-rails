@@ -8,7 +8,7 @@
 </div>
 
 <%= form_with model: @workout,
-              url: edit_workout_path,
+              url: workout_path,
               method: :patch,
               class: "flex flex-col " do |form| %>
   <% if @workout.errors.any? %>
