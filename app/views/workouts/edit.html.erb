@@ -1,0 +1,42 @@
+<div class="flex items-center mb-4">
+  <div class="text-3xl font-medium">Workout</div>
+</div>
+
+<div class="flex items-center mb-4">
+  <div class="text-2xl font-medium mr-auto">Details</div>
+  <%#= button_to 'Delete', workout_path, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete #{@workout_day.name}?" } }, class: delete_button_class %>
+</div>
+
+<%= form_with model: @workout,
+              url: edit_workout_path,
+              method: :patch,
+              class: "flex flex-col " do |form| %>
+  <% if @workout.errors.any? %>
+    <% @workout.errors.full_messages.each do |msg| %>
+      <%= render 'shared/error_alert', msg: msg %>
+    <% end %>
+  <% end %>
+
+  <div class="flex flex-col mb-4">
+    <%= form.label :name, "Name:", class: 'mb-2' %>
+    <%= form.text_field :name, value: @workout.name %>
+  </div>
+
+  <div class="flex items-center mb-4">
+    <div class="text-2xl font-medium">Days</div>
+    <div class="flex ml-auto">
+      <%#= link_to "Add", new_workout_workout_day_workout_day_exercise_path(@workout_day.workout.id, @workout_day.id), class: default_button_class %>
+    </div>
+  </div>
+
+  <div class="space-y-2 flex flex-col">
+    <% @workout.days.each do |day| %>
+        <%= link_to day.name, edit_workout_workout_day_path(@workout, day), class: "border-2 p-2" %>
+    <% end %>
+  </div>
+
+
+  <%= form.hidden_field :workout, value: @workout.id %>
+  <%= form.submit "Save", class: create_button_class("my-2") %>
+
+<% end %>

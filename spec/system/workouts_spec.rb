@@ -20,4 +20,12 @@ RSpec.describe 'Workouts', type: :system do
       expect(page).to have_content(workout.name)
     end
   end
+
+  describe 'edit page' do
+    it 'shows a user\'s workout' do
+      sign_in user
+      visit edit_workout_path(workout.id)
+      expect(find_field('Name').value).to eq workout.name
+    end
+  end
 end
