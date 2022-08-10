@@ -36,6 +36,7 @@ RSpec.describe 'Workout Days', type: :system do
       submit_button.click
 
       expect(page).to have_content('Successfully saved')
+      expect(find_field('Name').value).to eq 'Push (A)'
     end
   end
 

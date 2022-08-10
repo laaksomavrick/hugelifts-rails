@@ -3,6 +3,7 @@
   <%= button_to "Delete",
                 workout_workout_day_workout_day_exercise_path(@form.workout_id, @form.workout_day_id, @form.workout_day_exercise_id),
                 method: :delete,
+                form: { data: { turbo_confirm: "Are you sure you want to delete #{@form.workout_day_exercise.exercise.name}?" } },
                 class: delete_button_class %>
   <%= render 'workout_day_exercises/form',
              model: @form,

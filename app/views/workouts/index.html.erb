@@ -2,6 +2,6 @@
 
 <ul class="workouts">
   <% @workouts.each do |workout| %>
-    <li><%= link_to workout.name, workout%></li>
+    <li><%= link_to workout.name, edit_workout_path(workout.id) %></li>
   <% end %>
 </ul>
