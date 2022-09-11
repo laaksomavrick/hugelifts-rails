@@ -7,4 +7,5 @@ class Workout < ApplicationRecord
   has_many :workout_days, dependent: :destroy
 
   validates :name, presence: true
+  validates :active, uniqueness: { scope: %i[user_id active] }, if: :active
 end

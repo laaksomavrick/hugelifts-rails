@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-#
 # TODO: authorization logic (e.g. policy on this resource) with pundit
 
 class WorkoutDaysController < ApplicationController
@@ -18,6 +17,10 @@ class WorkoutDaysController < ApplicationController
 
     @workout_day = WorkoutDay.find_by(id: workout_day_id)
     @workout = @workout_day.workout
+
+    # TODO: if active toggle has changed:
+    # - set all other workouts to false
+    # - set this workout to true
 
     @workout_day.name = name
 
