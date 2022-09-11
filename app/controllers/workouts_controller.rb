@@ -14,23 +14,24 @@ class WorkoutsController < ApplicationController
     params = update_workout_params
     workout_id = params[:workout].to_i
     name = params[:name]
+    active = params[:active].to_i == 1
 
     @workout = Workout.find_by(id: workout_id)
+
     @workout.name = name
+    @workout.active = active
 
-    saved = @workout.save
+    @workout.save_with_active!(user_id: current_user.id)
 
-    if saved == false
-      render 'edit', status: :unprocessable_entity
-    else
-      flash[:notice] = 'Successfully saved'
-      redirect_to(edit_workout_path(@workout.id))
-    end
+    flash[:notice] = 'Successfully saved'
+    redirect_to(edit_workout_path(@workout.id))
+  rescue ActiveRecord::RecordInvalid
+    render 'edit', status: :unprocessable_entity
   end
 
   private
 
   def update_workout_params
-    params.require(:workout).permit(:workout, :name)
+    params.require(:workout).permit(:workout, :name, :active)
   end
 end

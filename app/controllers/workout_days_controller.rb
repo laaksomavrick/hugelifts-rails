@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-#
 # TODO: authorization logic (e.g. policy on this resource) with pundit
 
 class WorkoutDaysController < ApplicationController

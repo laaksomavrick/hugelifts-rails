@@ -8,6 +8,8 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+# TODO: refactor into seeder objects
+
 user = User.create!(email: 'laakso.mavrick@gmail.com', password: 'Qweqwe1!')
 exercises = user.exercises
 bench_press = exercises.find { |x| x.name == 'Barbell Bench Press' }
@@ -25,3 +27,7 @@ push_day.workout_day_exercises.create!(exercise: overhead_press,
 
 ppl.workout_days.create!(name: 'Pull', ordinal: 1)
 ppl.workout_days.create!(name: 'Legs', ordinal: 2)
+
+# Create another workout
+FactoryBot.create(:workout, :with_days_and_exercises, user:)
+FactoryBot.create(:workout, :with_days_and_exercises, user:)
