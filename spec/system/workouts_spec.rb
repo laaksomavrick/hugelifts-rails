@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Workouts', type: :system do
   let!(:user) { create(:user) }
-  let!(:workout) { create(:workout, user:) }
+  let!(:workout) { create(:workout, user:, active: true) }
 
   describe 'index page' do
     it 'redirects non-authenticated users' do
@@ -38,6 +38,18 @@ RSpec.describe 'Workouts', type: :system do
       submit_button.click
 
       expect(page).to have_content("Name can't be blank")
+    end
+
+    it 'is still active when validation error occurs' do
+      sign_in user
+      visit edit_workout_path(workout.id)
+
+      fill_in 'Name', with: ''
+
+      submit_button = find('input[name="commit"]')
+      submit_button.click
+
+      expect(page.find('input#workout_active')).to be_checked
     end
 
     it 'can update a workout day' do

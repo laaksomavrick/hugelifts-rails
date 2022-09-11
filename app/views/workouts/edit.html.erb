@@ -22,6 +22,12 @@
     <%= form.text_field :name, value: @workout.name %>
   </div>
 
+  <div class="flex flex-col mb-4">
+    <%= form.label :active, "Active:", class: 'mb-2' %>
+    <%= form.check_box :active %>
+  </div>
+
+
   <div class="flex items-center mb-4">
     <div class="text-2xl font-medium">Days</div>
     <div class="flex ml-auto">

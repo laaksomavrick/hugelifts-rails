@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-workout_names = ['PPL', 'Full Body', 'Stronglifts', 'Texas Method']
+workout_names = ['PPL', 'Full Body', 'Stronglifts', 'Texas Method', 'Starting Strength', 'Upper/Lower Split']
 
 FactoryBot.define do
   factory :workout do
