@@ -1,7 +1,14 @@
-<h1>workouts</h1>
+<div class="text-3xl font-medium mb-4">Workouts</div>
 
-<ul class="workouts">
+<div class="workouts">
   <% @workouts.each do |workout| %>
-    <li><%= link_to workout.name, edit_workout_path(workout) %></li>
+    <%= link_to edit_workout_path(workout), class: "flex py-2 items-center" do %>
+      <div class="text-xl font-medium">
+        <%= workout.name %>
+      </div>
+      <div class="ml-auto <%= workout.active ? "font-bold" : "" %>">
+        <%= workout.active ? "Active" : "Inactive" %>
+      </div>
+    <% end %>
   <% end %>
-</ul>
+</div>
