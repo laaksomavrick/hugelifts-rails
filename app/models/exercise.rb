@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Exercise < ApplicationRecord
+  include NameParameterizable
+
   belongs_to :user
   has_many :workout_day_exercises, dependent: :destroy
 
