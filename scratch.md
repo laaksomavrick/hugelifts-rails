@@ -1,10 +1,8 @@
-- active workout true/false
 - add new workout day to workout
 - js and css refactor ala clf app
 - styling updates
-- query params for workout/workoutday/workoutdayexercise
 - humanize instead of ids + grab resources dependent on current_user
 - authorization layer via pundit for workout, workout_day, workout_day_exercises
 - i18n for tests
 - today's workout view + functionality
-- exercise details view 
+- exercise details view

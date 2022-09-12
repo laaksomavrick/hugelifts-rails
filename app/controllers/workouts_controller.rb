@@ -6,7 +6,7 @@ class WorkoutsController < ApplicationController
   end
 
   def edit
-    workout_id = params[:id]
+    workout_id = params[:id].to_i
     @workout = Workout.includes(:workout_days).find_by(id: workout_id)
   end
 

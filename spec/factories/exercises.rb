@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :exercise do
     user factory: :user
-    name { Exercise.default_exercises.sample }
+    name { Exercise::DEFAULT_EXERCISE_NAMES.sample }
   end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Workout < ApplicationRecord
+  include NameParameterizable
+
   alias_attribute :days, :workout_days
 
   belongs_to :user
