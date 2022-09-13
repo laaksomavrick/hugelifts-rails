@@ -3,24 +3,37 @@
 # TODO: authorization logic (e.g. policy on this resource) with pundit
 
 class WorkoutDaysController < ApplicationController
+  def new
+    workout_id = params[:workout_id].to_i
+    @form = WorkoutDayForm.new(workout_id:)
+  end
+
+  def create
+    workout_id = params[:workout_id].to_i
+
+    @form = WorkoutDayForm.new(workout_id:)
+    saved = @form.process(params[:workout_day_form])
+
+    if saved == false
+      render 'new', status: :unprocessable_entity
+    else
+      flash[:notice] = 'Successfully saved'
+      redirect_to(edit_workout_path(@form.workout))
+    end
+  end
+
   def edit
-    workout_day_id = params[:id]
-    @workout_day = WorkoutDay.includes(workout_day_exercises: :exercise).find_by(id: workout_day_id)
-    @workout = @workout_day.workout
+    workout_day_id = params[:id].to_i
+    workout_id = params[:workout_id].to_i
+    @form = WorkoutDayForm.new(workout_id:, workout_day_id:)
   end
 
   def update
-    params = update_workout_day_params
+    workout_id = params[:workout_id].to_i
+    workout_day_id = params[:id].to_i
 
-    workout_day_id = params[:workout_day].to_i
-    name = params[:name]
-
-    @workout_day = WorkoutDay.find_by(id: workout_day_id)
-    @workout = @workout_day.workout
-
-    @workout_day.name = name
-
-    saved = @workout_day.save
+    @form = WorkoutDayForm.new(workout_id:, workout_day_id:)
+    saved = @form.process(params[:workout_day_form])
 
     if saved == false
       render 'edit', status: :unprocessable_entity
@@ -49,7 +62,11 @@ class WorkoutDaysController < ApplicationController
     params.permit(:id, :workout_id)
   end
 
+  def create_workout_day_params
+    params.require(:workout_day).permit(:name)
+  end
+
   def update_workout_day_params
-    params.require(:workout_day).permit(:workout, :name, :workout_day)
+    params.require(:workout_day).permit(:name)
   end
 end

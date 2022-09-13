@@ -1,0 +1,28 @@
+<% method = method || :post %>
+
+<%= form_with model: model,
+              url: url,
+              method: method,
+              class: "flex flex-col " do |form| %>
+  <% if model.errors.any? %>
+    <% model.errors.full_messages.each do |msg| %>
+      <%= render 'shared/error_alert', msg: msg %>
+    <% end %>
+  <% end %>
+
+  <div class="flex flex-col mb-4">
+    <%= form.label :workout, "Workout:", class: 'mb-2' %>
+    <%= form.select :workout, [[model.workout.name, model.workout.id]], {}, disabled: true %>
+    <%= form.hidden_field :workout, value: model.workout.id %>
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <%= form.label :name, "Name:", class: 'mb-2' %>
+    <%= form.text_field :name, value: model.workout_day.name %>
+  </div>
+
+  <%= yield %>
+
+  <%= form.submit "Save", class: create_button_class("my-2") %>
+
+<% end %>
