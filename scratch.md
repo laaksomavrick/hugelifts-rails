@@ -1,4 +1,5 @@
 - add new workout day to workout
+- delete workout
 - js and css refactor ala clf app
 - styling updates
 - humanize instead of ids + grab resources dependent on current_user

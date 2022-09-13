@@ -1,0 +1,12 @@
+<div class="flex items-center mb-4">
+  <div class="text-3xl font-medium">Workout Day</div>
+</div>
+
+<div class="flex items-center mb-4">
+  <div class="text-2xl font-medium mr-auto">Details</div>
+</div>
+
+<%= render 'workout_days/form',
+           model: @form,
+           method: :post,
+           url: workout_workout_days_path %>

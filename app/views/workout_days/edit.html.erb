@@ -4,41 +4,25 @@
 
 <div class="flex items-center mb-4">
   <div class="text-2xl font-medium mr-auto">Details</div>
-  <%= button_to 'Delete', workout_workout_day_path, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete #{@workout_day.name}?" } }, class: delete_button_class %>
+  <%= button_to 'Delete', workout_workout_day_path, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete #{@form.workout_day.name}?" } }, class: delete_button_class %>
 </div>
 
-<%= form_with model: @workout_day,
-              url: workout_workout_day_path,
-              method: :patch,
-              class: "flex flex-col " do |form| %>
-  <% if @workout_day.errors.any? %>
-    <% @workout_day.errors.full_messages.each do |msg| %>
-      <%= render 'shared/error_alert', msg: msg %>
-    <% end %>
-  <% end %>
-
-  <div class="flex flex-col mb-4">
-    <%= form.label :workout, "Workout:", class: 'mb-2' %>
-    <%= form.select :workout, [[@workout.name, @workout.id]], {}, disabled: true %>
-    <%= form.hidden_field :workout, value: @workout.id %>
-  </div>
-
-  <div class="flex flex-col mb-4">
-    <%= form.label :name, "Name:", class: 'mb-2' %>
-    <%= form.text_field :name, value: @workout_day.name %>
-  </div>
+<%= render 'workout_days/form',
+           model: @form,
+           method: :patch,
+           url: workout_workout_day_path do %>
 
   <div class="flex items-center mb-4">
     <div class="text-2xl font-medium">Exercises</div>
     <div class="flex ml-auto">
-      <%= link_to "Add", new_workout_workout_day_workout_day_exercise_path(@workout_day.workout.id, @workout_day.id), class: default_button_class %>
+      <%= link_to "Add", new_workout_workout_day_workout_day_exercise_path(@form.workout, @form.workout_day), class: default_button_class %>
     </div>
   </div>
 
   <div class="space-y-2">
-    <% @workout_day.workout_day_exercises.each do |wde| %>
+    <% @form.workout_day.workout_day_exercises.each do |wde| %>
       <div class="border-2 p-2">
-        <%= link_to edit_workout_workout_day_workout_day_exercise_path(@workout_day.workout, @workout_day, wde) do %>
+        <%= link_to edit_workout_workout_day_workout_day_exercise_path(@form.workout, @form.workout_day, wde) do %>
           <div class="font-medium">
             <%= wde.exercise.name %>
           </div>
@@ -49,9 +33,5 @@
       </div>
     <% end %>
   </div>
-
-
-  <%= form.hidden_field :workout_day, value: @workout_day.id %>
-  <%= form.submit "Save", class: create_button_class("my-2") %>
 
 <% end %>
