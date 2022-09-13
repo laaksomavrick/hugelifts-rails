@@ -8,7 +8,7 @@ RSpec.describe 'Workout Day Exercises', type: :system do
   let!(:workout_day) { create(:workout_day, workout:) }
   let!(:workout_day_exercise) { create(:workout_day_exercise, workout_day:) }
 
-  describe 'create page' do
+  describe 'new page' do
     it 'redirects non-authenticated users' do
       visit new_workout_workout_day_workout_day_exercise_path(workout.id, workout_day.id)
       expect(page).to have_content('Log in')

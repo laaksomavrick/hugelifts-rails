@@ -7,6 +7,41 @@ RSpec.describe 'Workout Days', type: :system do
   let!(:workout) { create(:workout, user:) }
   let!(:workout_day) { create(:workout_day, workout:) }
 
+  describe 'new page' do
+    it 'redirects non-authenticated users' do
+      visit new_workout_workout_day_path(workout)
+      expect(page).to have_content('Log in')
+      expect(page).to have_current_path('/users/sign_in')
+    end
+
+    it 'shows an error when name is empty' do
+      sign_in user
+      visit new_workout_workout_day_path(workout, workout_day)
+
+      fill_in 'Name', with: ''
+
+      submit_button = find('input[name="commit"]')
+      submit_button.click
+
+      expect(page).to have_content("Name can't be blank")
+    end
+
+    it 'can create a workout day' do
+      sign_in user
+      visit new_workout_workout_day_path(workout, workout_day)
+
+      workout_day_name = 'Workout day name'
+
+      fill_in 'Name', with: workout_day_name
+
+      submit_button = find('input[name="commit"]')
+      submit_button.click
+
+      expect(page).to have_content('Successfully saved')
+      expect(page).to have_content(workout_day_name)
+    end
+  end
+
   describe 'edit page' do
     it 'redirects non-authenticated users' do
       visit edit_workout_workout_day_path(workout, workout_day)
