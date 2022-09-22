@@ -58,6 +58,7 @@ class WorkoutDayExercisesController < ApplicationController
     if saved == false
       render 'new', status: :unprocessable_entity
     else
+      flash[:notice] = t('workout_day_exercises.update.success')
       redirect_to(edit_workout_workout_day_path(workout_id, workout_day_id))
     end
   end

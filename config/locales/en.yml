@@ -3,4 +3,7 @@ en:
     destroy:
       cannot_delete_workout: 'Cannot delete active workout - designate a new workout as active first'
       success: 'Successfully deleted workout'
+  workout_day_exercises:
+    update:
+      success: 'Successfully updated exercise'
 

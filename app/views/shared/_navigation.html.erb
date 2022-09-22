@@ -1,4 +1,4 @@
-<nav class="bg-gray-100">
+<nav>
   <div class="<%= layout_class %>">
     <div class="relative flex items-center justify-between h-16">
       <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
@@ -8,7 +8,7 @@
         <% if current_user %>
           <div class="flex space-x-4">
             <%= nav_link_to "Today", todays_workout_index_path %>
-            <%= nav_link_to "Workouts", workouts_path %>
+            <%= nav_link_to "Workouts", workouts_path, controller: 'workouts' %>
             <%= nav_link_to "Exercises", exercises_path %>
           </div>
         <% end %>
