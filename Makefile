@@ -8,10 +8,6 @@ migrate:
 
 .PHONY: seed
 seed:
-	@bundler exec rails db:seed
-
-.PHONY: replant
-replant:
 	@bundler exec rails db:seed:replant
 
 .PHONY: serve
