@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO: authorization
 class WorkoutsController < ApplicationController
   def index
     @workouts = current_user.workouts
@@ -27,6 +28,21 @@ class WorkoutsController < ApplicationController
     redirect_to(edit_workout_path(@workout.id))
   rescue ActiveRecord::RecordInvalid
     render 'edit', status: :unprocessable_entity
+  end
+
+  def destroy
+    workout_id = params[:id].to_i
+
+    workout = Workout.find_by(id: workout_id)
+
+    if workout.active?
+      flash[:alert] = t('workouts.destroy.cannot_delete_workout')
+      redirect_to(edit_workout_path(workout_id))
+    else
+      workout.destroy
+      flash[:notice] = t('workouts.destroy.success')
+      redirect_to(workouts_path)
+    end
   end
 
   private

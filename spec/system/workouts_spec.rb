@@ -65,5 +65,30 @@ RSpec.describe 'Workouts', type: :system do
       expect(page).to have_content('Successfully saved')
       expect(find_field('Name').value).to eq 'Upper/Lower Split'
     end
+
+    it 'cannot delete an active workout' do
+      sign_in user
+
+      visit edit_workout_path(workout.id)
+
+      accept_confirm do
+        click_button 'Delete'
+      end
+
+      expect(page).to have_content(I18n.t('workouts.destroy.cannot_delete_workout'))
+    end
+
+    it 'can delete an inactive workout' do
+      inactive_workout = create(:workout, user:, active: false)
+      sign_in user
+
+      visit edit_workout_path(inactive_workout.id)
+
+      accept_confirm do
+        click_button 'Delete'
+      end
+
+      expect(page).to have_content(I18n.t('workouts.destroy.success'))
+    end
   end
 end
