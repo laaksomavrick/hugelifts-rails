@@ -3,7 +3,7 @@
 # TODO: authorization
 class WorkoutsController < ApplicationController
   def index
-    @workouts = current_user.workouts
+    @workouts = current_user.workouts.order(active: :desc)
   end
 
   def edit

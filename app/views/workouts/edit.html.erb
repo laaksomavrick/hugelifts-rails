@@ -1,9 +1,9 @@
 <div class="flex items-center mb-4">
-  <div class="text-3xl font-medium">Workout</div>
+  <div class="text-3xl font-medium"><%= t('common.workout') %></div>
 </div>
 
 <div class="flex items-center mb-4">
-  <div class="text-2xl font-medium mr-auto">Details</div>
+  <div class="text-2xl font-medium mr-auto"><%= t('common.details') %></div>
   <%= button_to 'Delete', workout_path, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete #{@workout.name}?" } }, class: delete_button_class %>
 </div>
 
@@ -17,16 +17,15 @@
     <% end %>
   <% end %>
 
-  <div class="flex flex-col mb-4">
-    <%= form.label :name, "Name:", class: 'mb-2' %>
-    <%= form.text_field :name, value: @workout.name %>
+  <div class="<%= form_element_class %>">
+    <%= form.label :name, t('common.name'), class: form_label_class %>
+    <%= form.text_field :name, value: @workout.name, class: form_input_class %>
   </div>
 
-  <div class="flex flex-col mb-4">
-    <%= form.label :active, "Active:", class: 'mb-2' %>
-    <%= form.check_box :active %>
+  <div class="<%= form_element_class("flex flex-col") %>">
+    <%= form.label :active, t('common.active'), class: form_label_class %>
+    <%= form.check_box :active, class: "appearance-none border rounded p-2 center" %>
   </div>
-
 
   <div class="flex items-center mb-4">
     <div class="text-2xl font-medium">Days</div>
@@ -37,7 +36,11 @@
 
   <div class="space-y-2 flex flex-col">
     <% @workout.days.each do |day| %>
-        <%= link_to day.name, edit_workout_workout_day_path(@workout, day), class: "border-2 p-2" %>
+      <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 hover:outline">
+        <%= link_to edit_workout_workout_day_path(@workout, day) do %>
+        <div class="text-gray-700"><%= day.name %></div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 

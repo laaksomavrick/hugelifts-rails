@@ -1,4 +1,4 @@
-<div class="text-3xl font-medium mb-4">Workouts</div>
+<div class="text-3xl font-medium mb-4"><%= t('common.workout') %></div>
 
 <div class="workouts">
   <% @workouts.each do |workout| %>
@@ -7,7 +7,7 @@
         <%= workout.name %>
       </div>
       <div class="ml-auto <%= workout.active ? "font-bold" : "" %>">
-        <%= workout.active ? "Active" : "Inactive" %>
+        <%= workout.active ? t('common.active') : t('common.inactive') %>
       </div>
     <% end %>
   <% end %>

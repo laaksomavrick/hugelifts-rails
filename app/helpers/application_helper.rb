@@ -30,7 +30,9 @@ module ApplicationHelper
   end
 
   def form_input_class(css_class_string = '')
+    # rubocop:disable Layout/LineLength
     "appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline #{css_class_string}"
+    # rubocop:enable Layout/LineLength
   end
 
   def nav_link_to(text, path, opts = {})
