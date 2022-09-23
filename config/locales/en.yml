@@ -1,6 +1,30 @@
 en:
+  common:
+    hugelifts: 'Hugelifts'
+    today: 'Today'
+    workouts: 'Workouts'
+    save: 'Save'
+    details: 'Details'
+    exercises: 'Exercises'
+    exercise: 'Exercise'
+    sets: 'Sets'
+    reps: 'Reps'
+    weight: 'Weight'
+    unit: 'Unit'
+    workout: 'Workout'
+    workout_day: 'Workout day'
+    name: 'Name'
+    active: 'Active'
+    inactive: 'Inactive'
   workouts:
+    header: 'Workout Day Exercise'
     destroy:
       cannot_delete_workout: 'Cannot delete active workout - designate a new workout as active first'
       success: 'Successfully deleted workout'
+  workout_days:
+    workout: 'Workout'
+    header: 'Workout Day'
+  workout_day_exercises:
+    update:
+      success: 'Successfully updated exercise'
 
