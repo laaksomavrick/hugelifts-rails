@@ -10,19 +10,23 @@
     <% end %>
   <% end %>
 
-  <div class="flex flex-col mb-4">
-    <%= form.label :workout, "Workout:", class: 'mb-2' %>
-    <%= form.select :workout, [[model.workout.name, model.workout.id]], {}, disabled: true %>
-    <%= form.hidden_field :workout, value: model.workout.id %>
-  </div>
+    <div class="<%= form_element_class %>">
 
-  <div class="flex flex-col mb-4">
-    <%= form.label :name, "Name:", class: 'mb-2' %>
-    <%= form.text_field :name, value: model.workout_day.name %>
-  </div>
+    <div class=<%= form_element_class %>>
+      <%= form.label :workout, t('workout_days.workout'), class: form_label_class %>
+      <%= form.select :workout, [[model.workout.name, model.workout.id]], {}, disabled: true, class: form_input_class %>
+      <%= form.hidden_field :workout, value: model.workout.id %>
+    </div>
 
-  <%= yield %>
+    <div class=<%= form_element_class %>>
+      <%= form.label :name, t('common.name'), class: form_label_class %>
+      <%= form.text_field :name, value: model.workout_day.name, class: form_input_class %>
+    </div>
 
-  <%= form.submit "Save", class: create_button_class("my-2") %>
+    </div>
+
+    <%= yield %>
+    <%= form.submit t('common.save'), class: create_button_class("my-2") %>
+
 
 <% end %>

@@ -1,4 +1,4 @@
-  <div class="flex items-center mb-4">
-    <div class="text-3xl font-medium">Workout Day Exercise</div>
+  <div class="<%= page_header_class %>">
+    <div class="text-3xl font-medium"><%= t('workouts.header') %></div>
   </div>
   <%= render 'workout_day_exercises/form', model: @form, url: workout_workout_day_workout_day_exercises_path(@form.workout_id, @form.workout_day_id)  %>

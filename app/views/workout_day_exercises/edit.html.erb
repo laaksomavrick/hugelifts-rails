@@ -1,14 +1,18 @@
-  <div class="flex items-center mb-4 py-4">
-    <div class="text-3xl font-medium mr-auto">Workout Day Exercise</div>
-    <%= button_to "Delete",
-                  workout_workout_day_workout_day_exercise_path(@form.workout_id, @form.workout_day_id, @form.workout_day_exercise_id),
-                  method: :delete,
-                  form: { data: { turbo_confirm: "Are you sure you want to delete #{@form.workout_day_exercise.exercise.name}?" } },
-                  class: delete_button_class %>
-  </div>
+<div class="<%= page_header_class %>">
+  <div class="text-3xl font-medium mr-auto"><%= t('workouts.header') %></div>
+</div>
+
+<div class="flex items-center mb-4">
+  <div class="text-2xl font-medium mr-auto"><%= t('common.details') %></div>
+  <%= button_to "Delete",
+                workout_workout_day_workout_day_exercise_path(@form.workout_id, @form.workout_day_id, @form.workout_day_exercise_id),
+                method: :delete,
+                form: { data: { turbo_confirm: "Are you sure you want to delete #{@form.workout_day_exercise.exercise.name}?" } },
+                class: delete_button_class %>
+</div>
 
 
-  <%= render 'workout_day_exercises/form',
-             model: @form,
-             method: :patch,
-             url: workout_workout_day_workout_day_exercise_path(@form.workout_id, @form.workout_day_id, @form.workout_day_exercise_id)  %>
+<%= render 'workout_day_exercises/form',
+           model: @form,
+           method: :patch,
+           url: workout_workout_day_workout_day_exercise_path(@form.workout_id, @form.workout_day_id, @form.workout_day_exercise_id) %>

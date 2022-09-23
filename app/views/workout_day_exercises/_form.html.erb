@@ -13,45 +13,47 @@
   <%= form.hidden_field :workout_day_exercise, value: model.workout_day_exercise_id %>
 
   <div class="grid grid-cols-2 gap-x-4">
-    <div>
-      <%= form.label :workout, "Workout:", class: form_label_class %>
+    <div class=<%= form_element_class %>>
+      <%= form.label :workout, t('common.workout'), class: form_label_class %>
       <%= form.select :workout, model.workout_options, {}, disabled: true, class: form_input_class %>
       <%= form.hidden_field :workout, value: model.workout_id %>
     </div>
 
-    <div>
-      <%= form.label :workout_day, "Workout day:", class: form_label_class %>
+    <div class=<%= form_element_class %>>
+      <%= form.label :workout_day, t('common.workout_day'), class: form_label_class %>
       <%= form.select :workout_day, model.workout_day_options, {}, disabled: true, class: form_input_class %>
       <%= form.hidden_field :workout_day, value: model.workout_day_id %>
     </div>
   </div>
 
-  <%= form.label :exercise, "Exercise:", class: form_label_class%>
-  <%= form.select :exercise, model.exercise_options, {}, selected: model.selected_exercise, class: form_input_class %>
+  <div class=<%= form_element_class %>>
+    <%= form.label :exercise, t('common.exercise'), class: form_label_class%>
+    <%= form.select :exercise, model.exercise_options, {}, selected: model.selected_exercise, class: form_input_class %>
+  </div>
 
   <div class="grid grid-cols-2 gap-x-4">
-    <div>
-      <%= form.label :sets, "Sets:" , class: form_label_class%>
+    <div class=<%= form_element_class %>>
+      <%= form.label :sets, t('common.sets'), class: form_label_class%>
       <%= form.select :sets, model.set_options, {}, selected: model.selected_sets, class: form_input_class %>
     </div>
 
-    <div>
-      <%= form.label :reps, "Reps:", class: form_label_class %>
+    <div class=<%= form_element_class %>>
+      <%= form.label :reps, t('common.reps'), class: form_label_class %>
       <%= form.select :reps, model.rep_options, {}, selected: model.selected_reps, class: form_input_class %>
     </div>
 
-    <div>
-      <%= form.label :weight, "Weight:", class: form_label_class %>
+    <div class=<%= form_element_class %>>
+      <%= form.label :weight, t('common.weight'), class: form_label_class %>
       <%= form.number_field :weight, value: model.selected_weight, class: form_input_class %>
     </div>
 
-    <div>
-      <%= form.label :unit, "Unit:", class: form_label_class %>
+    <div class=<%= form_element_class %>>
+      <%= form.label :unit, t('common.unit'), class: form_label_class %>
       <%= form.select :unit, model.default_unit, {}, disabled: true, class: form_input_class %>
       <%= form.hidden_field :unit, value: "lb" %>
     </div>
   </div>
 
 
-  <%= form.submit "Save", class: create_button_class("mt-2") %>
+  <%= form.submit t('common.save'), class: create_button_class("mt-2") %>
 <% end %>
