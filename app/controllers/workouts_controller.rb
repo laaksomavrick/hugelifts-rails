@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-# TODO: authorization
 class WorkoutsController < ApplicationController
   def index
-    @workouts = current_user.workouts.order(active: :desc)
+    @workouts = policy_scope(Workout).order(active: :desc)
   end
 
   def edit
     workout_id = params[:id].to_i
-    @workout = Workout.includes(:workout_days).find_by(id: workout_id)
+    @workout = authorize Workout.includes(:workout_days).find_by(id: workout_id)
   end
 
   def update
@@ -17,7 +16,7 @@ class WorkoutsController < ApplicationController
     name = params[:name]
     active = params[:active].to_i == 1
 
-    @workout = Workout.find_by(id: workout_id)
+    @workout = authorize Workout.find_by(id: workout_id)
 
     @workout.name = name
     @workout.active = active
@@ -33,7 +32,7 @@ class WorkoutsController < ApplicationController
   def destroy
     workout_id = params[:id].to_i
 
-    workout = Workout.find_by(id: workout_id)
+    workout = authorize Workout.find_by(id: workout_id)
 
     if workout.active?
       flash[:alert] = t('workouts.destroy.cannot_delete_workout')

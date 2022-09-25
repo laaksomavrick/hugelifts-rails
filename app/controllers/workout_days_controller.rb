@@ -5,11 +5,16 @@
 class WorkoutDaysController < ApplicationController
   def new
     workout_id = params[:workout_id].to_i
+
+    authorize WorkoutDay
+
     @form = WorkoutDayForm.new(workout_id:)
   end
 
   def create
     workout_id = params[:workout_id].to_i
+
+    authorize WorkoutDay
 
     @form = WorkoutDayForm.new(workout_id:)
     saved = @form.process(params[:workout_day_form])
@@ -25,7 +30,10 @@ class WorkoutDaysController < ApplicationController
   def edit
     workout_day_id = params[:id].to_i
     workout_id = params[:workout_id].to_i
+
     @form = WorkoutDayForm.new(workout_id:, workout_day_id:)
+
+    authorize @form.workout_day
   end
 
   def update
@@ -33,6 +41,9 @@ class WorkoutDaysController < ApplicationController
     workout_day_id = params[:id].to_i
 
     @form = WorkoutDayForm.new(workout_id:, workout_day_id:)
+
+    authorize @form.workout_day
+
     saved = @form.process(params[:workout_day_form])
 
     if saved == false
@@ -48,7 +59,7 @@ class WorkoutDaysController < ApplicationController
     workout_id = params[:workout_id].to_i
     workout_day_id = params[:id].to_i
 
-    workout_day = WorkoutDay.find_by(id: workout_day_id)
+    workout_day = authorize WorkoutDay.find_by(id: workout_day_id)
     workout_day.destroy
 
     flash[:notice] = 'Successfully deleted workout day'
