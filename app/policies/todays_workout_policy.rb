@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ExercisePolicy < ApplicationPolicy
+class TodaysWorkoutPolicy < ApplicationPolicy
   class Scope
     def initialize(user, scope)
       @user  = user
@@ -8,7 +8,7 @@ class ExercisePolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.where(user_id: user.id)
+      true
     end
 
     private
