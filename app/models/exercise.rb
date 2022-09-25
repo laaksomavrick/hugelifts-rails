@@ -40,4 +40,8 @@ class Exercise < ApplicationRecord
   def self.default_exercise_names
     DEFAULT_EXERCISE_NAMES
   end
+
+  def self.policy_class
+    ExercisePolicy
+  end
 end

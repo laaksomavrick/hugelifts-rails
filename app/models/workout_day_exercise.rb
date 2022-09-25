@@ -13,4 +13,8 @@ class WorkoutDayExercise < ApplicationRecord
   validates :unit, inclusion: { in: %w[lb kg] }
 
   delegate :name, to: :exercise
+
+  def self.policy_class
+    WorkoutDayExercisePolicy
+  end
 end

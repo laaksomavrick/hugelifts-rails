@@ -17,4 +17,8 @@ class Workout < ApplicationRecord
       save!
     end
   end
+
+  def self.policy_class
+    WorkoutPolicy
+  end
 end
