@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
   before_action :authenticate_user!
+
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
 
   # Here so Rubymine stops complaining
   def current_user # rubocop:disable Lint/UselessMethodDefinition
