@@ -1,0 +1,27 @@
+<div class="flex items-center mb-4">
+  <div class="text-3xl font-medium"><%= t('common.workout') %></div>
+</div>
+
+<%= form_with model: @workout,
+              url: workouts_path,
+              method: :post,
+              class: "flex flex-col " do |form| %>
+  <% if @workout.errors.any? %>
+    <% @workout.errors.full_messages.each do |msg| %>
+      <%= render 'shared/error_alert', msg: msg %>
+    <% end %>
+  <% end %>
+
+  <div class="<%= form_element_class %>">
+    <%= form.label :name, t('common.name'), class: form_label_class %>
+    <%= form.text_field :name, value: @workout.name, class: form_input_class %>
+  </div>
+
+  <div class="<%= form_element_class("flex flex-col") %>">
+    <%= form.label :active, t('common.active'), class: form_label_class %>
+    <%= form.check_box :active, class: "appearance-none border rounded p-2 center" %>
+  </div>
+
+  <%= form.submit "Save", class: create_button_class("my-2") %>
+
+<% end %>

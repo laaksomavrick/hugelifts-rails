@@ -21,6 +21,35 @@ RSpec.describe 'Workouts', type: :system do
     end
   end
 
+  describe 'new page' do
+    it 'shows an error when name is empty' do
+      sign_in user
+      visit new_workout_path
+
+      fill_in 'Name', with: ''
+
+      submit_button = find('input[name="commit"]')
+      submit_button.click
+
+      expect(page).to have_content("Name can't be blank")
+    end
+
+    it 'can create a workout' do
+      name = 'FooBarBaz'
+      sign_in user
+
+      visit new_workout_path
+
+      fill_in 'Name', with: name
+
+      submit_button = find('input[name="commit"]')
+      submit_button.click
+
+      expect(page).to have_content(I18n.t('workouts.create.success'))
+      expect(find_field('Name').value).to eq name
+    end
+  end
+
   describe 'edit page' do
     it 'shows a user\'s workout' do
       sign_in user
@@ -62,7 +91,7 @@ RSpec.describe 'Workouts', type: :system do
       submit_button = find('input[name="commit"]')
       submit_button.click
 
-      expect(page).to have_content('Successfully saved')
+      expect(page).to have_content(I18n.t('workouts.update.success'))
       expect(find_field('Name').value).to eq 'Upper/Lower Split'
     end
 

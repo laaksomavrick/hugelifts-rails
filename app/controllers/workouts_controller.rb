@@ -5,6 +5,32 @@ class WorkoutsController < ApplicationController
     @workouts = policy_scope(Workout).order(active: :desc)
   end
 
+  def new
+    @workout = authorize Workout.new
+  end
+
+  def create
+    params = create_workout_params
+    name = params[:name]
+    active = params[:active].to_i == 1
+
+    @workout = authorize Workout.new
+    @workout.name = name
+    @workout.active = active
+    @workout.user_id = current_user.id
+
+    if active
+      @workout.save_with_active!(user_id: current_user.id)
+    else
+      @workout.save!
+    end
+
+    flash[:notice] = t('workouts.create.success')
+    redirect_to(edit_workout_path(@workout.id))
+  rescue ActiveRecord::RecordInvalid
+    render 'new', status: :unprocessable_entity
+  end
+
   def edit
     workout_id = params[:id].to_i
     @workout = authorize Workout.includes(:workout_days).find_by(id: workout_id)
@@ -23,7 +49,7 @@ class WorkoutsController < ApplicationController
 
     @workout.save_with_active!(user_id: current_user.id)
 
-    flash[:notice] = 'Successfully saved'
+    flash[:notice] = t('workouts.update.success')
     redirect_to(edit_workout_path(@workout.id))
   rescue ActiveRecord::RecordInvalid
     render 'edit', status: :unprocessable_entity
@@ -48,5 +74,9 @@ class WorkoutsController < ApplicationController
 
   def update_workout_params
     params.require(:workout).permit(:workout, :name, :active)
+  end
+
+  def create_workout_params
+    params.require(:workout).permit(:name, :active)
   end
 end

@@ -21,6 +21,10 @@ en:
     destroy:
       cannot_delete_workout: 'Cannot delete active workout - designate a new workout as active first'
       success: 'Successfully deleted workout'
+    create:
+      success: 'Successfully created workout'
+    update:
+      success: 'Successfully updated workout'
   workout_days:
     workout: 'Workout'
     header: 'Workout Day'

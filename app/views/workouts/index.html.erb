@@ -1,4 +1,11 @@
-<div class="text-3xl font-medium mb-4"><%= t('common.workout') %></div>
+<div class="flex items-center mb-4">
+      <div class="text-3xl font-medium">
+        <%= t('common.workout') %>
+      </div>
+  <div class="flex ml-auto">
+    <%= link_to "Add", new_workout_path, class: default_button_class %>
+  </div>
+</div>
 
 <div class="workouts">
   <% @workouts.each do |workout| %>
