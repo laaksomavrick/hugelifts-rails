@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: authorization logic (e.g. policy on this resource) with pundit
-
 class WorkoutDaysController < ApplicationController
   def new
     workout_id = params[:workout_id].to_i

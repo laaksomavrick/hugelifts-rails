@@ -16,6 +16,10 @@ class WorkoutPolicy < ApplicationPolicy
     attr_reader :user, :scope
   end
 
+  def create?
+    true
+  end
+
   def update?
     user.id == record.user_id
   end

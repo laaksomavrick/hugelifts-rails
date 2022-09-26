@@ -18,6 +18,13 @@ class Workout < ApplicationRecord
     end
   end
 
+  def create_with_active!(user_id:)
+    transaction do
+      Workout.where(user_id:).update(active: false) if active
+      create!
+    end
+  end
+
   def self.policy_class
     WorkoutPolicy
   end
