@@ -16,6 +16,7 @@ en:
     name: 'Name'
     active: 'Active'
     inactive: 'Inactive'
+    ordinal: 'Order'
   workouts:
     header: 'Workout Day Exercise'
     destroy:

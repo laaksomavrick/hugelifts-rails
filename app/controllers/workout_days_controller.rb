@@ -72,10 +72,10 @@ class WorkoutDaysController < ApplicationController
   end
 
   def create_workout_day_params
-    params.require(:workout_day).permit(:name)
+    params.require(:workout_day).permit(:name, :ordinal)
   end
 
   def update_workout_day_params
-    params.require(:workout_day).permit(:name)
+    params.require(:workout_day).permit(:name, :ordinal)
   end
 end

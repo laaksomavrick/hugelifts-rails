@@ -23,6 +23,23 @@ class WorkoutDayForm
                      end
   end
 
+  def ordinal
+    if @workout_day_id.nil?
+      @workout.workout_days.length
+    else
+      @workout_day.ordinal
+    end
+  end
+
+  def ordinal_options
+    max_ordinal = if @workout_day_id.nil?
+                    @workout.workout_days.length
+                  else
+                    @workout.workout_days.length - 1
+                  end
+    [*0..max_ordinal]
+  end
+
   def process(params = {})
     name = params[:name]
 
