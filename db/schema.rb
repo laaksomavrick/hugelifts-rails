@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_27_005630) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["workout_id", "ordinal"], name: "index_workout_days_on_workout_id_and_ordinal"
+    t.index ["workout_id", "ordinal"], name: "index_workout_days_on_workout_id_and_ordinal", unique: true
     t.index ["workout_id"], name: "index_workout_days_on_workout_id"
   end
 
