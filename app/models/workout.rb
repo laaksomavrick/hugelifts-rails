@@ -6,7 +6,7 @@ class Workout < ApplicationRecord
   alias_attribute :days, :workout_days
 
   belongs_to :user
-  has_many :workout_days, dependent: :destroy
+  has_many :workout_days, -> { order(ordinal: :asc) }, dependent: :destroy, inverse_of: :workout
 
   validates :name, presence: true
   validates :active, uniqueness: { scope: %i[user_id active] }, if: :active
