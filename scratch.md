@@ -13,3 +13,15 @@
         { exercise_id: 2, sets: 4, reps: 10, result: [10, 10, 8, 6] }
 
 - exercise details view
+
+
+
+ordinal sorting
+
+[0, 1, 2]
+
+1) [0,0*,2] => [0, 1*, 2]
+2) [0, 2*, 2] => [0, 1, 2*]
+
+PORO: OrdinalSorter.sort(collection, key:?)
+-> do TDD

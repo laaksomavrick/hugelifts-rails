@@ -33,7 +33,9 @@ class WorkoutsController < ApplicationController
 
   def edit
     workout_id = params[:id].to_i
-    @workout = authorize Workout.includes(:workout_days).find_by(id: workout_id)
+    @workout = authorize Workout
+               .includes(:workout_days)
+               .find_by(id: workout_id)
   end
 
   def update

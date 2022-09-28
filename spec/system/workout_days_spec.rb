@@ -73,17 +73,19 @@ RSpec.describe 'Workout Days', type: :system do
       expect(page).to have_content('Successfully saved')
       expect(find_field('Name').value).to eq 'Push (A)'
     end
-  end
 
-  it 'can delete a workout day' do
-    sign_in user
-    visit edit_workout_workout_day_path(workout, workout_day)
+    it 'can delete a workout day' do
+      sign_in user
+      visit edit_workout_workout_day_path(workout, workout_day)
 
-    accept_confirm do
-      click_button 'Delete'
+      accept_confirm do
+        click_button 'Delete'
+      end
+
+      expect(page).to have_content('Successfully deleted workout day')
+      expect(page).not_to have_content(workout_day.name)
     end
 
-    expect(page).to have_content('Successfully deleted workout day')
-    expect(page).not_to have_content(workout_day.name)
   end
+
 end
