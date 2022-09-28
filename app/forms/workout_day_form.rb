@@ -49,20 +49,25 @@ class WorkoutDayForm
     ordinal = params[:ordinal].to_i
 
     if @workout_day_id
-      WorkoutDay.transaction do
-        workout_day.update!(name:)
-        # Recompute ordinals
-        # TODO: extract into mixin e.g. Ordinable or Sortable and put under test
-        workout_days = WorkoutDay.where(workout:).where.not(id: @workout_day_id).order(ordinal: :asc).to_a
-        workout_days.insert(ordinal, workout_day)
-        workout_days.each_with_index do |wd, i|
-          wd.ordinal = i
-          wd.save!
+      begin
+        WorkoutDay.transaction do
+          workout_day.update!(name:)
+          # Recompute ordinals
+          # TODO: extract into mixin e.g. Ordinable or Sortable and put under test
+          workout_days = WorkoutDay.where(workout:).where.not(id: @workout_day_id).order(ordinal: :asc).to_a
+          workout_days.insert(ordinal, workout_day)
+          workout_days.each_with_index do |wd, i|
+            wd.ordinal = i
+            wd.save!
+          end
         end
+        true
+      rescue ActiveRecord::RecordInvalid
+        false
       end
     else
       @workout_day = WorkoutDay.create(workout:, name:, ordinal:)
-      @workout_day.save!
+      @workout_day.save
     end
   end
 end
