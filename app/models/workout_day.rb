@@ -11,4 +11,17 @@ class WorkoutDay < ApplicationRecord
   def self.policy_class
     WorkoutDayPolicy
   end
+
+  # TODO: can extract this to a common module when needs to be generalized
+  def self.swap_ordinal!(obj, new_ordinal)
+    transaction do
+      collection = where.not(id: obj.id).order(ordinal: :asc).to_a
+      collection.insert(new_ordinal, obj)
+      # TODO: make this more efficient
+      collection.each_with_index do |wd, i|
+        wd.ordinal = i
+        wd.save!
+      end
+    end
+  end
 end

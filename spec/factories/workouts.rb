@@ -10,7 +10,9 @@ FactoryBot.define do
 
     trait :with_days do
       after(:create) do |workout|
-        create_list(:workout_day, 3, workout:)
+        create(:workout_day, workout:, ordinal: 0)
+        create(:workout_day, workout:, ordinal: 1)
+        create(:workout_day, workout:, ordinal: 2)
       end
     end
 

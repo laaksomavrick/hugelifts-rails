@@ -52,14 +52,7 @@ class WorkoutDayForm
       begin
         WorkoutDay.transaction do
           workout_day.update!(name:)
-          # Recompute ordinals
-          # TODO: extract into mixin e.g. Ordinable or Sortable and put under test
-          workout_days = WorkoutDay.where(workout:).where.not(id: @workout_day_id).order(ordinal: :asc).to_a
-          workout_days.insert(ordinal, workout_day)
-          workout_days.each_with_index do |wd, i|
-            wd.ordinal = i
-            wd.save!
-          end
+          WorkoutDay.swap_ordinal!(workout_day, ordinal)
         end
         true
       rescue ActiveRecord::RecordInvalid
