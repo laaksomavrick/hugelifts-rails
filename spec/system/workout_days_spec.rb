@@ -85,7 +85,5 @@ RSpec.describe 'Workout Days', type: :system do
       expect(page).to have_content('Successfully deleted workout day')
       expect(page).not_to have_content(workout_day.name)
     end
-
   end
-
 end

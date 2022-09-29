@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrdinalService
   def self.add_to_collection(collection:, element:, element_ordinal:)
     sorted = collection.order(ordinal: :asc)
