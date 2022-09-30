@@ -5,6 +5,7 @@ class WorkoutDay < ApplicationRecord
 
   belongs_to :workout
   has_many :workout_day_exercises, dependent: :destroy
+  has_many :scheduled_workouts, dependent: :nullify
 
   validates :name, presence: true
 

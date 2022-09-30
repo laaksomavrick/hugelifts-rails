@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_11_162334) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_30_005259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,29 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_162334) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_exercises_on_user_id"
+  end
+
+  create_table "scheduled_workout_exercises", force: :cascade do |t|
+    t.bigint "scheduled_workout_id", null: false
+    t.bigint "workout_day_exercise_id", null: false
+    t.decimal "sets", null: false
+    t.decimal "reps", null: false
+    t.decimal "weight", null: false
+    t.integer "result", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["scheduled_workout_id"], name: "index_scheduled_workout_exercises_on_scheduled_workout_id"
+    t.index ["workout_day_exercise_id"], name: "index_scheduled_workout_exercises_on_workout_day_exercise_id"
+  end
+
+  create_table "scheduled_workouts", force: :cascade do |t|
+    t.bigint "workout_day_id"
+    t.bigint "user_id", null: false
+    t.boolean "completed", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_scheduled_workouts_on_user_id"
+    t.index ["workout_day_id"], name: "index_scheduled_workouts_on_workout_day_id"
   end
 
   create_table "users", force: :cascade do |t|
