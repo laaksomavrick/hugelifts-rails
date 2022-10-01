@@ -12,6 +12,8 @@ class ScheduledWorkoutExercise < ApplicationRecord
   private
 
   def result_length
+    return if result == []
+
     correct_sets = result.length == sets
     correct_reps = result.all? { |x| x >= 0 && x <= reps }
 

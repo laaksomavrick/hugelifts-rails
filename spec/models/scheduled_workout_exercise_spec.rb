@@ -3,8 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe ScheduledWorkoutExercise, type: :model do
-  it 'can create an scheduled_workout_exercise' do
+  it 'can create a scheduled_workout_exercise' do
     scheduled_workout_exercise = create(:scheduled_workout_exercise)
+    expect(scheduled_workout_exercise.valid?).to be(true)
+  end
+
+  it 'can create an incomplete scheduled_workout_exercise' do
+    scheduled_workout_exercise = create(:scheduled_workout_exercise, result: [])
     expect(scheduled_workout_exercise.valid?).to be(true)
   end
 

@@ -7,6 +7,8 @@ class WorkoutDay < ApplicationRecord
   has_many :workout_day_exercises, dependent: :destroy
   has_many :scheduled_workouts, dependent: :nullify
 
+  alias_attribute :exercises, :workout_day_exercises
+
   validates :name, presence: true
 
   def self.policy_class
