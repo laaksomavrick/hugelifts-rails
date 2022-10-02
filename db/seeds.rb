@@ -15,7 +15,7 @@ exercises = user.exercises
 bench_press = exercises.find { |x| x.name == 'Barbell Bench Press' }
 overhead_press = exercises.find { |x| x.name == 'Barbell Overhead Press' }
 barbell_row = exercises.find { |x| x.name == 'Barbell Row' }
-chin_up = exercises.find { |x| x.name == 'Chin Up' }
+chin_up = exercises.find { |x| x.name == 'Chinup' }
 squat = exercises.find { |x| x.name == 'Back Squat' }
 deadlift = exercises.find { |x| x.name == 'Deadlift' }
 

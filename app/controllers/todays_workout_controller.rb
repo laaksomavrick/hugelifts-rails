@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # TODO: on completion of an exercise, increase the weight
 
@@ -11,7 +12,11 @@ class TodaysWorkoutController < ApplicationController
     #   If one is incomplete, return that
     #   If none are incomplete, find the latest completion ordinal and create from ordinal + 1 (cycle)
 
+    # TODO: extract to service object
+    # TODO: todays_workout_presenter
     # TODO: transaction
+    # TODO: test
+    # TODO: system test (it renders todays workout)
 
     has_scheduled_workout = current_user.scheduled_workouts.any?
     active_workout = current_user.workouts.active_workout_for_user(current_user)
@@ -37,10 +42,10 @@ class TodaysWorkoutController < ApplicationController
         scheduled_exercise.save!
       end
 
-      @todays_workout = ScheduledWorkout.includes(:scheduled_workout_exercises).find(todays_workout.id)
+      @todays_workout = ScheduledWorkout.includes(:scheduled_workout_exercises, :workout_day).find(todays_workout.id)
     else
       incomplete_workout = current_user.scheduled_workouts
-                                       .includes(:scheduled_workout_exercises)
+                                       .includes(:scheduled_workout_exercises, :workout_day)
                                        .where(completed: false, workout_day: [active_workout_day_ids])
                                        .first
 
@@ -73,7 +78,7 @@ class TodaysWorkoutController < ApplicationController
           scheduled_exercise.save!
         end
 
-        @todays_workout = ScheduledWorkout.includes(:scheduled_workout_exercises).find(todays_workout.id)
+        @todays_workout = ScheduledWorkout.includes(:scheduled_workout_exercises, :workout_day).find(todays_workout.id)
       end
     end
   end

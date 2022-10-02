@@ -1,4 +1,3 @@
-  <div class="<%= page_header_class %>">
-    <div class="text-3xl font-medium"><%= t('workouts.header') %></div>
-  </div>
+  <%= render 'shared/page_header', header: t('workouts.header') %>
+
   <%= render 'workout_day_exercises/form', model: @form, url: workout_workout_day_workout_day_exercises_path(@form.workout_id, @form.workout_day_id)  %>
