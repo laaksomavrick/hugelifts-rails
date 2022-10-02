@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def layout_class
-    'max-w-4xl mx-auto px-2 sm:px-6 lg:px-8'
+    'max-w-2xl mx-auto px-2 sm:px-6 lg:px-8'
   end
 
   def default_button_class(css_class_string = '')
@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def page_header_class(css_class_string = '')
-    "flex items-center mb-4 py-4 #{css_class_string}"
+    "flex items-center mb-4 #{css_class_string}"
   end
 
   def form_element_class(css_class_string = '')
