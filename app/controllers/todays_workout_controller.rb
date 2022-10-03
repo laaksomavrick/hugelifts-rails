@@ -4,8 +4,8 @@
 
 class TodaysWorkoutController < ApplicationController
   def index
-    # TODO: policy_scope(nil, policy_scope_class: TodaysWorkoutPolicy::Scope)
-    # TODO: todays_workout_presenter
-    @todays_workout = TodaysWorkoutService.new(user: current_user).call
+    policy_scope(ScheduledWorkout)
+    scheduled_workout = TodaysWorkoutService.new(user: current_user).call
+    @todays_workout = TodaysWorkoutPresenter.new(scheduled_workout:)
   end
 end

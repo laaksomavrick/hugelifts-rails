@@ -11,7 +11,7 @@ class TodaysWorkoutService
     ScheduledWorkout.transaction do
       active_workout = @user.workouts.active_workout_for_user(@user)
 
-      raise "No active workout for user=#{@user.id}" if active_workout == false
+      raise "No active workout for user=#{@user.id}" if active_workout.blank?
 
       active_workout_days = active_workout.days
       active_workout_day_ids = active_workout_days.map(&:id)
@@ -36,6 +36,8 @@ class TodaysWorkoutService
         raise "Something unexpected went wrong generating a scheduled_workout for workout=#{active_workout.id}"
       end
     end
+  rescue Exception
+    nil
   end
 
   private
@@ -50,7 +52,7 @@ class TodaysWorkoutService
 
   def incomplete_workout(active_workout_day_ids:)
     @user.scheduled_workouts
-         .includes(:scheduled_workout_exercises, :workout_day)
+         .with_exercises
          .where(completed: false, workout_day: [active_workout_day_ids])
          .first
   end
@@ -75,6 +77,7 @@ class TodaysWorkoutService
       scheduled_exercise.save!
     end
 
-    ScheduledWorkout.includes(:scheduled_workout_exercises, :workout_day).find(todays_workout.id)
+    # :scheduled_workout_exercises, :workout_day
+    ScheduledWorkout.with_exercises.find(todays_workout.id)
   end
 end

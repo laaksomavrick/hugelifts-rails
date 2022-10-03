@@ -1,34 +1,34 @@
 <%= render 'shared/page_header', header: t('todays_workout.header') %>
 
-<%= render 'shared/page_subheader', subheader: @todays_workout.workout_day.name %>
-
-<% #TODO: extract + refactor with presenter %>
-<% if @todays_workout %>
-<div class="space-y-4 mb-4">
-  <% @todays_workout.exercises.each do |exercise| %>
-    <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 flex flex-col">
-      <div class="flex text-xl">
-        <div class="mr-auto">
-          <%= exercise.workout_day_exercise.exercise.name %>
-        </div>
-        <div>
-          <%= exercise.sets.to_i %>x<%= exercise.reps.to_i %> @ <%= exercise.weight.to_i %>lbs
-        </div>
-      </div>
-      <div class="flex justify-between px-2 py-4">
-        <% exercise.sets.to_i.times do %>
-          <div class="h-12 w-12 bg-gray-600 rounded-3xl text-white flex justify-center items-center">
-            <%= exercise.reps.to_i %>
+<% if @todays_workout.has_workout? %>
+  <%= render 'shared/page_subheader', subheader: @todays_workout.day_name %>
+  <div class="space-y-4 mb-4">
+    <% @todays_workout.exercises.each do |exercise| %>
+      <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 flex flex-col">
+        <div class="flex text-xl">
+          <div class="mr-auto">
+            <%= exercise.name %>
           </div>
-        <% end %>
+          <div>
+            <%= exercise.sets %>x<%= exercise.reps %> @ <%= exercise.weight %><%= exercise.units %>
+          </div>
+        </div>
+        <div class="flex justify-between px-2 py-4">
+          <% exercise.sets.times do %>
+            <div class="h-12 w-12 bg-gray-600 rounded-3xl text-white flex justify-center items-center">
+              <%= exercise.reps %>
+            </div>
+          <% end %>
+        </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
 
-<div class="flex justify-center">
-  <button class="<%= create_button_class("m-auto") %>"><%= t('common.complete') %></button>
-</div>
+  <div class="flex justify-center">
+    <button class="<%= create_button_class("m-auto") %>"><%= t('common.complete') %></button>
+  </div>
 <% else %>
- <p>No active workout</p>
+  <div class="flex items-center justify-center text-xl">
+    <%= t('todays_workout.missing') %>
+  </div>
 <% end %>

@@ -77,5 +77,12 @@ RSpec.describe 'Today\'s Workout', type: :system do
         expect(page).to have_content(exercise.name)
       end
     end
+
+    it 'shows missing message when no workout exists' do
+      sign_in user
+      workout.destroy!
+      visit todays_workout_index_path
+      expect(page).to have_content(I18n.t('todays_workout.missing'))
+    end
   end
 end
