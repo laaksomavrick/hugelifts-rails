@@ -17,7 +17,8 @@ RSpec.describe ScheduledWorkoutExercise, type: :model do
     scheduled_workout_exercise = create(:scheduled_workout_exercise, sets: 4, reps: 10)
     scheduled_workout_exercise.result = [10, 10, 10]
     expect(scheduled_workout_exercise.valid?).to be(false)
-    expect(scheduled_workout_exercise.errors.full_messages).to include('Result has wrong number of sets for workout exercise')
+    expect(scheduled_workout_exercise.errors.full_messages)
+      .to include('Result has wrong number of sets for workout exercise')
   end
 
   it 'has an error when reps in result are wrong' do

@@ -36,7 +36,7 @@ class TodaysWorkoutService
         raise "Something unexpected went wrong generating a scheduled_workout for workout=#{active_workout.id}"
       end
     end
-  rescue Exception
+  rescue StandardError
     nil
   end
 

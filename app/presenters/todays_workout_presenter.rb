@@ -5,7 +5,7 @@ class TodaysWorkoutPresenter
     @scheduled_workout = scheduled_workout
   end
 
-  def has_workout?
+  def workout?
     @scheduled_workout.present?
   end
 

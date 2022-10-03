@@ -1,6 +1,6 @@
 <%= render 'shared/page_header', header: t('todays_workout.header') %>
 
-<% if @todays_workout.has_workout? %>
+<% if @todays_workout.workout? %>
   <%= render 'shared/page_subheader', subheader: @todays_workout.day_name %>
   <div class="space-y-4 mb-4">
     <% @todays_workout.exercises.each do |exercise| %>
