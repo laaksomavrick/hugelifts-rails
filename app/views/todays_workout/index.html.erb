@@ -3,6 +3,7 @@
 <%= render 'shared/page_subheader', subheader: @todays_workout.workout_day.name %>
 
 <% #TODO: extract + refactor with presenter %>
+<% if @todays_workout %>
 <div class="space-y-4 mb-4">
   <% @todays_workout.exercises.each do |exercise| %>
     <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 flex flex-col">
@@ -28,3 +29,6 @@
 <div class="flex justify-center">
   <button class="<%= create_button_class("m-auto") %>"><%= t('common.complete') %></button>
 </div>
+<% else %>
+ <p>No active workout</p>
+<% end %>

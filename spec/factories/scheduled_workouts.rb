@@ -11,7 +11,7 @@ FactoryBot.define do
         workout_day = scheduled_workout.workout_day
         workout_day_exercises = workout_day.workout_day_exercises
         workout_day_exercises.each do |wde|
-          create(:scheduled_workout_exercise, exercise: wde.exercise, sets: wde.sets, reps: wde.reps,
+          create(:scheduled_workout_exercise, workout_day_exercise: wde, scheduled_workout:, sets: wde.sets, reps: wde.reps,
                                               weight: wde.weight)
         end
       end

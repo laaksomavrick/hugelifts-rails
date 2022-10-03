@@ -18,10 +18,16 @@ class TodaysWorkoutController < ApplicationController
     # TODO: test
     # TODO: system test (it renders todays workout)
 
-    has_scheduled_workout = current_user.scheduled_workouts.any?
     active_workout = current_user.workouts.active_workout_for_user(current_user)
+
+    if active_workout == false
+      @todays_workout = nil
+      return
+    end
+
     active_workout_days = active_workout.days
     active_workout_day_ids = active_workout_days.map(&:id)
+    has_scheduled_workout = current_user.scheduled_workouts.where(workout_day_id: [active_workout_day_ids]).any?
 
     if has_scheduled_workout == false
       to_schedule_workout_day = active_workout_days.order(ordinal: :asc).first
