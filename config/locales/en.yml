@@ -17,6 +17,7 @@ en:
     active: 'Active'
     inactive: 'Inactive'
     ordinal: 'Order'
+    complete: 'Complete'
   workouts:
     header: 'Workout Day Exercise'
     destroy:
@@ -32,4 +33,7 @@ en:
   workout_day_exercises:
     update:
       success: 'Successfully updated exercise'
+  todays_workout:
+    header: "Today's workout"
+    missing: 'No workout scheduled for today'
 

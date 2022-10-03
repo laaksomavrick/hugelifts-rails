@@ -8,6 +8,8 @@ class Workout < ApplicationRecord
   belongs_to :user
   has_many :workout_days, -> { order(ordinal: :asc) }, dependent: :destroy, inverse_of: :workout
 
+  scope :active_workout_for_user, ->(user) { where(user:, active: true).first }
+
   validates :name, presence: true
   validates :active, uniqueness: { scope: %i[user_id active] }, if: :active
 

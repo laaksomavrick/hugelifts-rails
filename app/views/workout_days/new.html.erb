@@ -1,10 +1,6 @@
-<div class="flex items-center mb-4">
-  <div class="text-3xl font-medium"><%= t('workout_days.header') %></div>
-</div>
+<%= render 'shared/page_header', header: t('workout_days.header') %>
 
-<div class="flex items-center mb-4">
-  <div class="text-2xl font-medium mr-auto"><%= t('common.details') %></div>
-</div>
+<%= render 'shared/page_subheader', subheader: t('common.details') %>
 
 <%= render 'workout_days/form',
            model: @form,
