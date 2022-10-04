@@ -26,14 +26,22 @@ jobs:
       - uses: actions/checkout@v1
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
-      - name: Install dependencies
+      - name: Install ruby dependencies
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3
-      - name: Check formatting
-        run: bundler exec rubocop --fail-level=warning
+      - name: Install js dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
       - name: Setup assets
         run: bundler exec rails assets:clean assets:precompile
+      - name: Check ruby formatting
+        run: bundler exec rubocop --fail-level=warning
+      - name: Check js formatting
+        run: yarn format:check
+      - name: Check js lint
+        run: yarn lint
+      - name: Run js tests
+        run: yarn test
       - name: Setup test database
         env:
           RAILS_ENV: test
@@ -44,7 +52,7 @@ jobs:
         run: |
           cp config/database.ci.yml config/database.yml
           rake db:create db:schema:load
-      - name: Run tests
+      - name: Run ruby tests
         env:
           RAILS_ENV: test
           PGHOST: localhost

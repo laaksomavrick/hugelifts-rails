@@ -20,12 +20,12 @@ console:
 
 .PHONY: test
 test:
-	@bundler exec rspec
+	@bundler exec rspec && yarn test
 
 .PHONY: format
 format:
-	@bundler exec rubocop -A
+	@bundler exec rubocop -A && yarn format && yarn lint
 
 .PHONY: check-format
 check-format:
-	@bundler exec rubocop --fail-level=warning
+	@bundler exec rubocop --fail-level=warning && yarn format:check && yarn lint
