@@ -20,15 +20,15 @@
     <% @form.workout_day.workout_day_exercises.each do |wde| %>
       <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 hover:outline">
         <%= link_to edit_workout_workout_day_workout_day_exercise_path(@form.workout, @form.workout_day, wde) do %>
-          <div class="grid grid-cols-4 grid-rows-2 gap-2">
+          <div class="grid grid-cols-[3fr_1fr_1fr_1fr] grid-rows-2 gap-2 ">
             <div><%= t('common.name') %></div>
-            <div><%= t('common.sets') %></div>
-            <div><%= t('common.reps') %></div>
-            <div><%= t('common.weight') %></div>
+            <div class="text-center"><%= t('common.sets') %></div>
+            <div class="text-center"><%= t('common.reps') %></div>
+            <div class="text-center"><%= t('common.weight') %></div>
             <div class="text-gray-700"><%= wde.exercise.name %></div>
-            <div><%= wde.sets %></div>
-            <div><%= wde.reps %></div>
-            <div><%= wde.weight %></div>
+            <div class="text-center"><%= wde.sets %></div>
+            <div class="text-center"><%= wde.reps %></div>
+            <div class="text-center"><%= wde.weight %></div>
           </div>
         <% end %>
       </div>
