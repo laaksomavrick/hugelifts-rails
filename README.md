@@ -4,7 +4,9 @@
 
 ### First time set up
 
+* `nvm use`
 * `bundler`
+* `yarn`
 * `make up`
 * `bin/rails db:create`
 * `bin/rails db:migrate`
