@@ -40,6 +40,10 @@ class TodaysWorkoutPresenter
       @scheduled_workout_exercise.weight.to_i
     end
 
+    def id
+      @scheduled_workout_exercise.id
+    end
+
     def units
       'lbs'
     end
