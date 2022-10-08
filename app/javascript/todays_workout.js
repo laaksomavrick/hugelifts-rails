@@ -1,10 +1,10 @@
 export default () => {
   const repButtons = document.querySelectorAll('[data-rep-button]');
   const completeButton = document.querySelector('[data-complete-button]');
-  const totalSets = repButtons.length;
 
   for (const repButton of repButtons) {
     repButton.addEventListener('click', (e) => {
+      const totalSets = repButtons.length;
       const node = e.target;
 
       const active = !!parseInt(node.getAttribute('data-rep-active'), 10);
@@ -22,7 +22,12 @@ export default () => {
 
       checkCompleteButton(completeButton, { totalSets });
 
-      // TODO: extract handler to its own function + DI via () => () => { ... } for tests
+      // TODO: extract handler to its own function + DI via (repButtons, completeButton) => () => { ... } for tests
+      // - on click, when not active, active is toggled
+      // - on click, when active, rep count is decreased
+      // - on click, when rep count is 0, resets to maxReps
+      // - when all reps completed, completed is no loner disabled
+
       // TODO: debounce an API call to store this in session
       // TODO: on todays workout index, need to set this data
       // => { exercise_id, ordinal} => active, max-reps, reps-done

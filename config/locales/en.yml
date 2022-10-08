@@ -36,4 +36,7 @@ en:
   todays_workout:
     header: "Today's workout"
     missing: 'No workout scheduled for today'
+    update:
+      success: 'Successfully completed workout'
+      failure: 'Oops! Something went wrong completing your workout'
 

@@ -3,40 +3,25 @@
 class TodaysWorkoutController < ApplicationController
   def index
     policy_scope(ScheduledWorkout)
-    scheduled_workout = TodaysWorkoutService.new(user: current_user).call
+    scheduled_workout = TodaysWorkoutGenerationService.new(user: current_user).call
     @todays_workout = TodaysWorkoutPresenter.new(scheduled_workout:)
   end
 
   def update
+    # TODO: test
+    # - ok path (flash, next workout presented)
+    # - err path (flash)
     todays_workout_id = params[:id]
-    scheduled_workout_exercise_form_results = params[:scheduled_workout_exercises]
+    workout_results = params[:scheduled_workout_exercises]
 
-    # TODO: extract to service object
+    service = TodaysWorkoutCompletionService.new(todays_workout_id:, workout_results:)
 
-    scheduled_workout_exercise_ids = scheduled_workout_exercise_form_results.keys.map(&:to_i)
+    ok = service.call
 
-    todays_workout = ScheduledWorkout.find_by(id: todays_workout_id)
-
-    todays_workout.transaction do
-      scheduled_workout_exercises = ScheduledWorkoutExercise
-                                    .includes(:workout_day_exercise)
-                                    .where(id: scheduled_workout_exercise_ids)
-                                    .all
-
-      scheduled_workout_exercises.each do |scheduled_workout_exercise|
-        result = scheduled_workout_exercise_form_results[scheduled_workout_exercise.id.to_s]['result']
-        scheduled_workout_exercise.result = result
-
-        if scheduled_workout_exercise.success?
-          scheduled_workout_exercise.workout_day_exercise.increase_weight!
-          scheduled_workout_exercise.workout_day_exercise.save!
-        end
-
-        scheduled_workout_exercise.save!
-      end
-
-      todays_workout.completed = true
-      todays_workout.save!
+    if ok == false
+      flash[:alert] = I18n.t('todays_workout.update.error')
+    else
+      flash[:notice] = I18n.t('todays_workout.update.success')
     end
 
     redirect_to(todays_workout_index_path)

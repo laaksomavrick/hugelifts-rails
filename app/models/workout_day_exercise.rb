@@ -21,6 +21,7 @@ class WorkoutDayExercise < ApplicationRecord
 
   def increase_weight!
     # TODO: accommodate kg
+    # TODO: test
     self.weight += 5
   end
 end
