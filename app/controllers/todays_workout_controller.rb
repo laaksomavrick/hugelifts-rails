@@ -8,13 +8,11 @@ class TodaysWorkoutController < ApplicationController
   end
 
   def update
-    # TODO: test
-    # - ok path (flash, next workout presented)
-    # - err path (flash)
     todays_workout_id = params[:id]
     workout_results = params[:scheduled_workout_exercises]
 
-    service = TodaysWorkoutCompletionService.new(todays_workout_id:, workout_results:)
+    todays_workout = authorize ScheduledWorkout.find_by(id: todays_workout_id)
+    service = TodaysWorkoutCompletionService.new(todays_workout:, workout_results:)
 
     ok = service.call
 
