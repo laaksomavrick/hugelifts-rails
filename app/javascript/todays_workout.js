@@ -1,5 +1,7 @@
 export default () => {
   const repButtons = document.querySelectorAll('[data-rep-button]');
+  const completeButton = document.querySelector('[data-complete-button]');
+  const totalSets = repButtons.length;
 
   for (const repButton of repButtons) {
     repButton.addEventListener('click', (e) => {
@@ -12,16 +14,15 @@ export default () => {
       const maxReps = node.getAttribute('data-max-reps');
       const repsDone = node.getAttribute('data-reps-done');
 
-      console.log({ active, id, ordinal, maxReps, repsDone });
-
       if (active === false) {
         addActiveClassToRepButton(repButton);
       } else {
-        setRepCount(repButton, { repsDone, maxReps });
+        setRepCount(repButton, { id, ordinal, repsDone, maxReps });
       }
 
-      // TODO: extract handler to its own function + DI via () => () => { ... } for tests
+      checkCompleteButton(completeButton, { totalSets });
 
+      // TODO: extract handler to its own function + DI via () => () => { ... } for tests
       // TODO: debounce an API call to store this in session
       // TODO: on todays workout index, need to set this data
       // => { exercise_id, ordinal} => active, max-reps, reps-done
@@ -31,22 +32,39 @@ export default () => {
 
 const activeClass = 'bg-gray-600 text-white';
 const inactiveClass = 'bg-white text-gray-600 border-2 border-gray-600';
+const buttonDisabledClass = 'disabled:bg-green-300 disabled:cursor-not-allowed';
 
-const setRepCount = (repButton, { repsDone, maxReps }) => {
+const setRepCount = (repButton, { id, ordinal, repsDone, maxReps }) => {
+  const resultInput = document.getElementById(
+    `exercise_${id}_${ordinal}_result`,
+  );
   const repCount = repsDone > 0 ? repsDone - 1 : maxReps;
+
   repButton.setAttribute('data-reps-done', repCount);
   repButton.innerText = repCount;
+  resultInput.value = repCount;
 };
 
 const addActiveClassToRepButton = (repButton) => {
-  removeActiveClassFromRepButton(repButton);
-  repButton.setAttribute('data-rep-active', '1');
+  const inactiveClasses = inactiveClass.split(' ');
+  const activeClasses = activeClass.split(' ');
 
-  const classes = activeClass.split(' ');
-  repButton.classList.add(...classes);
+  repButton.classList.remove(...inactiveClasses);
+  repButton.classList.add(...activeClasses);
+
+  repButton.setAttribute('data-rep-active', '1');
 };
 
-const removeActiveClassFromRepButton = (repButton) => {
-  const classes = inactiveClass.split(' ');
-  repButton.classList.remove(...classes);
+const checkCompleteButton = (completeButton, { totalSets }) => {
+  const activeRepButtons = document.querySelectorAll('[data-rep-active="1"]');
+  const isComplete = activeRepButtons.length === totalSets;
+
+  if (isComplete === false) {
+    return;
+  }
+
+  const disabledClassList = buttonDisabledClass.split(' ');
+
+  completeButton.classList.remove(...disabledClassList);
+  completeButton.removeAttribute('disabled');
 };

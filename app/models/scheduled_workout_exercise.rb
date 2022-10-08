@@ -9,6 +9,10 @@ class ScheduledWorkoutExercise < ApplicationRecord
 
   validate :result_length
 
+  def empty_result
+    sets.times.map { 0 }
+  end
+
   private
 
   def result_length

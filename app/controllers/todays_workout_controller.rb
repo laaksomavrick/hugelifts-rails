@@ -8,4 +8,8 @@ class TodaysWorkoutController < ApplicationController
     scheduled_workout = TodaysWorkoutService.new(user: current_user).call
     @todays_workout = TodaysWorkoutPresenter.new(scheduled_workout:)
   end
+
+  def update
+    redirect_to(todays_workout_index_path)
+  end
 end
