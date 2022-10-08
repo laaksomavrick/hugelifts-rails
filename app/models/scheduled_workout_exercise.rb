@@ -13,6 +13,10 @@ class ScheduledWorkoutExercise < ApplicationRecord
     sets.times.map { 0 }
   end
 
+  def success?
+    result.all? { |x| x == reps }
+  end
+
   private
 
   def result_length

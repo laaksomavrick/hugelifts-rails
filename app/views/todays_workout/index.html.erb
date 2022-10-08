@@ -33,7 +33,6 @@
           <% exercise.sets.times do |i| %>
             <%= ef.hidden_field :result, id: "exercise_#{exercise.id}_#{i}_result", value: exercise.reps, multiple: true %>
           <% end %>
-          <%#= ef.hidden_field :result, value: exercise.default_result, multiple: true %>
         <% end %>
       <% end %>
     </div>
