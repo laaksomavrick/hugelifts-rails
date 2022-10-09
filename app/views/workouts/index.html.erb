@@ -9,7 +9,7 @@
 
 <div class="workouts">
   <% @workouts.each do |workout| %>
-    <%= link_to edit_workout_path(workout), class: "flex py-2 items-center" do %>
+    <%= link_to edit_workout_path(workout), class: "flex py-2 items-center hover:text-blue-600" do %>
       <div class="text-xl font-medium">
         <%= workout.name %>
       </div>

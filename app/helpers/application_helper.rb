@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def layout_class
-    'max-w-2xl mx-auto px-2 sm:px-6 lg:px-8'
+    'max-w-2xl mx-auto px-2 sm:px-6 lg:px-8 text-gray-600'
   end
 
   def default_button_class(css_class_string = '')
@@ -38,7 +38,7 @@ module ApplicationHelper
   def nav_link_to(text, path, opts = {})
     # TODO: subroutes
     is_active = current_page?(path)
-    opts[:class] ||= "#{is_active ? 'text-black-700' : 'text-gray-500'} px-3 py-2 rounded-md text-sm font-medium"
+    opts[:class] ||= "#{is_active ? 'text-blue-600' : ''} px-3 py-2 rounded-md text-md font-medium"
     link_to(text, path, opts)
   end
 end
