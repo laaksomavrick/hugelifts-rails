@@ -19,7 +19,13 @@ class TodaysWorkoutPresenter
     end
   end
 
+  def id
+    @scheduled_workout.id
+  end
+
   class TodaysWorkoutExercisePresenter
+    attr_reader :scheduled_workout_exercise
+
     def initialize(scheduled_workout_exercise:)
       @scheduled_workout_exercise = scheduled_workout_exercise
     end
@@ -29,19 +35,27 @@ class TodaysWorkoutPresenter
     end
 
     def sets
-      @scheduled_workout_exercise.sets.to_i
+      @scheduled_workout_exercise.sets
     end
 
     def reps
-      @scheduled_workout_exercise.reps.to_i
+      @scheduled_workout_exercise.reps
     end
 
     def weight
-      @scheduled_workout_exercise.weight.to_i
+      @scheduled_workout_exercise.weight
+    end
+
+    def id
+      @scheduled_workout_exercise.id
     end
 
     def units
       'lbs'
+    end
+
+    def default_result
+      @scheduled_workout_exercise.empty_result
     end
   end
 end

@@ -12,6 +12,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :todays_workout, only: [:index]
+  resources :todays_workout, only: %i[index update]
   resources :exercises, only: [:index]
 end

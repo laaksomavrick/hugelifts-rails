@@ -25,9 +25,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_30_005259) do
   create_table "scheduled_workout_exercises", force: :cascade do |t|
     t.bigint "scheduled_workout_id", null: false
     t.bigint "workout_day_exercise_id", null: false
-    t.decimal "sets", null: false
-    t.decimal "reps", null: false
-    t.decimal "weight", null: false
+    t.integer "sets", null: false
+    t.integer "reps", null: false
+    t.integer "weight", null: false
     t.integer "result", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -2,31 +2,49 @@
 
 <% if @todays_workout.workout? %>
   <%= render 'shared/page_subheader', subheader: @todays_workout.day_name %>
-  <div class="space-y-4 mb-4">
-    <% @todays_workout.exercises.each do |exercise| %>
-      <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 flex flex-col">
-        <div class="flex text-xl">
-          <div class="mr-auto">
-            <%= exercise.name %>
-          </div>
-          <div>
-            <%= exercise.sets %>x<%= exercise.reps %> @ <%= exercise.weight %><%= exercise.units %>
-          </div>
-        </div>
-        <div class="flex justify-between px-2 py-4">
-          <% exercise.sets.times do %>
-            <div class="h-12 w-12 bg-gray-600 rounded-3xl text-white flex justify-center items-center">
-              <%= exercise.reps %>
+  <%= form_tag todays_workout_path(@todays_workout.id), method: :patch, id: 'todays_workout_form' do |f| %>
+    <div class="space-y-4 mb-4">
+      <% @todays_workout.exercises.each do |exercise| %>
+        <%= fields_for "scheduled_workout_exercises[]", exercise.scheduled_workout_exercise do |ef| %>
+          <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 flex flex-col">
+            <div class="flex text-xl">
+              <div class="mr-auto">
+                <%= exercise.name %>
+              </div>
+              <div>
+                <%= exercise.sets %>x<%= exercise.reps %> @ <%= exercise.weight %><%= exercise.units %>
+              </div>
             </div>
+            <div class="flex justify-between px-2 py-4">
+              <% exercise.sets.times do |i| %>
+                <div
+                  class="h-12 w-12 rounded-3xl flex justify-center items-center cursor-pointer bg-white text-gray-600 border-2 border-gray-600"
+                  data-rep-button
+                  data-rep-active="0"
+                  data-rep-ordinal="<%= i %>"
+                  data-max-reps="<%= exercise.reps %>"
+                  data-reps-done="<%= exercise.reps %>"
+                  data-exercise-id="<%= exercise.id %>">
+                  <%= exercise.reps %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <% exercise.sets.times do |i| %>
+            <%= ef.hidden_field :result, id: "exercise_#{exercise.id}_#{i}_result", value: exercise.reps, multiple: true %>
           <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="flex justify-center">
+      <button
+        data-complete-button
+        disabled
+        form="todays_workout_form"
+        class="<%= create_button_class("m-auto") %> disabled:bg-green-300 disabled:cursor-not-allowed"><%= t('common.complete') %></button>
+    </div>
+  <% end %>
 
-  <div class="flex justify-center">
-    <button class="<%= create_button_class("m-auto") %>"><%= t('common.complete') %></button>
-  </div>
 <% else %>
   <div class="flex items-center justify-center text-xl">
     <%= t('todays_workout.missing') %>

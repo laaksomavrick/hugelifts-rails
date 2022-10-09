@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TodaysWorkoutService
+class TodaysWorkoutGenerationService
   attr_reader :user
 
   def initialize(user:)

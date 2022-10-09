@@ -15,4 +15,8 @@ class ScheduledWorkoutPolicy < ApplicationPolicy
 
     attr_reader :user, :scope
   end
+
+  def update?
+    user.id == record.user_id
+  end
 end

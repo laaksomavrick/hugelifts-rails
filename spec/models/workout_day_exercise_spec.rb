@@ -30,4 +30,12 @@ RSpec.describe WorkoutDayExercise, type: :model do
     workout_day_exercise.unit = 'kg'
     expect(workout_day_exercise.valid?).to be(true)
   end
+
+  describe 'increase_weight!' do
+    it 'increases the weight by 5lbs' do
+      former_weight = workout_day_exercise.weight
+      workout_day_exercise.increase_weight!
+      expect(workout_day_exercise.weight).to be(former_weight + 5)
+    end
+  end
 end
