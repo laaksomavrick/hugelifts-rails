@@ -36,7 +36,7 @@
 
   <div class="space-y-2 flex flex-col">
     <% @workout.days.each do |day| %>
-      <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 hover:outline">
+      <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 bg-white hover:border-blue-600">
         <%= link_to edit_workout_workout_day_path(@workout, day) do %>
         <div class="text-gray-700"><%= day.name %></div>
         <% end %>

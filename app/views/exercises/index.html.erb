@@ -1,7 +1,18 @@
-<h1>exercises</h1>
+<div class="flex items-center mb-4">
+  <div class="text-3xl font-medium">
+    <%= t('exercises.header') %>
+  </div>
+  <div class="flex ml-auto">
+    <%#= link_to "Add", new_workout_path, class: default_button_class %>
+  </div>
+</div>
 
-<ul>
-<% @exercises.each do |exercise| %>
- <li><%= exercise.name %></li>
-<% end %>
-</ul>
+<div class="exercises">
+  <% @exercises.each do |exercise| %>
+    <%= link_to edit_exercise_path(exercise), class: "flex py-2 items-center hover:text-blue-600" do %>
+      <div class="text-xl font-medium">
+        <%= exercise.name %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

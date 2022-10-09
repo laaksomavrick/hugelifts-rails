@@ -6,7 +6,7 @@
     <div class="space-y-4 mb-4">
       <% @todays_workout.exercises.each do |exercise| %>
         <%= fields_for "scheduled_workout_exercises[]", exercise.scheduled_workout_exercise do |ef| %>
-          <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 flex flex-col">
+          <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 flex flex-col bg-white">
             <div class="flex text-xl">
               <div class="mr-auto">
                 <%= exercise.name %>
@@ -18,7 +18,7 @@
             <div class="flex justify-between px-2 py-4">
               <% exercise.sets.times do |i| %>
                 <div
-                  class="h-12 w-12 rounded-3xl flex justify-center items-center cursor-pointer bg-white text-gray-600 border-2 border-gray-600"
+                  class="h-12 w-12 rounded-3xl flex justify-center items-center cursor-pointer bg-white text-gray-600 border-2 border-gray-600 select-none"
                   data-rep-button
                   data-rep-active="0"
                   data-rep-ordinal="<%= i %>"

@@ -39,4 +39,6 @@ en:
     update:
       success: 'Successfully completed workout'
       failure: 'Oops! Something went wrong completing your workout'
+  exercises:
+    header: 'Exercises'
 
