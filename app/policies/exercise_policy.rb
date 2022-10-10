@@ -19,4 +19,8 @@ class ExercisePolicy < ApplicationPolicy
   def update?
     user.id == record.user_id
   end
+
+  def create?
+    true
+  end
 end
