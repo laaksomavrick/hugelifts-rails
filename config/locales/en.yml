@@ -41,4 +41,6 @@ en:
       failure: 'Oops! Something went wrong completing your workout'
   exercises:
     header: 'Exercises'
+    create:
+      success: 'Successfully created exercise'
 

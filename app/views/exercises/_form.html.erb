@@ -1,0 +1,21 @@
+<% method = method || :post %>
+
+<%= form_with model: model,
+              url: url,
+              method: method,
+              class: "flex flex-col " do |form| %>
+  <% if model.errors.any? %>
+    <% model.errors.full_messages.each do |msg| %>
+      <%= render 'shared/error_alert', msg: msg %>
+    <% end %>
+  <% end %>
+
+  <div class="<%= form_element_class %>">
+    <%= form.label :name, t('common.name'), class: form_label_class %>
+    <%= form.text_field :name, value: model.name, class: form_input_class %>
+  </div>
+
+  <%= form.hidden_field :exercise, value: model.id %>
+  <%= form.submit t('common.save'), class: create_button_class("my-2") %>
+
+<% end %>
