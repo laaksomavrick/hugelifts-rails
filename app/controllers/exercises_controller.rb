@@ -30,12 +30,28 @@ class ExercisesController < ApplicationController
   end
 
   def update
-    # TODO
+    params = update_exercise_params
+    exercise_id = params[:exercise]
+    name = params[:name]
+
+    @exercise = authorize Exercise.find_by(id: exercise_id)
+
+    @exercise.name = name
+    @exercise.save!
+
+    flash[:notice] = t('exercises.update.success')
+    redirect_to edit_exercise_path(@exercise.id)
+  rescue ActiveRecord::RecordInvalid
+    render 'edit', status: :unprocessable_entity
   end
 
   private
 
   def create_exercise_params
     params.require(:exercise).permit(:name)
+  end
+
+  def update_exercise_params
+    params.require(:exercise).permit(:name, :exercise)
   end
 end

@@ -43,4 +43,6 @@ en:
     header: 'Exercises'
     create:
       success: 'Successfully created exercise'
+    update:
+      success: 'Successfully updated workout'
 

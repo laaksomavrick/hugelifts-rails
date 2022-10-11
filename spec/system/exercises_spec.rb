@@ -21,14 +21,6 @@ RSpec.describe 'Exercises', type: :system do
     end
   end
 
-  describe 'edit page' do
-    it 'shows an exercise' do
-      sign_in user
-      visit exercises_path(exercise)
-      expect(page).to have_content(exercise.name)
-    end
-  end
-
   describe 'new page' do
     it 'shows an error when name is empty' do
       sign_in user
@@ -55,6 +47,40 @@ RSpec.describe 'Exercises', type: :system do
 
       expect(page).to have_content(I18n.t('exercises.create.success'))
       expect(find_field('Name').value).to eq name
+    end
+  end
+
+  describe 'edit page' do
+    it 'shows an exercise' do
+      sign_in user
+      visit edit_exercise_path(exercise.id)
+      expect(find_field('Name').value).to eq exercise.name
+    end
+
+    it 'can update an exercise' do
+      sign_in user
+
+      visit edit_exercise_path(exercise.id)
+
+      fill_in 'Name', with: 'Foo'
+
+      submit_button = find('input[name="commit"]')
+      submit_button.click
+
+      expect(page).to have_content(I18n.t('exercises.update.success'))
+      expect(find_field('Name').value).to eq 'Foo'
+    end
+
+    it 'shows an error when name is empty' do
+      sign_in user
+      visit edit_exercise_path(exercise.id)
+
+      fill_in 'Name', with: ''
+
+      submit_button = find('input[name="commit"]')
+      submit_button.click
+
+      expect(page).to have_content("Name can't be blank")
     end
   end
 end
