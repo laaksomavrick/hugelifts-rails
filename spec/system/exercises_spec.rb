@@ -82,5 +82,17 @@ RSpec.describe 'Exercises', type: :system do
 
       expect(page).to have_content("Name can't be blank")
     end
+
+    it 'can delete an exercise' do
+      sign_in user
+
+      visit edit_exercise_path(exercise.id)
+
+      accept_confirm do
+        click_button 'Delete'
+      end
+
+      expect(page).to have_content(I18n.t('exercises.destroy.success'))
+    end
   end
 end
