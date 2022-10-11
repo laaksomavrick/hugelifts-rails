@@ -45,6 +45,16 @@ class ExercisesController < ApplicationController
     render 'edit', status: :unprocessable_entity
   end
 
+  def destroy
+    exercise_id = params[:id].to_i
+
+    @exercise = authorize Exercise.find_by(id: exercise_id)
+    @exercise.destroy
+
+    flash[:notice] = t('exercises.destroy.success')
+    redirect_to(exercises_path)
+  end
+
   private
 
   def create_exercise_params

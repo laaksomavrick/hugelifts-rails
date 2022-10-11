@@ -44,5 +44,8 @@ en:
     create:
       success: 'Successfully created exercise'
     update:
-      success: 'Successfully updated workout'
+      success: 'Successfully updated exercise'
+    destroy:
+      success: 'Successfully deleted exercise'
+
 
