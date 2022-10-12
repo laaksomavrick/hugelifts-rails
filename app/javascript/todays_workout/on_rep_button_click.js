@@ -14,7 +14,7 @@ const onRepButtonClick =
 
     if (active === false) {
       addActiveClassToRepButton(node);
-      cacheRepCount({ id, ordinal, maxReps });
+      cacheRepCount({ id, ordinal, repCount: maxReps });
     } else {
       const repCount = getRepCount({ repsDone, maxReps });
       setRepCount(node, { id, ordinal, repCount });
@@ -22,15 +22,13 @@ const onRepButtonClick =
     }
 
     checkCompleteButton(completeButton, { totalSets });
-
-    // TODO: debounce an API call to store this in session
-    // TODO: on todays workout index, need to set this data
-    // => { exercise_id, ordinal} => active, max-reps, reps-done
   };
 
 const cacheRepCount = async ({ id, ordinal, repCount }) => {
   console.log({ id, ordinal, repCount });
   const csrfToken = document.getElementsByName('csrf-token')[0].content;
+  // TODO: debounce
+  // TODO: wait until request complete for next request (ie mutex)
   const res = await fetch(`/todays_workout_reps/${id}`, {
     method: 'PATCH',
     headers: {

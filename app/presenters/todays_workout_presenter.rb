@@ -63,11 +63,15 @@ class TodaysWorkoutPresenter
     end
 
     def reps_for_ordinal(ordinal)
-      @exercise_state[ordinal.to_s] || reps
+      (@exercise_state && @exercise_state[ordinal.to_s]) || reps
     end
 
     def active(ordinal)
-      @exercise_state[ordinal.to_s] ? '1' : '0'
+      if @exercise_state && @exercise_state[ordinal.to_s]
+        @exercise_state[ordinal.to_s] ? '1' : '0'
+      else
+        '0'
+      end
     end
   end
 end

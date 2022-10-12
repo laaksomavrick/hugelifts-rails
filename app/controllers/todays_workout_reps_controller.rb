@@ -2,9 +2,9 @@
 
 class TodaysWorkoutRepsController < ApplicationController
   def update
-    id = params[:id].to_i
+    id = params[:id]
     params = update_todays_workout_rep_params
-    ordinal = params[:ordinal].to_i
+    ordinal = params[:ordinal]
     rep_count = params[:rep_count].to_i
 
     # TODO: better way of doing this
