@@ -4,7 +4,9 @@ class TodaysWorkoutController < ApplicationController
   def index
     policy_scope(ScheduledWorkout)
     scheduled_workout = TodaysWorkoutGenerationService.new(user: current_user).call
-    @todays_workout = TodaysWorkoutPresenter.new(scheduled_workout:)
+    # TODO: better way of wrapping/accessing this?
+    todays_workout_state = session[:todays_workout_state]
+    @todays_workout = TodaysWorkoutPresenter.new(scheduled_workout:, todays_workout_state:)
   end
 
   def update
@@ -19,6 +21,8 @@ class TodaysWorkoutController < ApplicationController
     if ok == false
       flash[:alert] = I18n.t('todays_workout.update.error')
     else
+      # TODO: better way of doing this
+      session[:todays_workout_state] = nil
       flash[:notice] = I18n.t('todays_workout.update.success')
     end
 

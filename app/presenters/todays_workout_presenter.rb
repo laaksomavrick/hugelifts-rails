@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class TodaysWorkoutPresenter
-  def initialize(scheduled_workout:)
+  def initialize(scheduled_workout:, todays_workout_state:)
     @scheduled_workout = scheduled_workout
+    @todays_workout_state = todays_workout_state || {}
   end
 
   def workout?
@@ -15,7 +16,9 @@ class TodaysWorkoutPresenter
 
   def exercises
     @scheduled_workout.exercises.map do |scheduled_workout_exercise|
-      TodaysWorkoutExercisePresenter.new(scheduled_workout_exercise:)
+      id = scheduled_workout_exercise.id
+      exercise_state = @todays_workout_state[id.to_s]
+      TodaysWorkoutExercisePresenter.new(scheduled_workout_exercise:, exercise_state:)
     end
   end
 
@@ -26,8 +29,9 @@ class TodaysWorkoutPresenter
   class TodaysWorkoutExercisePresenter
     attr_reader :scheduled_workout_exercise
 
-    def initialize(scheduled_workout_exercise:)
+    def initialize(scheduled_workout_exercise:, exercise_state:)
       @scheduled_workout_exercise = scheduled_workout_exercise
+      @exercise_state = exercise_state
     end
 
     def name
@@ -56,6 +60,14 @@ class TodaysWorkoutPresenter
 
     def default_result
       @scheduled_workout_exercise.empty_result
+    end
+
+    def reps_for_ordinal(ordinal)
+      @exercise_state[ordinal.to_s] || reps
+    end
+
+    def active(ordinal)
+      @exercise_state[ordinal.to_s] ? '1' : '0'
     end
   end
 end
