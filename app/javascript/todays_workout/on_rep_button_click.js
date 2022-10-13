@@ -27,7 +27,8 @@ const onRepButtonClick =
   };
 
 const cacheRepCount = async ({ id, ordinal, repCount }) => {
-  let csrfToken = document.getElementsByName('csrf-token');
+  let csrfToken = document.getElementById('csrf-token');
+  console.log(csrfToken);
   csrfToken = get(csrfToken, '[0].content', null);
   const url = `/todays_workout_reps/${id}`;
   await patch({

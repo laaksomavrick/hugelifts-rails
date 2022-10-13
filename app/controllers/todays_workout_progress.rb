@@ -25,6 +25,10 @@ module TodaysWorkoutProgress
     session[:todays_workout_progress][exercise_id][ordinal] = reps
   end
 
+  def destroy_progress
+    session[:todays_workout_progress] = nil
+  end
+
   def set_todays_workout_progress_session
     session[:todays_workout_progress] ||= {}
   end

@@ -21,8 +21,7 @@ class TodaysWorkoutController < ApplicationController
     if ok == false
       flash[:alert] = I18n.t('todays_workout.update.error')
     else
-      # TODO: better way of doing this
-      session[:todays_workout_state] = nil
+      destroy_progress
       flash[:notice] = I18n.t('todays_workout.update.success')
     end
 

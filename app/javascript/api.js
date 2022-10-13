@@ -1,12 +1,12 @@
 const fetchFactory = ({ url, method, csrfToken, body }) => {
   if (csrfToken == null) {
-    throw new Error('csrfToken is missing for fetchFactory');
+    console.warn('csrfToken is missing for fetchFactory');
   }
   if (url == null) {
-    throw new Error('url is missing for fetchFactory');
+    console.warn('url is missing for fetchFactory');
   }
   if (method == null) {
-    throw new Error('method is missing for fetchFactory');
+    console.warn('method is missing for fetchFactory');
   }
 
   body = body != null ? JSON.stringify(body) : undefined;
