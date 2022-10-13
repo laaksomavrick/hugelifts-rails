@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 class TodaysWorkoutRepsController < ApplicationController
+  include TodaysWorkoutProgress
+
+  before_action :set_todays_workout_progress_session
+
   def update
-    id = params[:id]
+    exercise_id = params[:id]
     params = update_todays_workout_rep_params
     ordinal = params[:ordinal]
-    rep_count = params[:rep_count].to_i
+    reps = params[:rep_count].to_i
 
-    # TODO: better way of doing this
-    session[:todays_workout_state] ||= {}
-    session[:todays_workout_state][id] ||= {}
-    session[:todays_workout_state][id][ordinal] = rep_count
+    set_progress(exercise_id:, ordinal:, reps:)
 
-    respond_to do |format|
-      format.json { render json: session[:todays_workout_state] }
-    end
+    head :created
   end
 
   private

@@ -26,7 +26,7 @@ const onRepButtonClick =
 
 const cacheRepCount = async ({ id, ordinal, repCount }) => {
   const csrfToken = document.getElementsByName('csrf-token')[0].content;
-  const res = await fetch(`/todays_workout_reps/${id}`, {
+  await fetch(`/todays_workout_reps/${id}`, {
     method: 'PATCH',
     headers: {
       'X-CSRF-Token': csrfToken,
@@ -38,7 +38,6 @@ const cacheRepCount = async ({ id, ordinal, repCount }) => {
       rep_count: repCount,
     }),
   });
-  const json = await res.json();
 };
 
 const getRepCount = ({ repsDone, maxReps }) => {

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class TodaysWorkoutController < ApplicationController
+  include TodaysWorkoutProgress
+
   def index
     policy_scope(ScheduledWorkout)
     scheduled_workout = TodaysWorkoutGenerationService.new(user: current_user).call
-    # TODO: better way of wrapping/accessing this?
-    todays_workout_state = session[:todays_workout_state]
-    @todays_workout = TodaysWorkoutPresenter.new(scheduled_workout:, todays_workout_state:)
+    @todays_workout = TodaysWorkoutPresenter.new(scheduled_workout:, todays_workout_progress:)
   end
 
   def update
