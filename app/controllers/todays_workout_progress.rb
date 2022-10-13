@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TodaysWorkoutProgress
-  class TodaysWorkoutProgress
+  class TodaysWorkoutProgressState
     def initialize(todays_workout_progress:)
       @todays_workout_progress = todays_workout_progress || {}
     end
@@ -14,7 +14,7 @@ module TodaysWorkoutProgress
 
   def todays_workout_progress
     todays_workout_progress = session[:todays_workout_progress]
-    TodaysWorkoutProgress.new(todays_workout_progress:)
+    TodaysWorkoutProgressState.new(todays_workout_progress:)
   end
 
   def set_progress(exercise_id:, ordinal:, reps:)

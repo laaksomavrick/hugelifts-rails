@@ -17,6 +17,7 @@ export const getRepButtonAttributes = (repButton) => {
     repsDone,
   };
 };
+
 export const addActiveClassToRepButton = (repButton) => {
   const inactiveClasses = inactiveClass.split(' ');
   const activeClasses = activeClass.split(' ');

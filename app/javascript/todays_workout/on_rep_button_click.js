@@ -3,6 +3,8 @@ import {
   checkCompleteButton,
   getRepButtonAttributes,
 } from './common';
+import { patch } from '../api';
+import { get } from 'lodash';
 
 const onRepButtonClick =
   ({ completeButton, totalSets }) =>
@@ -25,18 +27,16 @@ const onRepButtonClick =
   };
 
 const cacheRepCount = async ({ id, ordinal, repCount }) => {
-  const csrfToken = document.getElementsByName('csrf-token')[0].content;
-  await fetch(`/todays_workout_reps/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'X-CSRF-Token': csrfToken,
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify({
+  let csrfToken = document.getElementsByName('csrf-token');
+  csrfToken = get(csrfToken, '[0].content', null);
+  const url = `/todays_workout_reps/${id}`;
+  await patch({
+    url,
+    csrfToken,
+    body: {
       ordinal,
       rep_count: repCount,
-    }),
+    },
   });
 };
 
