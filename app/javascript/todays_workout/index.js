@@ -10,7 +10,7 @@ export default () => {
   for (const repButton of repButtons) {
     repButton.addEventListener(
       'click',
-      onRepButtonClick({ repButtons, completeButton, totalSets }),
+      onRepButtonClick({ completeButton, totalSets }),
     );
 
     setRepButtonState(repButton);
