@@ -99,5 +99,25 @@ RSpec.describe 'Today\'s Workout', type: :system do
       visit todays_workout_index_path
       expect(page).to have_content(I18n.t('todays_workout.missing'))
     end
+
+    it 'shows previous workout progress on reload' do
+      workout_day = workout.workout_days.first
+      sign_in user
+      visit todays_workout_index_path
+
+      rep_button = page.all(:css, 'div[data-rep-button]').first
+      rep_button_reps_done = rep_button['data-reps-done'].to_i
+      rep_button.click
+      rep_button.click
+
+      # TODO: better solution for ajax (e.g. waiting until an element is visible)
+      sleep 1
+
+      visit todays_workout_index_path
+
+      rep_button = page.all(:css, 'div[data-rep-button]').first
+      expect(page).to have_content(workout_day.name)
+      expect(rep_button).to have_content((rep_button_reps_done - 1).to_s)
+    end
   end
 end

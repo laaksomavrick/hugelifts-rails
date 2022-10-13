@@ -12,7 +12,10 @@ Capybara.register_driver :selenium_chrome_headless do |app|
     opts.add_preference(:download, default_directory: Capybara.save_path)
   end
 
-  Capybara::Selenium::Driver.new(app, **{ browser: :chrome, options_key => browser_options })
+  client = Selenium::WebDriver::Remote::Http::Default.new
+  client.open_timeout = 120
+  client.read_timeout = 120
+  Capybara::Selenium::Driver.new(app, **{ browser: :chrome, http_client: client, options_key => browser_options })
 end
 
 RSpec.configure do |config|

@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class TodaysWorkoutController < ApplicationController
+  include TodaysWorkoutProgress
+
   def index
     policy_scope(ScheduledWorkout)
     scheduled_workout = TodaysWorkoutGenerationService.new(user: current_user).call
-    @todays_workout = TodaysWorkoutPresenter.new(scheduled_workout:)
+    @todays_workout = TodaysWorkoutPresenter.new(scheduled_workout:, todays_workout_progress:)
   end
 
   def update
@@ -19,6 +21,7 @@ class TodaysWorkoutController < ApplicationController
     if ok == false
       flash[:alert] = I18n.t('todays_workout.update.error')
     else
+      destroy_progress
       flash[:notice] = I18n.t('todays_workout.update.success')
     end
 

@@ -16,16 +16,16 @@
               </div>
             </div>
             <div class="flex justify-between px-2 py-4">
-              <% exercise.sets.times do |i| %>
+              <% exercise.sets.times do |ordinal| %>
                 <div
                   class="h-12 w-12 rounded-3xl flex justify-center items-center cursor-pointer bg-white text-gray-600 border-2 border-gray-600 select-none"
                   data-rep-button
-                  data-rep-active="0"
-                  data-rep-ordinal="<%= i %>"
+                  data-rep-active="<%= exercise.active(ordinal) %>"
+                  data-rep-ordinal="<%= ordinal %>"
                   data-max-reps="<%= exercise.reps %>"
-                  data-reps-done="<%= exercise.reps %>"
+                  data-reps-done="<%= exercise.reps_for_ordinal(ordinal) %>"
                   data-exercise-id="<%= exercise.id %>">
-                  <%= exercise.reps %>
+                  <%= exercise.reps_for_ordinal(ordinal) %>
                 </div>
               <% end %>
             </div>
@@ -36,6 +36,7 @@
         <% end %>
       <% end %>
     </div>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <div class="flex justify-center">
       <button
         data-complete-button
