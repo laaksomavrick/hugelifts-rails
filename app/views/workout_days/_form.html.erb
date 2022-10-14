@@ -12,7 +12,7 @@
 
   <div class="<%= form_element_class %>">
 
-    <div class=<%= form_element_class %>>
+    <div class="<%= form_element_class %>">
       <%= form.label :workout, t('workout_days.workout'), class: form_label_class %>
       <%= form.select :workout, [[model.workout.name, model.workout.id]], {}, disabled: true, class: form_input_class %>
       <%= form.hidden_field :workout, value: model.workout.id %>

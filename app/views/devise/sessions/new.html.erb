@@ -1,25 +1,25 @@
-<h2>Log in</h2>
+<%= render 'shared/page_header', header: t('common.log_in') %>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="<%= form_element_class %>">
+    <%= f.label :email, class: form_label_class %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: form_input_class %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+  <div class="<%= form_element_class %>">
+    <%= f.label :password, class: form_label_class %>
+    <%= f.password_field :password, autocomplete: "current-password", class: form_input_class %>
   </div>
 
   <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+    <div class="<%= form_element_class("flex flex-row items-center") %>">
+      <%= f.check_box :remember_me, class: form_check_box_class %>
+      <%= f.label :remember_me, class: form_label_class("mb-0 ml-2") %>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="<%= form_element_class %>">
+    <%= f.submit t('common.log_in'), class: create_button_class("my-2") %>
   </div>
 <% end %>
 
