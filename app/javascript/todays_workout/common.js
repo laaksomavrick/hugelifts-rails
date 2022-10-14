@@ -3,6 +3,10 @@ const inactiveClass = 'bg-white text-gray-600 border-2 border-gray-600';
 const buttonDisabledClass = 'disabled:bg-green-300 disabled:cursor-not-allowed';
 
 export const getRepButtonAttributes = (repButton) => {
+  if (repButton == null) {
+    return;
+  }
+
   const active = !!parseInt(repButton.getAttribute('data-rep-active'), 10);
   const id = repButton.getAttribute('data-exercise-id');
   const ordinal = repButton.getAttribute('data-rep-ordinal');
@@ -19,6 +23,10 @@ export const getRepButtonAttributes = (repButton) => {
 };
 
 export const addActiveClassToRepButton = (repButton) => {
+  if (repButton == null) {
+    return;
+  }
+
   const inactiveClasses = inactiveClass.split(' ');
   const activeClasses = activeClass.split(' ');
 
@@ -29,6 +37,10 @@ export const addActiveClassToRepButton = (repButton) => {
 };
 
 export const checkCompleteButton = (completeButton, { totalSets }) => {
+  if (completeButton == null) {
+    return;
+  }
+
   const activeRepButtons = document.querySelectorAll('[data-rep-active="1"]');
   const isComplete = activeRepButtons.length === totalSets;
 
