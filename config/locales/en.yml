@@ -49,5 +49,8 @@ en:
       success: 'Successfully updated exercise'
     destroy:
       success: 'Successfully deleted exercise'
+  registrations:
+    create:
+      disabled: 'Creating new accounts is currently disabled'
 
 
