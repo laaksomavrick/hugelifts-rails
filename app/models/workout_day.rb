@@ -4,7 +4,8 @@ class WorkoutDay < ApplicationRecord
   include NameParameterizable
 
   belongs_to :workout
-  has_many :workout_day_exercises, dependent: :destroy
+
+  has_many :workout_day_exercises, -> { order(created_at: :asc) }, dependent: :destroy, inverse_of: :workout_day
   has_many :scheduled_workouts, dependent: :nullify
 
   alias_attribute :exercises, :workout_day_exercises

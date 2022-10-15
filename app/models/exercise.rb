@@ -8,42 +8,65 @@ class Exercise < ApplicationRecord
 
   validates :name, presence: true
 
+  BARBELL_BENCH_PRESS = 'Barbell Bench Press'
+  INCLINE_BARBELL_BENCH_PRESS = 'Incline Barbell Bench Press'
+  DUMBBELL_BENCH_PRESS = 'Dumbbell Bench Press'
+  INCLINE_DUMBBELL_BENCH_PRESS = 'Incline Dumbbell Bench Press'
+  BARBELL_OVERHEAD_PRESS = 'Barbell Overhead Press'
+  DUMBBELL_OVERHEAD_PRESS = 'Dumbbell Overhead Press'
+  BARBELL_SHOULDER_PRESS = 'Barbell Shoulder Press'
+  DUMBBELL_SHOULDER_PRESS = 'Dumbbell Shoulder Press'
+  DEADLIFT = 'Deadlift'
+  ROMANIAN_DEADLIFT = 'Romanian Deadlift'
+  BARBELL_ROW = 'Barbell Row'
+  DUMBBELL_ROW = 'Dumbbell Row'
+  BACK_SQUAT = 'Back Squat'
+  FRONT_SQUAT = 'Front Squat'
+  DUMBBELL_BICEP_CURL = 'Dumbbell Bicep Curl'
+  BARBELL_BICEP_CURL = 'Barbell Bicep Curl'
+  EZ_BAR_BICEP_CURL = 'EZ-Bar Bicep Curl'
+  CHINUP = 'Chinup'
+  PULLUP = 'Pullup'
+  SKULLCRUSHER = 'Skullcrusher'
+  LATERAL_RAISE = 'Lateral Raise'
+  BARBELL_SHRUG = 'Barbell Shrug'
+
   DEFAULT_EXERCISE_NAMES = [
-    'Barbell Bench Press',
-    'Incline Barbell Bench Press',
-    'Dumbbell Bench Press',
-    'Incline Dumbbell Bench Press',
-    'Barbell Overhead Press',
-    'Dumbbell Overhead Press',
-    'Barbell Shoulder Press',
-    'Dumbbell Shoulder Press',
-    'Deadlift',
-    'Romanian Deadlift',
-    'Barbell Row',
-    'Dumbbell Row',
-    'Back Squat',
-    'Front Squat',
-    'Dumbbell Bicep Curl',
-    'Barbell Bicep Curl',
-    'EZ-Bar Bicep Curl',
-    'Chinup',
-    'Pullup',
-    'Skullcrusher',
-    'Lateral Raise',
-    'Barbell Shrug',
-    'Situp',
-    'Twisting Situp'
+    BARBELL_BENCH_PRESS,
+    INCLINE_BARBELL_BENCH_PRESS,
+    DUMBBELL_BENCH_PRESS,
+    INCLINE_DUMBBELL_BENCH_PRESS,
+    BARBELL_OVERHEAD_PRESS,
+    DUMBBELL_OVERHEAD_PRESS,
+    BARBELL_SHOULDER_PRESS,
+    DUMBBELL_SHOULDER_PRESS,
+    DEADLIFT,
+    ROMANIAN_DEADLIFT,
+    BARBELL_ROW,
+    DUMBBELL_ROW,
+    BACK_SQUAT,
+    FRONT_SQUAT,
+    DUMBBELL_BICEP_CURL,
+    BARBELL_BICEP_CURL,
+    EZ_BAR_BICEP_CURL,
+    CHINUP,
+    PULLUP,
+    SKULLCRUSHER,
+    LATERAL_RAISE,
+    BARBELL_SHRUG
   ].freeze
 
-  def self.default_exercises
-    DEFAULT_EXERCISE_NAMES.map { |name| new(name:) }
-  end
+  class << self
+    def default_exercises
+      DEFAULT_EXERCISE_NAMES.map { |name| new(name:) }
+    end
 
-  def self.default_exercise_names
-    DEFAULT_EXERCISE_NAMES
-  end
+    def default_exercise_names
+      DEFAULT_EXERCISE_NAMES
+    end
 
-  def self.policy_class
-    ExercisePolicy
+    def policy_class
+      ExercisePolicy
+    end
   end
 end
