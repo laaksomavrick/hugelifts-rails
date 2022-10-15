@@ -1,0 +1,13 @@
+default: &default
+  user_signups: false
+
+production:
+  <<: *default
+
+development:
+  <<: *default
+  user_signups: true
+
+test:
+  <<: *default
+  user_signups: true
