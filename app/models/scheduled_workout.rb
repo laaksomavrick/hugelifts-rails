@@ -3,7 +3,10 @@
 class ScheduledWorkout < ApplicationRecord
   belongs_to :workout_day
   belongs_to :user
-  has_many :scheduled_workout_exercises, dependent: :destroy
+  # TODO: ordinal
+  has_many :scheduled_workout_exercises, lambda {
+                                           order(created_at: :asc)
+                                         }, dependent: :destroy, inverse_of: :scheduled_workout
 
   scope :with_exercises, lambda {
                            includes({

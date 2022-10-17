@@ -22,3 +22,5 @@ RSpec/ExampleLength:
   Enabled: false
 Rails/I18nLocaleTexts:
   Enabled: false
+Metrics/ClassLength:
+  Enabled: false

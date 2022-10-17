@@ -13,12 +13,15 @@ class Exercise < ApplicationRecord
   DUMBBELL_BENCH_PRESS = 'Dumbbell Bench Press'
   INCLINE_DUMBBELL_BENCH_PRESS = 'Incline Dumbbell Bench Press'
   BARBELL_OVERHEAD_PRESS = 'Barbell Overhead Press'
+  SEATED_BARBELL_OVERHEAD_PRESS = 'Seated Barbell Overhead Press'
   DUMBBELL_OVERHEAD_PRESS = 'Dumbbell Overhead Press'
+  SEATED_DUMBBELL_OVERHEAD_PRESS = 'Seated Dumbbell Overhead Press'
   BARBELL_SHOULDER_PRESS = 'Barbell Shoulder Press'
   DUMBBELL_SHOULDER_PRESS = 'Dumbbell Shoulder Press'
   DEADLIFT = 'Deadlift'
   ROMANIAN_DEADLIFT = 'Romanian Deadlift'
   BARBELL_ROW = 'Barbell Row'
+  PENDLAY_ROW = 'Pendlay Row'
   DUMBBELL_ROW = 'Dumbbell Row'
   BACK_SQUAT = 'Back Squat'
   FRONT_SQUAT = 'Front Squat'
@@ -30,6 +33,7 @@ class Exercise < ApplicationRecord
   SKULLCRUSHER = 'Skullcrusher'
   LATERAL_RAISE = 'Lateral Raise'
   BARBELL_SHRUG = 'Barbell Shrug'
+  HIP_THRUST = 'Hip Thrust'
 
   DEFAULT_EXERCISE_NAMES = [
     BARBELL_BENCH_PRESS,
@@ -38,11 +42,14 @@ class Exercise < ApplicationRecord
     INCLINE_DUMBBELL_BENCH_PRESS,
     BARBELL_OVERHEAD_PRESS,
     DUMBBELL_OVERHEAD_PRESS,
+    SEATED_BARBELL_OVERHEAD_PRESS,
+    SEATED_DUMBBELL_OVERHEAD_PRESS,
     BARBELL_SHOULDER_PRESS,
     DUMBBELL_SHOULDER_PRESS,
     DEADLIFT,
     ROMANIAN_DEADLIFT,
     BARBELL_ROW,
+    PENDLAY_ROW,
     DUMBBELL_ROW,
     BACK_SQUAT,
     FRONT_SQUAT,
@@ -53,7 +60,8 @@ class Exercise < ApplicationRecord
     PULLUP,
     SKULLCRUSHER,
     LATERAL_RAISE,
-    BARBELL_SHRUG
+    BARBELL_SHRUG,
+    HIP_THRUST
   ].freeze
 
   class << self
