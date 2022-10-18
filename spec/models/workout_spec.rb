@@ -16,7 +16,6 @@ RSpec.describe Workout, type: :model do
 
   it 'can only have one active workout per user' do
     user = create(:user)
-    create(:workout, user:, active: true)
     expect do
       create(:workout, user:, active: true)
     end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Active has already been taken')
@@ -26,7 +25,6 @@ RSpec.describe Workout, type: :model do
     user = create(:user)
     inactive_workouts = create_list(:workout, 3, user:)
     inactive_workout = inactive_workouts.first
-    create(:workout, user:, active: true)
 
     inactive_workout.active = true
     inactive_workout.save_with_active!(user_id: user.id)
