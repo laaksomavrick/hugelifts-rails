@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Workouts', type: :system do
   let!(:user) { create(:user) }
-  let!(:workout) { create(:workout, user:, active: true) }
+  let!(:workout) { user.workouts.where(active: true).first }
 
   describe 'index page' do
     it 'redirects non-authenticated users' do

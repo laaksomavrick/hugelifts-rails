@@ -4,7 +4,9 @@ class WorkoutDay < ApplicationRecord
   include NameParameterizable
 
   belongs_to :workout
-  has_many :workout_day_exercises, dependent: :destroy
+
+  # TODO: ordinal
+  has_many :workout_day_exercises, -> { order(created_at: :asc) }, dependent: :destroy, inverse_of: :workout_day
   has_many :scheduled_workouts, dependent: :nullify
 
   alias_attribute :exercises, :workout_day_exercises
@@ -18,7 +20,7 @@ class WorkoutDay < ApplicationRecord
   # TODO: can extract this to a common module when needs to be generalized
   def self.swap_ordinal!(obj, new_ordinal)
     transaction do
-      collection = where.not(id: obj.id).order(ordinal: :asc).to_a
+      collection = where(workout_id: obj.workout_id).where.not(id: obj.id).order(ordinal: :asc).to_a
       collection.insert(new_ordinal, obj)
       # TODO: make this more efficient
       collection.each_with_index do |wd, i|

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Today\'s Workout', type: :system do
   let!(:user) { create(:user) }
-  let!(:workout) { create(:workout, :with_days_and_exercises, user:, active: true) }
+  let!(:workout) { user.workouts.where(active: true).first }
 
   describe 'update' do
     it 'can complete a scheduled workout' do
