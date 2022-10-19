@@ -119,6 +119,7 @@ GEM
       activesupport (>= 5.0.0)
     jsbundling-rails (1.0.3)
       railties (>= 6.0.0)
+    kgio (2.11.4)
     loofah (2.17.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -192,6 +193,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
+    raindrops (0.20.0)
     rake (13.0.6)
     regexp_parser (2.3.1)
     reline (0.3.1)
@@ -256,6 +258,9 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
+    unicorn (5.8.0)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -300,6 +305,7 @@ DEPENDENCIES
   sprockets-rails
   turbo-rails
   tzinfo-data
+  unicorn (~> 5.1)
   web-console
   webdrivers (~> 5.2.0)
 

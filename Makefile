@@ -1,3 +1,5 @@
+version=latest
+
 .PHONY: up
 up:
 	@docker-compose up -d
@@ -29,3 +31,7 @@ format:
 .PHONY: check-format
 check-format:
 	@bundler exec rubocop --fail-level=warning && yarn format:check && yarn lint
+
+.PHONY: build
+build:
+	@docker build -f Dockerfile -t hugelifts:$(version) .

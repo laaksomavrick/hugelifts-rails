@@ -12,6 +12,7 @@ gem 'jbuilder'
 gem 'jsbundling-rails', '~> 1.0'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
+gem 'pundit', '~> 2.2'
 gem 'rails', '~> 7.0.2', '>= 7.0.2.4'
 gem 'sprockets-rails'
 gem 'turbo-rails'
@@ -59,5 +60,3 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers', '~> 5.2.0'
 end
-
-gem 'pundit', '~> 2.2'
