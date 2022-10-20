@@ -1,9 +1,10 @@
-FROM ruby:3.1.1-slim-bullseye AS build-env
+FROM ruby:3.1.1 AS assets
 
 WORKDIR /app
 
 ARG UID=1000
 ARG GID=1000
+ARG SECRET_KEY_BASE=dummy
 
 RUN bash -c "set -o pipefail && apt-get update \
   && apt-get install -y --no-install-recommends build-essential curl git libpq-dev \
@@ -23,25 +24,17 @@ COPY --chown=ruby:ruby Gemfile* ./
 RUN bundle install --jobs "$(nproc)"
 
 COPY --chown=ruby:ruby package.json *yarn* ./
-RUN yarn install
+RUN yarn install --immutable --immutable-cache --check-cache
 
-ARG RAILS_ENV="production"
-ARG NODE_ENV="production"
-ENV RAILS_ENV="${RAILS_ENV}" \
-    NODE_ENV="${NODE_ENV}" \
-    PATH="${PATH}:/home/ruby/.local/bin:/node_modules/.bin" \
-    USER="ruby"
+ENV RAILS_ENV="production"
+ENV NODE_ENV="production"
+ENV USER="ruby"
 
 COPY --chown=ruby:ruby . .
 
-RUN if [ "${RAILS_ENV}" != "development" ]; then \
-  SECRET_KEY_BASE=dummyvalue rails assets:precompile; fi
+RUN SECRET_KEY_BASE=$SECRET_KEY_BASE rails assets:precompile
 
-CMD ["bash"]
-
-###############################################################################
-
-FROM ruby:3.1.2-slim-bullseye AS app
+FROM ruby:3.1.1 AS app
 
 WORKDIR /app
 
@@ -61,18 +54,12 @@ USER ruby
 COPY --chown=ruby:ruby bin/ ./bin
 RUN chmod 0755 bin/*
 
-ARG PORT=3000
-ARG RAILS_ENV="production"
-ENV PORT=$PORT
-ENV RAILS_ENV="${RAILS_ENV}" \
-    PATH="${PATH}:/home/ruby/.local/bin" \
-    USER="ruby"
+ENV PORT=3000
+ENV RAILS_ENV="production"
 
-COPY --chown=ruby:ruby --from=build-env /usr/local/bundle /usr/local/bundle
-COPY --chown=ruby:ruby --from=build-env /app/public /public
+COPY --chown=ruby:ruby --from=assets /usr/local/bundle /usr/local/bundle
+COPY --chown=ruby:ruby --from=assets /app/public /public
 COPY --chown=ruby:ruby . .
-
-# ENTRYPOINT ["/app/bin/docker-entrypoint-web"]
 
 EXPOSE $PORT
 

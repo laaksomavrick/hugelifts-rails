@@ -1,4 +1,5 @@
-version=latest
+VERSION=latest
+SECRET_KEY_BASE := $(shell eval RAILS_ENV=production rake secret)
 
 .PHONY: up
 up:
@@ -34,4 +35,4 @@ check-format:
 
 .PHONY: build
 build:
-	@docker build -f Dockerfile -t hugelifts:$(version) .
+	@docker build --build-arg SECRET_KEY_BASE=$(SECRET_KEY_BASE) -f Dockerfile -t hugelifts:$(VERSION) .
