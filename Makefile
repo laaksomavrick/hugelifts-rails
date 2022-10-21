@@ -1,9 +1,13 @@
 VERSION=latest
-SECRET_KEY_BASE := $(shell eval RAILS_ENV=production rake secret)
+RAILS_MASTER_KEY := $(shell eval cat config/master.key)
 
 .PHONY: up
 up:
 	@docker-compose up -d
+
+.PHONY: up-app
+up-app:
+	@docker-compose -f docker-compose.app.yml up
 
 .PHONY: migrate
 migrate:
@@ -35,4 +39,4 @@ check-format:
 
 .PHONY: build
 build:
-	@docker build --build-arg SECRET_KEY_BASE=$(SECRET_KEY_BASE) -f Dockerfile -t hugelifts:$(VERSION) .
+	@docker build --build-arg RAILS_MASTER_KEY=$(RAILS_MASTER_KEY) -f Dockerfile -t hugelifts:$(VERSION) .

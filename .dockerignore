@@ -20,3 +20,5 @@ docker-compose.yml
 yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+docker.app.env

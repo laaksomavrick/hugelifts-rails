@@ -84,6 +84,6 @@ test:
 #
 production:
   <<: *default
+  host: db
   database: hugelifts_production
-  username: hugelifts
   password: <%= ENV["HUGELIFTS_DATABASE_PASSWORD"] %>

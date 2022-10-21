@@ -4,7 +4,7 @@ WORKDIR /app
 
 ARG UID=1000
 ARG GID=1000
-ARG SECRET_KEY_BASE=dummy
+ARG RAILS_MASTER_KEY
 
 RUN bash -c "set -o pipefail && apt-get update \
   && apt-get install -y --no-install-recommends build-essential curl git libpq-dev \
@@ -32,7 +32,7 @@ ENV USER="ruby"
 
 COPY --chown=ruby:ruby . .
 
-RUN SECRET_KEY_BASE=$SECRET_KEY_BASE rails assets:precompile
+RUN rails assets:precompile
 
 FROM ruby:3.1.1 AS app
 
@@ -54,14 +54,15 @@ USER ruby
 COPY --chown=ruby:ruby bin/ ./bin
 RUN chmod 0755 bin/*
 
-ENV PORT=3000
 ENV RAILS_ENV="production"
 
 COPY --chown=ruby:ruby --from=assets /usr/local/bundle /usr/local/bundle
 COPY --chown=ruby:ruby --from=assets /app/public /public
 COPY --chown=ruby:ruby . .
 
-EXPOSE $PORT
+EXPOSE 3000
 
-CMD ["rails", "s", "-b", "${PORT}"]
+ENTRYPOINT ["bin/entry"]
+
+CMD ["rails", "s"]
 

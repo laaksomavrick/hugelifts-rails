@@ -39,3 +39,5 @@ node_modules/*
 
 # Ignore yarn errors
 yarn-error.log
+
+docker.app.env
