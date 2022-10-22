@@ -1,6 +1,12 @@
+VERSION=latest
+
 .PHONY: up
 up:
 	@docker-compose up -d
+
+.PHONY: up-app
+up-app:
+	@docker-compose -f docker-compose.app.yml up
 
 .PHONY: migrate
 migrate:
@@ -29,3 +35,7 @@ format:
 .PHONY: check-format
 check-format:
 	@bundler exec rubocop --fail-level=warning && yarn format:check && yarn lint
+
+.PHONY: build
+build:
+	@docker build -f Dockerfile -t hugelifts:$(VERSION) .

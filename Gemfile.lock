@@ -119,6 +119,7 @@ GEM
       activesupport (>= 5.0.0)
     jsbundling-rails (1.0.3)
       railties (>= 6.0.0)
+    json (2.6.2)
     loofah (2.17.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -184,6 +185,10 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.4.2)
       loofah (~> 2.3)
+    rails_real_favicon (0.1.1)
+      json (>= 1.7, < 3)
+      rails
+      rubyzip (~> 2)
     railties (7.0.2.4)
       actionpack (= 7.0.2.4)
       activesupport (= 7.0.2.4)
@@ -293,6 +298,7 @@ DEPENDENCIES
   puma (~> 5.0)
   pundit (~> 2.2)
   rails (~> 7.0.2, >= 7.0.2.4)
+  rails_real_favicon
   rspec-rails (~> 6.0.0.rc1)
   rubocop-rails
   rubocop-rspec

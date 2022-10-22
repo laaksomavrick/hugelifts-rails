@@ -17,3 +17,7 @@
 
 * `make seed`
 * `make serve`
+
+### Editing secrets:
+
+`EDITOR="code --wait" rails credentials:edit`

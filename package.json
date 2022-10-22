@@ -7,7 +7,15 @@
   },
   "dependencies": {
     "@hotwired/turbo-rails": "^7.1.3",
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@tailwindcss/forms": "^0.5.2",
+    "@tailwindcss/line-clamp": "^0.4.0",
+    "@tailwindcss/typography": "^0.5.4",
+    "autoprefixer": "^10.4.12",
+    "esbuild": "^0.14.50",
     "lodash": "^4.17.21",
+    "postcss": "^8.4.17",
+    "postcss-import": "^14.1.0",
     "tailwindcss": "^3.1.8"
   },
   "scripts": {
@@ -19,19 +27,11 @@
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
   },
   "devDependencies": {
-    "@tailwindcss/aspect-ratio": "^0.4.0",
-    "@tailwindcss/forms": "^0.5.2",
-    "@tailwindcss/line-clamp": "^0.4.0",
-    "@tailwindcss/typography": "^0.5.4",
-    "autoprefixer": "^10.4.12",
-    "esbuild": "^0.14.50",
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^28.1.3",
-    "postcss": "^8.4.17",
-    "postcss-import": "^14.1.0",
     "prettier": "^2.7.1"
   }
 }
