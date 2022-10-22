@@ -1,5 +1,4 @@
 VERSION=latest
-RAILS_MASTER_KEY := $(shell eval cat config/master.key)
 
 .PHONY: up
 up:
@@ -39,4 +38,4 @@ check-format:
 
 .PHONY: build
 build:
-	@docker build --build-arg RAILS_MASTER_KEY=$(RAILS_MASTER_KEY) -f Dockerfile -t hugelifts:$(VERSION) .
+	@docker build -f Dockerfile -t hugelifts:$(VERSION) .
