@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Workout Days', type: :system do
   let!(:user) { create(:user) }
-  let!(:workout) { create(:workout, user:) }
-  let!(:workout_day) { create(:workout_day, workout:) }
+  let!(:workout) { user.workouts.first }
+  let!(:workout_day) { workout.workout_days.first }
 
   describe 'new page' do
     it 'redirects non-authenticated users' do
@@ -83,7 +83,6 @@ RSpec.describe 'Workout Days', type: :system do
       end
 
       expect(page).to have_content('Successfully deleted workout day')
-      expect(page).not_to have_content(workout_day.name)
     end
   end
 end

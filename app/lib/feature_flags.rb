@@ -3,7 +3,7 @@
 module FeatureFlags
   class << self
     def user_signup_enabled?
-      Rails.configuration.feature_flags[:user_signups]
+      ENV.fetch('FEATURE_FLAGS_USER_SIGNUPS') { Rails.configuration.feature_flags[:user_signups] }
     end
   end
 end
