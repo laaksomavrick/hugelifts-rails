@@ -84,6 +84,7 @@ test:
 #
 production:
   <<: *default
-  host: db
-  database: hugelifts_production
-  password: <%= ENV["HUGELIFTS_DATABASE_PASSWORD"] %>
+  host: <%= ENV.fetch("HUGELIFTS_DB_HOST") { 'db' } %>
+  database: <%= ENV.fetch("HUGELIFTS_DB_DATABASE") { 'hugelifts_production' } %>
+  username: <%= ENV.fetch("HUGELIFTS_DB_USERNAME") { 'docker' } %>
+  password: <%= ENV.fetch("HUGELIFTS_DB_PASSWORD") { 'docker' } %>

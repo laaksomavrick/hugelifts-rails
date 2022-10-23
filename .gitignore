@@ -40,4 +40,6 @@ node_modules/*
 # Ignore yarn errors
 yarn-error.log
 
-docker-compose.prod.yml
+# Production configuration
+app.env
+db.env

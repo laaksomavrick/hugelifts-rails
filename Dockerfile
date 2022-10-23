@@ -45,8 +45,14 @@ FROM ruby:3.1.1-slim-bullseye AS app
 
 WORKDIR /app
 
+USER root
+
 ARG UID=1000
 ARG GID=1000
+
+# Wait for postgres
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends build-essential curl libpq-dev \
@@ -72,6 +78,6 @@ COPY --chown=ruby:ruby . .
 
 ENTRYPOINT ["/app/bin/docker-entrypoint-web"]
 
-EXPOSE 8000
+EXPOSE 3000
 
-CMD ["rails", "s"]
+CMD /wait && rails s

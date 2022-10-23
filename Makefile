@@ -4,9 +4,9 @@ VERSION=latest
 up:
 	@docker-compose up -d
 
-.PHONY: up-app
-up-app:
-	@docker-compose -f docker-compose.app.yml up
+.PHONY: up-prod
+up-prod:
+	@docker-compose -f docker-compose.prod.yml up
 
 .PHONY: migrate
 migrate:
