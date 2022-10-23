@@ -1,11 +1,41 @@
-version: '3'
+version: "3"
 services:
+  reverse-proxy:
+    image: nginx:stable
+    restart: unless-stopped
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    depends_on:
+      - app
+      - db
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+  app:
+    image: registry.digitalocean.com/ownyourday/hugelifts:2fc71c8 
+    restart: unless-stopped
+    expose:
+      - "3000"
+    depends_on:
+      - db
+    env_file:
+      - app.env
   db:
     image: postgres:11
-    ports:
-      - '5432:5432'
-    environment:
-      POSTGRES_USER: 'docker'
-      POSTGRES_PASSWORD: 'docker'
+    restart: unless-stopped
+    expose:
+      - "5432"
+    env_file:
+      - db.env
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
