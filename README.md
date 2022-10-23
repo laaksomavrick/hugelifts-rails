@@ -21,3 +21,11 @@
 ### Editing secrets:
 
 `EDITOR="code --wait" rails credentials:edit`
+
+## Operating this application
+
+### First time set up on VM:
+
+#### Set up user
+* Sign in via SSH as `root`
+* Install docker via [this link](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
