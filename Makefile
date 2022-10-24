@@ -2,11 +2,15 @@ VERSION=latest
 
 .PHONY: up
 up:
-	@docker-compose up -d
+	@docker-compose -f docker-compose.local.yml up -d
 
 .PHONY: up-prod
 up-prod:
-	@docker-compose -f docker-compose.prod.yml up
+	@docker-compose up -d
+
+.PHONY: down-prod
+down-prod:
+	@docker-compose down
 
 .PHONY: migrate
 migrate:
