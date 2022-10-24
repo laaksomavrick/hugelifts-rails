@@ -9,4 +9,10 @@ class RegistrationsController < Devise::RegistrationsController
       super
     end
   end
+
+  protected
+
+  def after_sign_up_path_for(resource)
+    todays_workout_index_path
+  end
 end
