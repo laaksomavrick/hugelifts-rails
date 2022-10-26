@@ -28,7 +28,7 @@
 
   <div class="<%= form_element_class %>">
     <%= form.label :exercise, t('common.exercise'), class: form_label_class%>
-    <%= form.select :exercise, model.exercise_options, {}, selected: model.selected_exercise, class: form_input_class %>
+    <%= form.select :exercise, model.exercise_options, {selected: model.selected_exercise }, class: form_input_class %>
   </div>
 
   <div class="grid grid-cols-2 gap-x-4">
@@ -44,7 +44,7 @@
 
     <div class=<%= form_element_class %>>
       <%= form.label :weight, t('common.weight'), class: form_label_class %>
-      <%= form.number_field :weight, value: model.selected_weight, class: form_input_class %>
+      <%= form.number_field :weight, value: model.selected_weight, step: 5, class: form_input_class %>
     </div>
 
     <div class=<%= form_element_class %>>
