@@ -8,7 +8,7 @@
         <%= fields_for "scheduled_workout_exercises[]", exercise.scheduled_workout_exercise do |ef| %>
           <div class="border rounded p-2 outline-1 border-gray-400 outline-gray-700 flex flex-col bg-white">
             <div class="flex text-xl">
-              <div class="mr-auto">
+              <div class="mr-auto w-1/2">
                 <%= exercise.name %>
               </div>
               <div>
@@ -18,7 +18,7 @@
             <div class="flex justify-between px-2 py-4">
               <% exercise.sets.times do |ordinal| %>
                 <div
-                  class="h-12 w-12 rounded-3xl flex justify-center items-center cursor-pointer bg-white text-gray-600 border-2 border-gray-600 select-none"
+                  class="h-14 w-14 rounded-full flex justify-center items-center cursor-pointer bg-white text-gray-600 border-2 border-gray-600 select-none"
                   data-rep-button
                   data-rep-active="<%= exercise.active(ordinal) %>"
                   data-rep-ordinal="<%= ordinal %>"
@@ -37,12 +37,12 @@
       <% end %>
     </div>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <div class="flex justify-center">
+    <div class="flex justify-center pb-4">
       <button
         data-complete-button
         disabled
         form="todays_workout_form"
-        class="<%= create_button_class("m-auto") %> disabled:bg-green-300 disabled:cursor-not-allowed"><%= t('common.complete') %></button>
+        class="<%= create_button_class("m-auto") %> disabled:bg-green-300 disabled:cursor-not-allowed w-full md:w-fit"><%= t('common.complete') %></button>
     </div>
   <% end %>
 
