@@ -1,4 +1,4 @@
-VERSION=$(git rev-parse HEAD | head -c7)
+VERSION=$(git rev-parse --short HEAD)
 
 .PHONY: up
 up:
