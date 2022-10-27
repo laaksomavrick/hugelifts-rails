@@ -1,12 +1,8 @@
 name: Upload container image and deploy
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
-
-#on:
-#  push:
-#    branches: [ main ]
 
 jobs:
   upload-container-image:
@@ -49,7 +45,6 @@ jobs:
           port: ${{ secrets.HUGELIFTS_DROPLET_SSH_PORT }}
           envs: GIT_SHORT_SHA,FOO
           script: |
-            echo $GIT_SHORT_SHA
             cd /home/hugelifts/hugelifts
             git pull
             docker pull registry.digitalocean.com/ownyourday/hugelifts:$GIT_SHORT_SHA
