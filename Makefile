@@ -43,3 +43,7 @@ check-format:
 .PHONY: build
 build:
 	@docker build -f Dockerfile -t hugelifts:$(VERSION) .
+
+.PHONY: update-app
+update-app:
+	@docker-compose up -d --no-deps --build app

@@ -43,10 +43,9 @@ module ApplicationHelper
     "text-blue-400 cursor-pointer #{css_class_string}"
   end
 
-  def nav_link_to(text, path, opts = {})
-    # TODO: subroutes
-    is_active = current_page?(path)
+  def nav_link_to(text, nav_link_path, opts = {})
+    is_active = current_page?(nav_link_path) || request.path.starts_with?(nav_link_path)
     opts[:class] ||= "#{is_active ? 'text-blue-600' : ''} px-3 py-2 rounded-md text-md font-medium"
-    link_to(text, path, opts)
+    link_to(text, nav_link_path, opts)
   end
 end
