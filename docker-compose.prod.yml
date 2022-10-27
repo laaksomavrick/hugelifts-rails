@@ -15,7 +15,7 @@ services:
       - "80:80"
       - "443:443"
   app:
-    image: registry.digitalocean.com/ownyourday/hugelifts:2fc71c8 
+    image: registry.digitalocean.com/ownyourday/hugelifts:latest
     restart: unless-stopped
     expose:
       - "3000"
