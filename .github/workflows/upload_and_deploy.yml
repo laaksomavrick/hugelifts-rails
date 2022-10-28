@@ -1,0 +1,53 @@
+name: Upload container image and deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  upload-container-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+
+      - name: Build container image
+        run: docker build -t registry.digitalocean.com/ownyourday/hugelifts:$(echo $GITHUB_SHA | head -c7) .
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Push image to DigitalOcean Container Registry
+        run: docker push registry.digitalocean.com/ownyourday/hugelifts:$(echo $GITHUB_SHA | head -c7)
+
+  deploy-container-image:
+    needs: upload-container-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set git short sha
+        shell: bash
+        run: echo "##[set-output name=git_short_sha;]$(echo $GITHUB_SHA | head -c7)"
+        id: set_git_short_sha
+
+      - name: Pull and deploy docker image
+        uses: appleboy/ssh-action@master
+        env:
+          GIT_SHORT_SHA: ${{ steps.set_git_short_sha.outputs.git_short_sha }}
+        with:
+          host: ${{ secrets.HUGELIFTS_DROPLET_HOST }}
+          username: ${{ secrets.HUGELIFTS_DROPLET_SSH_USERNAME }}
+          key: ${{ secrets.HUGELIFTS_DROPLET_SSH_KEY }}
+          port: ${{ secrets.HUGELIFTS_DROPLET_SSH_PORT }}
+          envs: GIT_SHORT_SHA,FOO
+          script: |
+            cd /home/hugelifts/hugelifts
+            git pull
+            docker pull registry.digitalocean.com/ownyourday/hugelifts:$GIT_SHORT_SHA
+            docker tag registry.digitalocean.com/ownyourday/hugelifts:$GIT_SHORT_SHA hugelifts:latest
+            docker-compose up -d --no-deps --build app
+            docker image prune -af
