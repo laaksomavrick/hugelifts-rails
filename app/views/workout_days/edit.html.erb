@@ -1,4 +1,4 @@
-<%= render 'shared/page_header', header: t('workout_days.header') %>
+<%= render 'shared/page_header', header: t('workout_days.header'), back_button: true %>
 
 <%= render 'shared/page_subheader', subheader: t('common.details') do %>
   <%= button_to 'Delete', workout_workout_day_path, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete #{@form.workout_day.name}?" } }, class: delete_button_class %>

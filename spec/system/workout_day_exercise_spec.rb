@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Workout Day Exercises', type: :system do
   let!(:user) { create(:user) }
-  let!(:exercise) { create(:exercise, user:)}
+  let!(:exercise) { create(:exercise, user:) }
   let!(:workout) { create(:workout, user:) }
   let!(:workout_day) { create(:workout_day, workout:) }
   let!(:workout_day_exercise) { create(:workout_day_exercise, workout_day:, exercise:) }

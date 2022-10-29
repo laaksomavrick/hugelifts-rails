@@ -1,3 +1,8 @@
+<% back_button ||= nil %>
+
 <div class="<%= page_header_class %>">
   <div class="text-3xl font-medium"><%= header %></div>
+  <% if back_button.present? %>
+    <button data-back-button class="<%= outline_button_class("ml-auto") %>">Back</button>
+  <% end %>
 </div>

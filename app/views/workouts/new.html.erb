@@ -1,6 +1,4 @@
-<div class="flex items-center mb-4">
-  <div class="text-3xl font-medium"><%= t('common.workout') %></div>
-</div>
+<%= render 'shared/page_header', header: t('common.workout'), back_button: true %>
 
 <%= form_with model: @workout,
               url: workouts_path,
