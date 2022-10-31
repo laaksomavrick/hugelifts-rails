@@ -20,6 +20,8 @@ en:
     inactive: 'Inactive'
     ordinal: 'Order'
     complete: 'Complete'
+    back: 'Back'
+    timer: 'Timer'
   workouts:
     header: 'Workout Day Exercise'
     destroy:
@@ -52,5 +54,7 @@ en:
   registrations:
     create:
       disabled: 'Creating new accounts is currently disabled'
+  set_timer:
+    alert: 'Setting timer for two minutes...'
 
 
