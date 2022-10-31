@@ -1,4 +1,7 @@
-<%= render 'shared/page_header', header: t('todays_workout.header') %>
+<%= render 'shared/page_header', header: t('todays_workout.header') do %>
+  <button data-set-timer-button data-set-timer-active="0" class="<%= default_button_class("ml-auto") %>"><%= t('common.timer') %></button>
+<% end %>
+
 
 <% if @todays_workout.workout? %>
   <%= render 'shared/page_subheader', subheader: @todays_workout.day_name %>
