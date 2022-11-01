@@ -10,7 +10,7 @@ const onSetTimerClick = async (e) => {
     return;
   }
 
-  await Notification.requestPermission();
+  await sendNotification();
 
   let ticks = TWO_MINUTES;
 
@@ -27,6 +27,29 @@ const onSetTimerClick = async (e) => {
 
     setButtonText({ button, ticks });
   }, ONE_SECOND);
+};
+
+const sendNotification = async () => {
+  try {
+    const permission = await Notification.requestPermission();
+
+    if (permission !== 'granted') {
+      return;
+    }
+
+    const registration = await navigator.serviceWorker.getRegistration();
+
+    if (registration == null) {
+      return;
+    }
+
+    await registration.showNotification('Rest timer ended', {
+      vibrate: [200, 100, 200, 100],
+      tag: 'rest-timer-notification',
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const handleTimerOver = () => {
