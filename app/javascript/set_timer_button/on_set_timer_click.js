@@ -1,8 +1,8 @@
-const ONE_SECOND = 1000;
-const TWO_MINUTES = 120;
+import timerTickWorkerFactory from '../timer_tick_worker';
 
 const onSetTimerClick = async (e) => {
   e.preventDefault();
+  const tickWorker = timerTickWorkerFactory();
   const button = e.target;
 
   if (isActive(button)) {
@@ -10,51 +10,48 @@ const onSetTimerClick = async (e) => {
     return;
   }
 
-  await sendNotification();
+  await requestNotificationPermissions();
 
-  let ticks = TWO_MINUTES;
-
-  setButtonText({ button, ticks });
+  setButtonText({ button, ticks: 120 });
   setButtonActive(button);
 
-  setInterval(() => {
-    ticks = ticks - 1;
-    const expired = ticks === 0;
+  tickWorker.onmessage = async ({ data: ticks }) => {
+    const expired = ticks <= 0;
+
     if (expired) {
-      handleTimerOver();
+      await handleTimerOver();
       return;
     }
 
     setButtonText({ button, ticks });
-  }, ONE_SECOND);
+  };
 };
 
-const sendNotification = async () => {
+const requestNotificationPermissions = async () => {
   try {
-    const permission = await Notification.requestPermission();
-
-    if (permission !== 'granted') {
-      return;
-    }
-
-    const registration = await navigator.serviceWorker.getRegistration();
-
-    if (registration == null) {
-      return;
-    }
-
-    await registration.showNotification('Rest timer ended', {
-      vibrate: [200, 100, 200, 100],
-      tag: 'rest-timer-notification',
-    });
+    await Notification.requestPermission();
   } catch (e) {
     console.error(e);
   }
 };
 
-const handleTimerOver = () => {
-  new Notification('Timer ended!');
-  alert('Timer ended!');
+const handleTimerOver = async () => {
+  const permission = await Notification.requestPermission();
+
+  if (permission !== 'granted') {
+    return;
+  }
+  const registration = await navigator.serviceWorker.getRegistration();
+
+  if (registration == null) {
+    return;
+  }
+
+  await registration.showNotification('Rest timer ended', {
+    vibrate: [200, 100, 200, 100],
+    tag: 'rest-timer-notification',
+  });
+
   location.reload();
 };
 
