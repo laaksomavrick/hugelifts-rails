@@ -2,6 +2,7 @@
 
 class WorkoutDay < ApplicationRecord
   include NameParameterizable
+  # include ScheduledWorkoutDestroyer
 
   belongs_to :workout
 
@@ -12,6 +13,20 @@ class WorkoutDay < ApplicationRecord
   alias_attribute :exercises, :workout_day_exercises
 
   validates :name, presence: true
+
+  after_create :reset_scheduled_workout_if_active
+  after_update :reset_scheduled_workout_if_active
+  after_destroy :reset_scheduled_workout_if_active
+
+  def reset_scheduled_workout_if_active
+    return if workout.active? == false
+
+    scheduled_workout = ScheduledWorkout.where(workout_day: self).where(completed: false).first
+
+    return if scheduled_workout.nil?
+
+    scheduled_workout.destroy
+  end
 
   def self.policy_class
     WorkoutDayPolicy

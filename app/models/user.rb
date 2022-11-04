@@ -11,6 +11,10 @@ class User < ApplicationRecord
   after_save :set_default_exercises
   after_save :set_default_workouts
 
+  def active_workout
+    workouts.where(active: true).first
+  end
+
   private
 
   def set_default_exercises

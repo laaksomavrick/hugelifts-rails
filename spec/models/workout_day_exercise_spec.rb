@@ -31,6 +31,15 @@ RSpec.describe WorkoutDayExercise, type: :model do
     expect(workout_day_exercise.valid?).to be(true)
   end
 
+  # Whenever something changes in our workout_day_exercise for the active workout
+  # we want those changes to be propagated to 'todays workout' for the user
+  # E.g. they add an exercise for the active workout day or change a weight
+  describe 'scheduled workout update' do
+    pending 'it deletes the scheduled workout on creation if workout is active'
+    pending 'it deletes the scheduled workout on update if workout is active'
+    pending 'it deletes the scheduled workout on delete if workout is active'
+  end
+
   describe 'increase_weight!' do
     it 'increases the weight by 5lbs' do
       former_weight = workout_day_exercise.weight
