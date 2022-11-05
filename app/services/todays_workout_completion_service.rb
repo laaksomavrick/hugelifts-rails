@@ -18,12 +18,16 @@ class TodaysWorkoutCompletionService
                                     .all
 
       scheduled_workout_exercises.each do |scheduled_workout_exercise|
+        workout_day_exercise = scheduled_workout_exercise.workout_day_exercise
         result = @workout_results[scheduled_workout_exercise.id.to_s]['result']
         scheduled_workout_exercise.result = result
 
         if scheduled_workout_exercise.success?
-          scheduled_workout_exercise.workout_day_exercise.increase_weight!
-          scheduled_workout_exercise.workout_day_exercise.save!
+          workout_day_exercise.increase_weight!
+          workout_day_exercise.save!
+        elsif scheduled_workout_exercise.failure_threshold_exceeded?
+          workout_day_exercise.decrease_weight!
+          workout_day_exercise.save!
         end
 
         scheduled_workout_exercise.save!

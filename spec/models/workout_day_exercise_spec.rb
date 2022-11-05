@@ -110,4 +110,12 @@ RSpec.describe WorkoutDayExercise, type: :model do
       expect(workout_day_exercise.weight).to be(former_weight + 5)
     end
   end
+
+  describe 'decrease_weight!!' do
+    it 'decreases the weight by 5lbs' do
+      former_weight = workout_day_exercise.weight
+      workout_day_exercise.decrease_weight!
+      expect(workout_day_exercise.weight).to be(former_weight - 5)
+    end
+  end
 end
