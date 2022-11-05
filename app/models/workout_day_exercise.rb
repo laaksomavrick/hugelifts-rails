@@ -2,6 +2,7 @@
 
 class WorkoutDayExercise < ApplicationRecord
   include NameParameterizable
+  include ResetScheduledWorkout
 
   belongs_to :workout_day
   belongs_to :exercise
@@ -14,6 +15,7 @@ class WorkoutDayExercise < ApplicationRecord
   validates :unit, inclusion: { in: %w[lb kg] }
 
   delegate :name, to: :exercise
+  delegate :workout, to: :workout_day
 
   def self.policy_class
     WorkoutDayExercisePolicy

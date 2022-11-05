@@ -34,10 +34,73 @@ RSpec.describe WorkoutDayExercise, type: :model do
   # Whenever something changes in our workout_day_exercise for the active workout
   # we want those changes to be propagated to 'todays workout' for the user
   # E.g. they add an exercise for the active workout day or change a weight
-  describe 'scheduled workout update' do
-    pending 'it deletes the scheduled workout on creation if workout is active'
-    pending 'it deletes the scheduled workout on update if workout is active'
-    pending 'it deletes the scheduled workout on delete if workout is active'
+  describe 'scheduled workout reset' do
+    let!(:user) { create(:user) }
+    let!(:exercise) { create(:exercise) }
+    let!(:active_workout_day) { user.active_workout.workout_days.first }
+    let!(:inactive_workout_day) { user.workouts.where(active: false).first.workout_days.first }
+
+    before do
+      create(:scheduled_workout, user:, workout_day: active_workout_day)
+    end
+
+    it 'resets the scheduled workout on wde creation if wde is active' do
+      new_workout_day_exercise = described_class.create(workout_day: active_workout_day, exercise:, sets: 4,
+                                                        reps: 10, weight: 135, unit: 'lb')
+      new_workout_day_exercise.save!
+
+      scheduled_workout = ScheduledWorkout.where(workout_day: active_workout_day).where(completed: false).first
+
+      expect(scheduled_workout).to be_nil
+    end
+
+    it 'resets the scheduled workout on wde update if wde is active' do
+      wde = active_workout_day.exercises.first
+      wde.reps = 12
+      wde.save!
+
+      scheduled_workout = ScheduledWorkout.where(workout_day: active_workout_day).where(completed: false).first
+
+      expect(scheduled_workout).to be_nil
+    end
+
+    it 'resets the scheduled workout on wde delete if wde is active' do
+      wde = active_workout_day.exercises.first
+      wde.destroy!
+
+      scheduled_workout = ScheduledWorkout.where(workout_day: active_workout_day).where(completed: false).first
+
+      expect(scheduled_workout).to be_nil
+    end
+
+    it 'does not reset the scheduled workout on wde creation if wde is not active' do
+      new_workout_day_exercise = described_class.create(workout_day: inactive_workout_day, exercise:, sets: 4,
+                                                        reps: 10, weight: 135, unit: 'lb')
+      new_workout_day_exercise.save!
+
+      scheduled_workout = ScheduledWorkout.where(workout_day: active_workout_day).where(completed: false).first
+
+      expect(scheduled_workout).not_to be_nil
+    end
+
+    it 'does not reset the scheduled workout on wde update if wde is not active' do
+      wde = inactive_workout_day.exercises.first
+      wde.reps = 12
+      wde.save!
+
+      scheduled_workout = ScheduledWorkout.where(workout_day: active_workout_day).where(completed: false).first
+
+      expect(scheduled_workout).not_to be_nil
+    end
+
+    it 'does not reset the scheduled workout on wde delete if wde is not active' do
+      wde = inactive_workout_day.exercises.first
+      wde.destroy!
+
+      scheduled_workout = ScheduledWorkout.where(workout_day: active_workout_day).where(completed: false).first
+
+      expect(scheduled_workout).not_to be_nil
+    end
   end
 
   describe 'increase_weight!' do

@@ -33,7 +33,7 @@ RSpec.describe WorkoutDay, type: :model do
   # Whenever something changes in our workout_day for the active workout
   # we want those changes to be propagated to 'todays workout' for the user
   # E.g. they rename the workout day or modify the days in the workout
-  describe 'scheduled workout destroy' do
+  describe 'reset scheduled workout' do
     let!(:user) { create(:user) }
     let!(:active_workout) { user.active_workout }
     let!(:inactive_workout) { user.workouts.where(active: false).first }
