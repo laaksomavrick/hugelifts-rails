@@ -75,7 +75,9 @@ RSpec.describe WorkoutDay, type: :model do
       active_workout_day.name = 'foo'
       active_workout_day.save!
 
-      scheduled_workout = ScheduledWorkout.where(workout_day: active_workout_day).where(completed: false).first
+      scheduled_workout = ScheduledWorkout
+                          .where(workout_day: active_workout_day)
+                          .where(completed: false).first
 
       expect(scheduled_workout).to be_nil
     end

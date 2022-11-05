@@ -9,11 +9,6 @@ class TodaysWorkoutCompletionService
   end
 
   def call
-    # TODO: test
-    # - updates all results
-    # - if success, weight is increased
-    # - completed is set to true
-
     scheduled_workout_exercise_ids = @workout_results.keys.map(&:to_i)
 
     @todays_workout.transaction do

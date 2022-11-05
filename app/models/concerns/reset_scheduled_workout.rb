@@ -4,9 +4,7 @@ module ResetScheduledWorkout
   extend ActiveSupport::Concern
 
   included do
-    after_create :reset_scheduled_workout_if_active
-    after_update :reset_scheduled_workout_if_active
-    after_destroy :reset_scheduled_workout_if_active
+    after_commit :reset_scheduled_workout_if_active, on: %i[create update destroy]
   end
 
   def reset_scheduled_workout_if_active
