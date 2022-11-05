@@ -25,4 +25,9 @@ class WorkoutDayExercise < ApplicationRecord
     # TODO: accommodate kg
     self.weight += 5
   end
+
+  def decrease_weight!
+    # TODO: accommodate kg
+    self.weight -= 5
+  end
 end

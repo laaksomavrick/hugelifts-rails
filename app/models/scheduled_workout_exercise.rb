@@ -17,6 +17,15 @@ class ScheduledWorkoutExercise < ApplicationRecord
     result.all? { |x| x == reps }
   end
 
+  def failure_threshold_exceeded?
+    prior_attempts = ScheduledWorkoutExercise
+                     .where(workout_day_exercise:)
+                     .where.not(id:)
+                     .order(created_at: :desc)
+                     .limit(2)
+    !prior_attempts.all?(&:success?)
+  end
+
   private
 
   def result_length
