@@ -2,6 +2,7 @@
 
 class WorkoutDay < ApplicationRecord
   include NameParameterizable
+  include ResetScheduledWorkout
 
   belongs_to :workout
 
@@ -12,6 +13,10 @@ class WorkoutDay < ApplicationRecord
   alias_attribute :exercises, :workout_day_exercises
 
   validates :name, presence: true
+
+  def workout_day
+    self
+  end
 
   def self.policy_class
     WorkoutDayPolicy

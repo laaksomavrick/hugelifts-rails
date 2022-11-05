@@ -19,7 +19,7 @@ class TodaysWorkoutController < ApplicationController
     ok = service.call
 
     if ok == false
-      flash[:alert] = I18n.t('todays_workout.update.error')
+      flash[:alert] = I18n.t('todays_workout.update.failure')
     else
       destroy_progress
       flash[:notice] = I18n.t('todays_workout.update.success')
