@@ -2,7 +2,11 @@
 
 class ExercisesController < ApplicationController
   def index
-    @exercises = policy_scope(Exercise)
+    page = params[:page]
+    search = params[:search]
+
+    @exercises = policy_scope(Exercise).all.order(:name).page(page)
+    @exercises = @exercises.prefix_search_by_name(search) if search.present?
   end
 
   def new
