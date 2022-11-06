@@ -16,8 +16,51 @@ RSpec.describe 'Exercises', type: :system do
     it 'shows a user\'s exercises' do
       sign_in user
       visit exercises_path
-      expect(page).to have_content(Exercise.default_exercise_names.sample)
+      expect(page).to have_content(Exercise.all.order(:name).first.name)
       expect(page).to have_current_path('/exercises')
+    end
+
+    describe 'pagination' do
+      it 'can go to the next page' do
+        sign_in user
+        visit exercises_path
+
+        click_link '2'
+
+        next_page_exercise_name = Exercise.all.order(:name).all[Exercise::PAGINATION_SIZE + 1].name
+        expect(page).to have_content(next_page_exercise_name)
+      end
+
+      it 'can go to the previous page' do
+        sign_in user
+        visit exercises_path
+
+        click_link '2'
+        click_link '1'
+
+        first_page_exercise_name = Exercise.all.order(:name).first.name
+        expect(page).to have_content(first_page_exercise_name)
+      end
+    end
+
+    describe 'search' do
+      it 'can search exercises' do
+        sign_in user
+        visit exercises_path
+
+        search_term = 'barbell'
+        barbell_exercises = Exercise.all.prefix_search_by_name(search_term)
+        other_exercise = create(:exercise, name: 'foo')
+
+        fill_in 'search', with: search_term
+        click_button 'commit'
+
+        barbell_exercises.each do |e|
+          expect(page).to have_content(e.name)
+        end
+
+        expect(page).not_to have_content(other_exercise.name)
+      end
     end
   end
 
