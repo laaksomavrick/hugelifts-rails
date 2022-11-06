@@ -3,6 +3,9 @@
 class Exercise < ApplicationRecord
   include NameParameterizable
 
+  PAGINATION_SIZE = 10
+  paginates_per PAGINATION_SIZE
+
   belongs_to :user
   has_many :workout_day_exercises, dependent: :destroy
 

@@ -2,7 +2,8 @@
 
 class ExercisesController < ApplicationController
   def index
-    @exercises = policy_scope(Exercise)
+    page = params[:page]
+    @exercises = policy_scope(Exercise).all.page(page)
   end
 
   def new
