@@ -9,6 +9,8 @@ class Exercise < ApplicationRecord
   belongs_to :user
   has_many :workout_day_exercises, dependent: :destroy
 
+  scope :prefix_search_by_name, ->(name = '') { where('name ILIKE ?', "#{name}%") }
+
   validates :name, presence: true
 
   BARBELL_BENCH_PRESS = 'Barbell Bench Press'

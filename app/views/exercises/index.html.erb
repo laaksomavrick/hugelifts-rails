@@ -7,6 +7,18 @@
   </div>
 </div>
 
+<div class="exercises-search mb-4">
+  <%= form_tag(exercises_path, method: :get, class: "flex mt-4") do %>
+    <%= text_field_tag(
+          :search,
+          params[:search],
+          placeholder: "Search for an exercise...",
+          class: "w-full max-w-md block rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
+        ) %>
+    <%= submit_tag "Search", class: outline_button_class("ml-auto") %>
+  <% end %>
+</div>
+
 <div class="exercises">
   <% @exercises.each do |exercise| %>
     <%= link_to edit_exercise_path(exercise), class: "flex py-2 items-center hover:text-blue-600" do %>

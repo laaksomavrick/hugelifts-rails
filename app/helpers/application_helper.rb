@@ -18,9 +18,7 @@ module ApplicationHelper
   end
 
   def outline_button_class(css_class_string = '')
-    # rubocop:disable Layout/LineLength
-    "bg-transparent hover:bg-gray-500 text-gray-700 font-bold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded #{css_class_string}"
-    # rubocop:enable Layout/LineLength
+    "bg-white hover:bg-gray-100 border border-gray-300 font-bold py-2 px-4 rounded cursor-pointer #{css_class_string}"
   end
 
   def page_header_class(css_class_string = '')

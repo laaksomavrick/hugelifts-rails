@@ -10,7 +10,7 @@
 <div class="workouts">
   <% @workouts.each do |workout| %>
     <%= link_to edit_workout_path(workout), class: "flex py-2 items-center hover:text-blue-600" do %>
-      <div class="text-xl font-medium">
+      <div class="text-xl">
         <%= workout.name %>
       </div>
       <div class="ml-auto <%= workout.active ? "font-bold" : "" %>">
