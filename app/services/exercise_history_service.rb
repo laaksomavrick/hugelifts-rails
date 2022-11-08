@@ -2,26 +2,25 @@
 
 class ExerciseHistoryService
   class ExerciseHistoryEntry
+    attr_reader :name, :date, :one_rep_max
+
     def initialize(exercise:, scheduled_workout_exercise:)
-      @exercise = exercise
-      @scheduled_workout_exercise = scheduled_workout_exercise
+      @name = exercise.name
+      @date = scheduled_workout_exercise.updated_at
+      @one_rep_max = calculate_one_rep_max(scheduled_workout_exercise)
     end
 
-    def name
-      @exercise.name
-    end
+    private
 
-    def date
-      @scheduled_workout_exercise.updated_at
-    end
-
-    def one_rep_max
+    def calculate_one_rep_max(scheduled_workout_exercise)
       # https://en.wikipedia.org/wiki/One-repetition_maximum
       # Epley formula
-      weight = @scheduled_workout_exercise.weight
-      reps = @scheduled_workout_exercise.result.max
+      weight = scheduled_workout_exercise.weight
+      reps = scheduled_workout_exercise.result.max
 
-      (weight * (1 + (reps.to_f / 30.0))).to_i
+      actual = (weight * (1 + (reps.to_f / 30.0)))
+      remainder = actual % 5
+      (actual - remainder).to_i
     end
   end
 

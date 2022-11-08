@@ -31,6 +31,7 @@ class ExercisesController < ApplicationController
   def edit
     exercise_id = params[:id].to_i
     @exercise = authorize Exercise.find_by(id: exercise_id)
+    @history = ExerciseHistoryService.new(user: current_user, exercise: @exercise).call
   end
 
   def update

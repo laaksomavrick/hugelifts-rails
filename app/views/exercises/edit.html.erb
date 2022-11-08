@@ -11,3 +11,7 @@
            model: @exercise,
            method: :patch,
            url: exercise_path %>
+
+<div data-exercise-history data-exercise-history-entries="<%= @history.to_json %>">
+
+</div>
