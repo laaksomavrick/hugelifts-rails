@@ -21,7 +21,7 @@ class ExerciseHistoryService
       weight = @scheduled_workout_exercise.weight
       reps = @scheduled_workout_exercise.result.max
 
-      weight * (1 + (reps.to_f / 30.0))
+      (weight * (1 + (reps.to_f / 30.0))).to_i
     end
   end
 
