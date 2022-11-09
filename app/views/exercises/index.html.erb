@@ -21,7 +21,7 @@
 
 <div class="exercises">
   <% @exercises.each do |exercise| %>
-    <%= link_to edit_exercise_path(exercise), class: "flex py-2 items-center hover:text-blue-600" do %>
+    <%= link_to exercise_path(exercise), class: "flex py-2 items-center hover:text-blue-600" do %>
       <div class="text-xl">
         <%= exercise.name %>
       </div>

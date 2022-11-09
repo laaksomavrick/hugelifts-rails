@@ -28,10 +28,15 @@ class ExercisesController < ApplicationController
     render 'new', status: :unprocessable_entity
   end
 
-  def edit
+  def show
     exercise_id = params[:id].to_i
     @exercise = authorize Exercise.find_by(id: exercise_id)
     @history = ExerciseHistoryService.new(user: current_user, exercise: @exercise).call
+  end
+
+  def edit
+    exercise_id = params[:id].to_i
+    @exercise = authorize Exercise.find_by(id: exercise_id)
   end
 
   def update
