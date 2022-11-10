@@ -20,8 +20,6 @@ export default () => {
     return;
   }
 
-  console.log(entries);
-
   const ctx = document.getElementById('exerciseHistoryChart').getContext('2d');
 
   const labels = entries.map((x) => format(new Date(x.date), 'MMM do'));

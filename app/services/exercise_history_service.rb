@@ -36,6 +36,7 @@ class ExerciseHistoryService
       .where('scheduled_workout.user_id': @user.id)
       .where('exercise.id': @exercise.id)
       .order(created_at: :asc)
+      .limit(10)
       .all
       .map do |scheduled_workout_exercise|
       ExerciseHistoryEntry.new(exercise: @exercise,
