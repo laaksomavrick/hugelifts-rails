@@ -27,4 +27,8 @@ class ExercisePolicy < ApplicationPolicy
   def destroy?
     true
   end
+
+  def show?
+    user.id == record.user_id
+  end
 end

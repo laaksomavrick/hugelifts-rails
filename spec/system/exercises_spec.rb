@@ -138,4 +138,21 @@ RSpec.describe 'Exercises', type: :system do
       expect(page).to have_content(I18n.t('exercises.destroy.success'))
     end
   end
+
+  describe 'show page' do
+    it 'shows an exercise' do
+      sign_in user
+      visit exercise_path(exercise.id)
+      expect(page).to have_content(exercise.name)
+    end
+
+    it "shows an exercise's workout history" do
+      sign_in user
+      visit exercise_path(exercise.id)
+
+      history_graph = find_by_id('exerciseHistoryChart')
+
+      expect(history_graph).not_to be_nil
+    end
+  end
 end

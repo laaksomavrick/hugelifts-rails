@@ -20,6 +20,8 @@ RSpec/MultipleExpectations:
   Enabled: false
 RSpec/ExampleLength:
   Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
 Rails/I18nLocaleTexts:
   Enabled: false
 Metrics/ClassLength:

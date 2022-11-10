@@ -51,6 +51,8 @@ en:
       success: 'Successfully updated exercise'
     destroy:
       success: 'Successfully deleted exercise'
+    show:
+      history: 'Workout history'
   registrations:
     create:
       disabled: 'Creating new accounts is currently disabled'
