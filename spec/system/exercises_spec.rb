@@ -147,6 +147,14 @@ RSpec.describe 'Exercises', type: :system do
     end
 
     it "shows an exercise's workout history" do
+      workout_day = user.active_workout.workout_days.first
+      workout_day_exercise = workout_day.exercises.first
+      exercise = workout_day_exercise.exercise
+
+      scheduled_workout = create(:scheduled_workout, workout_day:, user:, completed: true)
+      create(:scheduled_workout_exercise, scheduled_workout:, workout_day_exercise:, sets: 4, reps: 10,
+                                          result: [10, 9, 8, 7])
+
       sign_in user
       visit exercise_path(exercise.id)
 

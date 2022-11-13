@@ -53,6 +53,7 @@ en:
       success: 'Successfully deleted exercise'
     show:
       history: 'Workout history'
+      no_workout_history: 'No recorded workouts with this exercise'
   registrations:
     create:
       disabled: 'Creating new accounts is currently disabled'

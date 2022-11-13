@@ -10,7 +10,12 @@
   <div class="text-lg pb-2"><%= @exercise.name %></div>
 </div>
 
+<% if @history.any? %>
 <div class="<%= form_element_class %>"data-exercise-history data-exercise-history-entries="<%= @history.to_json %>">
   <%= label_tag :name, t('exercises.show.history'), class: form_label_class %>
   <canvas id="exerciseHistoryChart"></canvas>
 </div>
+<% else %>
+  <%= label_tag :name, t('exercises.show.history'), class: form_label_class %>
+  <p class="text-lg pb-2"><%= t('exercises.show.no_workout_history') %></p>
+<% end %>
