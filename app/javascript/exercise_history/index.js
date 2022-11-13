@@ -1,5 +1,6 @@
 import { Chart, registerables } from 'chart.js';
 import { format } from 'date-fns';
+import { min, max } from 'lodash';
 Chart.register(...registerables);
 
 export default () => {
@@ -20,18 +21,27 @@ export default () => {
     return;
   }
 
+  if (Array.isArray(entries) === false || entries.length === 0) {
+    return;
+  }
+
+  const oneRepMaxes = entries.map((x) => x.one_rep_max);
+
   const ctx = document.getElementById('exerciseHistoryChart').getContext('2d');
 
   const labels = entries.map((x) => format(new Date(x.date), 'MMM do'));
   const datasets = [
     {
       label: 'One rep max (lbs)',
-      data: entries.map((x) => x.one_rep_max),
+      data: oneRepMaxes,
       fill: false,
       borderColor: 'rgb(75, 192, 192)',
       tension: 0.1,
     },
   ];
+
+  const minY = min(oneRepMaxes) - 25;
+  const maxY = max(oneRepMaxes) + 25;
 
   const data = {
     labels,
@@ -42,15 +52,23 @@ export default () => {
     type: 'line',
     data: data,
     options: {
+      elements: {
+        point: {
+          radius: 6,
+        },
+      },
       scales: {
         y: {
-          beginAtZero: true,
+          min: minY,
+          max: maxY,
+          ticks: {
+            precision: 0,
+            stepSize: 5,
+          },
         },
       },
       plugins: {
-        legend: {
-          onClick: null,
-        },
+        legend: false,
       },
     },
   });
