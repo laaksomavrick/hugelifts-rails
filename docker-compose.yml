@@ -23,6 +23,8 @@ services:
       - db
     env_file:
       - app.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   db:
     image: postgres:11
     restart: unless-stopped
@@ -39,3 +41,4 @@ services:
 #    volumes:
 #      - ./data/certbot/conf:/etc/letsencrypt
 #      - ./data/certbot/www:/var/www/certbot
+

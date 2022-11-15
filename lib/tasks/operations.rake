@@ -15,18 +15,32 @@ namespace :operations do
     password = config.password
     database = config.database
 
+    Rails.logger.info "Backing up database=#{database} at host=#{host}"
+
+    # /var/run/docker.sock
+
     # Build the command to run
     filename = "#{Rails.root}/tmp/backup/#{Time.zone.now.strftime('%Y%m%d%H%M%S')}_#{database}.psql_dump"
+
+    Rails.logger.info "Sending backup to volume=#{filename}"
+
     pg_cmd = "PGPASSWORD='#{password}' pg_dump -F c -v -h '#{host}' -U '#{username}' -f '#{filename}' #{database}"
-    docker_cmd = "docker exec app #{pg_cmd}"
+
+    # Delegate command via docker socket to postgres
+    docker_cmd = "/var/run/docker.sock exec db #{pg_cmd}"
 
     # Exec
     exec docker_cmd
+
+    Rails.logger.info "Executing pg_dump was ok"
+
+    # Find backup from shared volume
+    # TODO
 
     Rails.logger.info "Database backed up to #{filename}"
 
     # Upload it to digital ocean spaces
 
-    # Set up cron for every day/week/whatever
+    # TODO: use whenever to set up cron for every day/week/whatever
   end
 end
