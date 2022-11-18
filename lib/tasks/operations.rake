@@ -3,12 +3,10 @@
 require 'database_config'
 
 namespace :operations do
-
   desc 'Backs up a database dump to digital ocean'
   task backup_database: :environment do
     Rails.logger.info 'Attempting to backup database'
 
-    # Get the config
     config = DatabaseConfig.new
     host = config.host
     username = config.username
@@ -17,29 +15,30 @@ namespace :operations do
 
     Rails.logger.info "Backing up database=#{database} at host=#{host}"
 
-    # /var/run/docker.sock
+    file_location = "#{Rails.root}/#{Time.zone.now.strftime('%Y%m%d%H%M%S')}_#{database}.psql_dump"
 
-    # Build the command to run
-    filename = "#{Rails.root}/tmp/backup/#{Time.zone.now.strftime('%Y%m%d%H%M%S')}_#{database}.psql_dump"
+    Rails.logger.info "Sending backup to volume=#{file_location}"
 
-    Rails.logger.info "Sending backup to volume=#{filename}"
+    pg_dump_command = "PGPASSWORD='#{password}' pg_dump -d postgres://#{username}:#{password}@#{host}:5432/#{database} > #{file_location}"
+    ` #{pg_dump_command} `
 
-    pg_cmd = "PGPASSWORD='#{password}' pg_dump -F c -v -h '#{host}' -U '#{username}' -f '#{filename}' #{database}"
+    Rails.logger.info "Wrote pg_dump output to #{file_location}"
 
-    # Delegate command via docker socket to postgres
-    docker_cmd = "/var/run/docker.sock exec db #{pg_cmd}"
+    file_exists = File.file?(file_location)
 
-    # Exec
-    exec docker_cmd
+    if file_exists == false
+      Rails.logger.error "Cannot find database backup at #{file_location}"
+      return
+    end
 
-    Rails.logger.info "Executing pg_dump was ok"
-
-    # Find backup from shared volume
-    # TODO
-
-    Rails.logger.info "Database backed up to #{filename}"
+    Rails.logger.info "Found database backup at #{file_location}"
 
     # Upload it to digital ocean spaces
+    # TODO
+
+    # Delete the backup from disk
+    # TODO
+    # todo: consider how to rotate in digital ocean spaces
 
     # TODO: use whenever to set up cron for every day/week/whatever
   end

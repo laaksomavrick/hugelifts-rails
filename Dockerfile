@@ -55,7 +55,7 @@ ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait
 RUN chmod +x /wait
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends build-essential curl libpq-dev \
+  && apt-get install -y --no-install-recommends build-essential curl libpq-dev postgresql-client \
   && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man \
   && apt-get clean \
   && groupadd -g "${GID}" ruby \
