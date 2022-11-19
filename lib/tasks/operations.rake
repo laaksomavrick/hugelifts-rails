@@ -16,12 +16,12 @@ namespace :operations do
 
     Rails.logger.info "Backing up database=#{database} at host=#{host}"
 
-    file_name = "#{database}_backup"
-    file_location = "#{Rails.root}/#{file_name}.psql_dump"
+    file_name = "#{Time.zone.now.strftime('%Y%m%d%H%M%S')}_#{database}.psql_dump"
+    file_location = Rails.root.join(file_name)
 
     Rails.logger.info "Sending backup to volume=#{file_location}"
 
-    pg_dump_command = "PGPASSWORD='#{password}' pg_dump -d postgres://#{username}:#{password}@#{host}:5432/#{database} > #{file_location}"
+    pg_dump_command = "PGPASSWORD='#{password}' pg_dump -d postgres://#{username}:#{password}@#{host}:5432/#{database} > #{file_location}" # rubocop:disable Layout/LineLength
     ` #{pg_dump_command} `
 
     Rails.logger.info "Wrote pg_dump output to #{file_location}"

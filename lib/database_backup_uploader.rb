@@ -9,8 +9,8 @@ class DatabaseBackupUploader
 
   def upload(file_location = '', file_key = '')
     response = client.put_object(
-      bucket: "#{@config.bucket_name}/backups",
-      key: file_key,
+      bucket: @config.bucket_name,
+      key: "backups/#{file_key}",
       body: File.read(file_location)
     )
 
@@ -18,7 +18,7 @@ class DatabaseBackupUploader
 
     true
   rescue StandardError => e
-    Rails.logger.error("Something went wrong uploading file_key=#{file_key} at file_location=#{file_location}. Error=#{e}")
+    Rails.logger.error("Something went wrong uploading file_key=#{file_key} at file_location=#{file_location}. Error=#{e}") # rubocop:disable Layout/LineLength
     false
   end
 
