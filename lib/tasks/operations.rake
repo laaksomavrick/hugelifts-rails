@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'database_config'
+require 'database_backup_uploader'
 
 namespace :operations do
   desc 'Backs up a database dump to digital ocean'
@@ -15,7 +16,8 @@ namespace :operations do
 
     Rails.logger.info "Backing up database=#{database} at host=#{host}"
 
-    file_location = "#{Rails.root}/#{Time.zone.now.strftime('%Y%m%d%H%M%S')}_#{database}.psql_dump"
+    file_name = "#{database}_backup"
+    file_location = "#{Rails.root}/#{file_name}.psql_dump"
 
     Rails.logger.info "Sending backup to volume=#{file_location}"
 
@@ -33,12 +35,22 @@ namespace :operations do
 
     Rails.logger.info "Found database backup at #{file_location}"
 
-    # Upload it to digital ocean spaces
-    # TODO
+    uploader = DatabaseBackupUploader.new
+    ok = uploader.upload(file_location, file_name)
+
+    if ok == false
+      Rails.logger.error "Something went wrong uploading #{file_name}"
+      return
+    end
+
+    Rails.logger.info 'Uploaded database backup'
 
     # Delete the backup from disk
-    # TODO
-    # todo: consider how to rotate in digital ocean spaces
+    File.delete(file_location)
+
+    Rails.logger.info 'Cleaned up database backup from disk'
+
+    Rails.logger.info 'Database backup successful, exiting...'
 
     # TODO: use whenever to set up cron for every day/week/whatever
   end
