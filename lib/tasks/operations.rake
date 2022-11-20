@@ -51,7 +51,5 @@ namespace :operations do
     Rails.logger.info 'Cleaned up database backup from disk'
 
     Rails.logger.info 'Database backup successful, exiting...'
-
-    # TODO: use whenever to set up cron for every day/week/whatever
   end
 end

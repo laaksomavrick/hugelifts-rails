@@ -1,4 +1,4 @@
-FROM ruby:3.1.1-slim-bullseye AS assets
+FROM ruby:3.1.1 AS assets
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ ARG UID=1000
 ARG GID=1000
 
 RUN bash -c "set -o pipefail && apt-get update \
-  && apt-get install -y --no-install-recommends build-essential curl git libpq-dev \
+  && apt-get install -y --no-install-recommends build-essential curl git libpq-dev cron \
   && curl -sSL https://deb.nodesource.com/setup_16.x | bash - \
   && curl -sSL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
   && echo 'deb https://dl.yarnpkg.com/debian/ stable main' | tee /etc/apt/sources.list.d/yarn.list \
@@ -41,7 +41,7 @@ CMD ["bash"]
 
 ###############################################################################
 
-FROM ruby:3.1.1-slim-bullseye AS app
+FROM ruby:3.1.1 AS app
 
 WORKDIR /app
 
@@ -55,14 +55,15 @@ ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait
 RUN chmod +x /wait
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends build-essential curl libpq-dev postgresql-client \
+  && apt-get install -y --no-install-recommends build-essential curl libpq-dev postgresql-client cron \
   && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man \
   && apt-get clean \
   && groupadd -g "${GID}" ruby \
   && useradd --create-home --no-log-init -u "${UID}" -g "${GID}" ruby \
   && chown ruby:ruby -R /app
 
-USER ruby
+# This is bad (running as root) but doing it to get cron functional
+# USER ruby
 
 COPY --chown=ruby:ruby bin/ ./bin
 RUN chmod 0755 bin/*

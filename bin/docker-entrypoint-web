@@ -21,7 +21,12 @@ if compgen -G "${manifest_files}" > /dev/null 2>&1; then
     -delete
 fi
 
+# Database migrations
 rails db:create
 rails db:migrate
+
+# Cron
+whenever --update-crontab
+service cron start
 
 exec "$@"
