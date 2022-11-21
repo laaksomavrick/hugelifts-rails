@@ -18,6 +18,14 @@
 !/tmp/pids/
 !/tmp/pids/.keep
 
+# Ignore volumes, but keep the directory.
+/volumes/grafana/*
+/volumes/loki/*
+!/volumes/grafana/
+!/volumes/grafana/.keep
+!/volumes/loki/
+!/volumes/loki/.keep
+
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
