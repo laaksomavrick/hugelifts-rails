@@ -9,3 +9,21 @@ services:
       POSTGRES_PASSWORD: 'docker'
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+  loki:
+    image: grafana/loki:2.6.1
+    ports:
+      - "3100"
+    volumes:
+      - ./volumes/loki:/loki
+  promtail:
+    image: grafana/promtail:2.6.1
+    volumes:
+      - ./config/promtail.yml:/etc/promtail/config.yml
+      - ./log:/app/log
+  grafana:
+    image: grafana/grafana:9.2.2
+    ports:
+      - "5000:3000"
+    volumes:
+      - ./volumes/grafana:/var/lib/grafana
+      - ./config/grafana/provisioning/:/etc/grafana/provisioning/
