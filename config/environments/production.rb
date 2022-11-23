@@ -54,7 +54,7 @@ Rails.application.configure do
   # https://github.com/roidrage/lograge
   config.lograge.enabled = true
   config.lograge.custom_options = lambda do |_event|
-    { time: Time.zone.now }
+    { time: Time.zone.now.strftime('%y/%m/%d %H:%M:%S') }
   end
   config.lograge.custom_payload do |controller|
     {
