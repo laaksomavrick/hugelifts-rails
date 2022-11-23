@@ -12,4 +12,4 @@ scrape_configs:
           - localhost
         labels:
           job: hugelifts
-          __path__: /app/log/production.log
+          __path__: /app/log/*.log

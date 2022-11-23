@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(hugelifts.ca www.hugelifts.ca)
+domains=(hugelifts.ca www.hugelifts.ca admin.hugelifts.ca www.admin.hugelifts.ca)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="laakso.mavrick@gmail.com" # Adding a valid address is strongly recommended
