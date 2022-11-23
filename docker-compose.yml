@@ -7,6 +7,7 @@ services:
     depends_on:
       - app
       - db
+      - grafana
     volumes:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
@@ -46,7 +47,7 @@ services:
     expose:
       - "3100"
     volumes:
-      - ./volumes/loki:/loki
+      - loki-storage:/loki
   promtail:
     image: grafana/promtail:2.6.1
     volumes:
@@ -59,5 +60,9 @@ services:
     env_file:
       - grafana.env
     volumes:
-      - ./volumes/grafana:/var/lib/grafana
+      - grafana-storage:/var/lib/grafana
       - ./config/grafana/provisioning/:/etc/grafana/provisioning/
+
+volumes:
+    grafana-storage:
+    loki-storage:
