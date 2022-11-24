@@ -4,52 +4,42 @@ require 'database_config'
 require 'database_backup_uploader'
 
 namespace :operations do
+  logger = Logger.new(Rails.root.join('log/operations.log'))
+
   desc 'Backs up a database dump to digital ocean'
   task backup_database: :environment do
-    Rails.logger.info 'Attempting to backup database'
+    begin
+      config = DatabaseConfig.new
+      host = config.host
+      username = config.username
+      password = config.password
+      database = config.database
 
-    config = DatabaseConfig.new
-    host = config.host
-    username = config.username
-    password = config.password
-    database = config.database
+      logger.info "Backing up database=#{database} at host=#{host}"
 
-    Rails.logger.info "Backing up database=#{database} at host=#{host}"
+      file_name = "#{Time.zone.now.strftime('%Y%m%d%H%M%S')}_#{database}.psql_dump"
+      file_location = Rails.root.join(file_name)
 
-    file_name = "#{Time.zone.now.strftime('%Y%m%d%H%M%S')}_#{database}.psql_dump"
-    file_location = Rails.root.join(file_name)
+      pg_dump_command = "PGPASSWORD='#{password}' pg_dump -d postgres://#{username}:#{password}@#{host}:5432/#{database} > #{file_location}" # rubocop:disable Layout/LineLength
+      ` #{pg_dump_command} `
 
-    Rails.logger.info "Sending backup to volume=#{file_location}"
+      file_exists = File.file?(file_location)
 
-    pg_dump_command = "PGPASSWORD='#{password}' pg_dump -d postgres://#{username}:#{password}@#{host}:5432/#{database} > #{file_location}" # rubocop:disable Layout/LineLength
-    ` #{pg_dump_command} `
+      raise "Cannot find database backup at #{file_location}" unless file_exists
 
-    Rails.logger.info "Wrote pg_dump output to #{file_location}"
+      uploader = DatabaseBackupUploader.new(logger:)
+      ok = uploader.upload(file_location, file_name)
 
-    file_exists = File.file?(file_location)
+      raise "Something went wrong uploading #{file_name}" unless ok
 
-    if file_exists == false
-      Rails.logger.error "Cannot find database backup at #{file_location}"
-      return
+      # Delete the backup from disk
+      File.delete(file_location)
+
+      logger.info 'Cleaned up database backup from disk'
+
+      logger.info "Database backup successful with filename=#{file_name}"
     end
-
-    Rails.logger.info "Found database backup at #{file_location}"
-
-    uploader = DatabaseBackupUploader.new
-    ok = uploader.upload(file_location, file_name)
-
-    if ok == false
-      Rails.logger.error "Something went wrong uploading #{file_name}"
-      return
-    end
-
-    Rails.logger.info 'Uploaded database backup'
-
-    # Delete the backup from disk
-    File.delete(file_location)
-
-    Rails.logger.info 'Cleaned up database backup from disk'
-
-    Rails.logger.info 'Database backup successful, exiting...'
+  rescue StandardError => e
+    logger.error e
   end
 end

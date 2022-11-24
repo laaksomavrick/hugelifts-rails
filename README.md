@@ -21,3 +21,15 @@
 ### Editing secrets:
 
 `EDITOR="code --wait" rails credentials:edit`
+
+## Deploying this codebase
+
+* Setup git, docker, ssh on virtual machine
+* Copy down repo, update CI config in Github secrets
+* Setup env files from examples
+  * `db.env`
+  * `app.env`
+  * `grafana.env`
+* run `init-letsencrypt.sh` to set up ssl
+* run `make up-prod`
+

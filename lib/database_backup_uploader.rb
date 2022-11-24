@@ -3,8 +3,9 @@
 require 'digital_ocean_spaces_config'
 
 class DatabaseBackupUploader
-  def initialize(config = DigitalOceanSpacesConfig.new)
+  def initialize(config: DigitalOceanSpacesConfig.new, logger: Rails.logger)
     @config = config
+    @logger = logger
   end
 
   def upload(file_location = '', file_key = '')
@@ -18,7 +19,7 @@ class DatabaseBackupUploader
 
     true
   rescue StandardError => e
-    Rails.logger.error("Something went wrong uploading file_key=#{file_key} at file_location=#{file_location}. Error=#{e}") # rubocop:disable Layout/LineLength
+    @logger.error("Something went wrong uploading file_key=#{file_key} at file_location=#{file_location}. Error=#{e}")
     false
   end
 
