@@ -93,22 +93,25 @@ services:
       - back-tier
       - front-tier
   node-exporter:
-    image: prom/node-exporter:latest
+    image: quay.io/prometheus/node-exporter:latest
     restart: unless-stopped
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/rootfs:ro
+      - /:/host:ro,rslave
     command:
+      - '--path.rootfs=/host'
       - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
       - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points'
+      - --collector.filesystem.ignored-mount-points
       - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
-    expose:
-      - 9100
+    ports:
+      - 9100:9100
     networks:
       - back-tier
+    deploy:
+      mode: global
   prometheus:
     image: prom/prometheus:latest
     restart: unless-stopped
