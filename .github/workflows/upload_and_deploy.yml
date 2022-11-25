@@ -49,6 +49,5 @@ jobs:
             git pull
             docker pull registry.digitalocean.com/ownyourday/hugelifts:$GIT_SHORT_SHA
             docker tag registry.digitalocean.com/ownyourday/hugelifts:$GIT_SHORT_SHA hugelifts:latest
-            docker-compose up -d
             docker-compose up -d --no-deps --build app promtail grafana prometheus
             docker image prune -af
