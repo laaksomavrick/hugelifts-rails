@@ -1,4 +1,14 @@
 version: "3"
+
+networks:
+  front-tier:
+  back-tier:
+
+volumes:
+  grafana-storage:
+  loki-storage:
+  prometheus-storage:
+
 services:
   reverse-proxy:
     image: nginx:stable
@@ -95,7 +105,6 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points'
       - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
-
     expose:
       - 9100
     networks:
@@ -116,12 +125,3 @@ services:
       - 9090
     networks:
       - back-tier
-
-volumes:
-    grafana-storage:
-    loki-storage:
-    prometheus-storage:
-
-networks:
-  front-tier:
-  back-tier:
