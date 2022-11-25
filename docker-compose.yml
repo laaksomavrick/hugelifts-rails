@@ -3,6 +3,7 @@ version: "3"
 networks:
   front-tier:
   back-tier:
+    driver: bridge
 
 volumes:
   grafana-storage:
@@ -82,8 +83,8 @@ services:
   grafana:
     image: grafana/grafana:9.2.2
     restart: unless-stopped
-    expose:
-      - "3000"
+    ports:
+      - 3000:3000
     env_file:
       - grafana.env
     volumes:
@@ -93,7 +94,7 @@ services:
       - back-tier
       - front-tier
   node-exporter:
-    image: quay.io/prometheus/node-exporter:latest
+    image: prom/node-exporter:latest
     restart: unless-stopped
     volumes:
       - /proc:/host/proc:ro
@@ -106,23 +107,21 @@ services:
       - '--path.sysfs=/host/sys'
       - --collector.filesystem.ignored-mount-points
       - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
-    ports:
-      - 9100:9100
+    expose:
+      - 9100
     networks:
       - back-tier
-    deploy:
-      mode: global
   prometheus:
     image: prom/prometheus:latest
     restart: unless-stopped
     volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./config/prometheus/:/etc/prometheus/
       - prometheus-storage:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--web.enable-lifecycle'
     expose:
       - 9090
