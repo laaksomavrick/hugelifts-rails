@@ -30,6 +30,7 @@ services:
     volumes:
       - ./log:/app/log
     networks:
+      - front-tier
       - back-tier
   db:
     image: postgres:11
