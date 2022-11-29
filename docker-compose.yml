@@ -112,7 +112,7 @@ services:
     networks:
       - back-tier
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:2.40.4
     restart: unless-stopped
     volumes:
       - ./config/prometheus/:/etc/prometheus/
@@ -127,3 +127,15 @@ services:
       - 9090
     networks:
       - back-tier
+  alertmanager:
+    image: prom/alertmanager:0.24.0
+    restart: unless-stopped
+    expose:
+      - 9093
+    volumes:
+      - .config/alertmanager/:/etc/alertmanager/
+    networks:
+      - back-tier
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
