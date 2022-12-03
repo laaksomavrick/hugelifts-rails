@@ -75,6 +75,8 @@ services:
     entrypoint:
       - /usr/bin/loki
       - -config.file=/etc/config/loki.yml
+    depends_on:
+      - alertmanager
     networks:
       - back-tier
   promtail:
@@ -99,7 +101,7 @@ services:
       - back-tier
       - front-tier
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.4.0
     restart: unless-stopped
     volumes:
       - /proc:/host/proc:ro
@@ -117,7 +119,7 @@ services:
     networks:
       - back-tier
   prometheus:
-    image: prom/prometheus:2.40.4
+    image: prom/prometheus:v2.40.4
     restart: unless-stopped
     volumes:
       - ./config/prometheus/:/etc/prometheus/
@@ -133,12 +135,12 @@ services:
     networks:
       - back-tier
   alertmanager:
-    image: prom/alertmanager:0.24.0
+    image: prom/alertmanager:v0.24.0
     restart: unless-stopped
     expose:
       - 9093
     volumes:
-      - .config/alertmanager/:/etc/alertmanager/
+      - ./config/alertmanager/:/etc/alertmanager/
     networks:
       - back-tier
     command:
