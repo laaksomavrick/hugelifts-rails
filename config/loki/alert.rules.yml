@@ -4,7 +4,7 @@ groups:
       - alert: ErrorOccurred
         expr: |
           sum by (job)
-            (rate({job="hugelifts"} |= `INFO`[2m]))
+            (rate({job="hugelifts"} |= `ERROR`[2m]))
             > 0
         for: 2m
         labels:
