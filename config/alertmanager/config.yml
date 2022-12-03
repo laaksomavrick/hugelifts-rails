@@ -1,13 +1,13 @@
 route:
-  group_by: [Alertname] # TODO
+  group_by: [alertname]
   receiver: email-me
 
 receivers:
   - name: email-me
     email_configs:
-      - to: $GMAIL_ACCOUNT # TODO my email
-        from: $GMAIL_ACCOUNT # TODO hugelifts gmail
+      - to: laakso.mavrick@gmail.com
+        from: hugelifts@gmail.com
         smarthost: smtp.gmail.com:587
-        auth_username: "$GMAIL_ACCOUNT"
-        auth_identity: "$GMAIL_ACCOUNT"
-        auth_password: "$GMAIL_AUTH_TOKEN"
+        auth_username: hugelifts@gmail.com
+        auth_identity: hugelifts@gmail.com
+        auth_password: xmrnvepnyhvakpip
