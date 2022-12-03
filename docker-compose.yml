@@ -70,6 +70,13 @@ services:
       - "3100"
     volumes:
       - loki-storage:/loki
+      - ./config/loki/loki.yml:/etc/config/loki.yml
+      - ./config/loki/alert.rules.yml:/etc/loki/rules/rules.yml
+    entrypoint:
+      - /usr/bin/loki
+      - -config.file=/etc/config/loki.yml
+    depends_on:
+      - alertmanager
     networks:
       - back-tier
   promtail:
@@ -94,7 +101,7 @@ services:
       - back-tier
       - front-tier
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.4.0
     restart: unless-stopped
     volumes:
       - /proc:/host/proc:ro
@@ -112,7 +119,7 @@ services:
     networks:
       - back-tier
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.40.4
     restart: unless-stopped
     volumes:
       - ./config/prometheus/:/etc/prometheus/
@@ -127,3 +134,15 @@ services:
       - 9090
     networks:
       - back-tier
+  alertmanager:
+    image: prom/alertmanager:v0.24.0
+    restart: unless-stopped
+    expose:
+      - 9093
+    volumes:
+      - ./config/alertmanager/:/etc/alertmanager/
+    networks:
+      - back-tier
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
