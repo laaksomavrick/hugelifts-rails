@@ -70,6 +70,11 @@ services:
       - "3100"
     volumes:
       - loki-storage:/loki
+      - ./config/loki/loki.yml:/etc/config/loki.yml
+      - ./config/loki/alert.rules.yml:/etc/loki/rules/rules.yml
+    entrypoint:
+      - /usr/bin/loki
+      - -config.file=/etc/config/loki.yml
     networks:
       - back-tier
   promtail:

@@ -10,4 +10,4 @@ receivers:
         smarthost: smtp.gmail.com:587
         auth_username: hugelifts@gmail.com
         auth_identity: hugelifts@gmail.com
-        auth_password: xmrnvepnyhvakpip
+        auth_password: xmrnvepnyhvakpip # TODO: read from .env
