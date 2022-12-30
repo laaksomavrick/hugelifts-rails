@@ -9,6 +9,8 @@ class WorkoutDayExercise < ApplicationRecord
 
   has_many :exercise_weight_attempts, dependent: :destroy
 
+  after_create :create_exercise_weight_attempt, if: :no_attempt_exists?
+
   store_accessor :meta, :sets, :reps, :weight, :unit
 
   validates :sets, numericality: { greater_than: 0, only_integer: true }
@@ -44,5 +46,15 @@ class WorkoutDayExercise < ApplicationRecord
       weight: self.weight
     )
     save!
+  end
+
+  private
+
+  def no_attempt_exists?
+    exercise_weight_attempts.empty?
+  end
+
+  def create_exercise_weight_attempt
+    exercise_weight_attempts.create(weight: self.weight)
   end
 end

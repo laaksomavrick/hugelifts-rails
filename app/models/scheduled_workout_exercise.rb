@@ -27,16 +27,16 @@ class ScheduledWorkoutExercise < ApplicationRecord
   end
 
   def failure_threshold_exceedable?
-    prior_attempts_at_current_weight = prior_attempts_at_current_weight(PRIOR_ATTEMPT_LOOKBACK)
+    prior_attempts = prior_attempts(PRIOR_ATTEMPT_LOOKBACK)
 
-    return false if prior_attempts_at_current_weight.count < PRIOR_ATTEMPT_LOOKBACK
+    return false if prior_attempts.count < PRIOR_ATTEMPT_LOOKBACK
 
-    !prior_attempts_at_current_weight.all?(&:success?)
+    !prior_attempts.all?(&:success?)
   end
 
   private
 
-  def prior_attempts_at_current_weight(limit)
+  def prior_attempts(limit)
     current_attempt = workout_day_exercise.current_attempt
 
     ScheduledWorkoutExercise

@@ -92,11 +92,12 @@ RSpec.describe ScheduledWorkoutExercise, type: :model do
     end
 
     it 'is exceedable when prior workouts were not successful' do
-      workout_day_exercise = create(:workout_day_exercise)
+      workout_day_exercise = create(:workout_day_exercise, :with_exercise_weight_attempt)
+      exercise_weight_attempt = workout_day_exercise.current_attempt
 
       ScheduledWorkoutExercise::PRIOR_ATTEMPT_LOOKBACK.times do
         create(:scheduled_workout_exercise, workout_day_exercise:, sets: workout_day_exercise.sets,
-                                            reps: workout_day_exercise.reps, result: [])
+                                            reps: workout_day_exercise.reps, result: [], exercise_weight_attempt:)
       end
 
       scheduled_workout_exercise = create(:scheduled_workout_exercise, workout_day_exercise:,
