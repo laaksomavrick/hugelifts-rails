@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_30_005259) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_30_153945) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exercise_weight_attempts", force: :cascade do |t|
+    t.bigint "workout_day_exercise_id", null: false
+    t.integer "weight", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["workout_day_exercise_id"], name: "index_exercise_weight_attempts_on_workout_day_exercise_id"
+  end
 
   create_table "exercises", force: :cascade do |t|
     t.string "name"
@@ -31,6 +39,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_30_005259) do
     t.integer "result", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "exercise_weight_attempt_id"
+    t.index ["exercise_weight_attempt_id"], name: "index_scheduled_workout_exercises_on_exercise_weight_attempt_id"
     t.index ["scheduled_workout_id"], name: "index_scheduled_workout_exercises_on_scheduled_workout_id"
     t.index ["workout_day_exercise_id"], name: "index_scheduled_workout_exercises_on_workout_day_exercise_id"
   end
@@ -86,4 +96,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_30_005259) do
     t.index ["user_id"], name: "index_workouts_on_user_id"
   end
 
+  add_foreign_key "scheduled_workout_exercises", "exercise_weight_attempts"
 end

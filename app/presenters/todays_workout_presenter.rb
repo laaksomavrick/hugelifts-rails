@@ -75,5 +75,9 @@ class TodaysWorkoutPresenter
         '0'
       end
     end
+
+    def in_danger?
+      @scheduled_workout_exercise.failure_threshold_exceedable?
+    end
   end
 end

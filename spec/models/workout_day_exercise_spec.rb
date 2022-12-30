@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe WorkoutDayExercise, type: :model do
-  let!(:workout_day_exercise) { create(:workout_day_exercise) }
+  let!(:workout_day_exercise) { create(:workout_day_exercise, :with_exercise_weight_attempt) }
 
   it 'must have a positive number of sets' do
     workout_day_exercise.sets = 0
@@ -109,6 +109,16 @@ RSpec.describe WorkoutDayExercise, type: :model do
       workout_day_exercise.increase_weight!
       expect(workout_day_exercise.weight).to be(former_weight + 5)
     end
+
+    it 'creates a new exercise_weight_attempt' do
+      former_attempt = workout_day_exercise.current_attempt
+
+      workout_day_exercise.increase_weight!
+      new_attempt = workout_day_exercise.current_attempt
+
+      expect(former_attempt.id).not_to be(new_attempt.id)
+      expect(former_attempt.weight).not_to be(new_attempt.weight)
+    end
   end
 
   describe 'decrease_weight!!' do
@@ -116,6 +126,16 @@ RSpec.describe WorkoutDayExercise, type: :model do
       former_weight = workout_day_exercise.weight
       workout_day_exercise.decrease_weight!
       expect(workout_day_exercise.weight).to be(former_weight - 5)
+    end
+
+    it 'creates a new exercise_weight_attempt' do
+      former_attempt = workout_day_exercise.current_attempt
+
+      workout_day_exercise.increase_weight!
+      new_attempt = workout_day_exercise.current_attempt
+
+      expect(former_attempt.id).not_to be(new_attempt.id)
+      expect(former_attempt.weight).not_to be(new_attempt.weight)
     end
   end
 end

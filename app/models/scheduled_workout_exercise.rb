@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class ScheduledWorkoutExercise < ApplicationRecord
+  PRIOR_ATTEMPT_LOOKBACK = 2
+
   belongs_to :scheduled_workout
   belongs_to :workout_day_exercise
+  belongs_to :exercise_weight_attempt
 
   validates :sets, presence: true
   validates :reps, presence: true
@@ -14,19 +17,34 @@ class ScheduledWorkoutExercise < ApplicationRecord
   end
 
   def success?
+    return false if result.empty?
+
     result.all? { |x| x == reps }
   end
 
   def failure_threshold_exceeded?
-    prior_attempts = ScheduledWorkoutExercise
-                     .where(workout_day_exercise:)
-                     .where.not(id:)
-                     .order(created_at: :desc)
-                     .limit(2)
+    success? == false && failure_threshold_exceedable?
+  end
+
+  def failure_threshold_exceedable?
+    prior_attempts = prior_attempts(PRIOR_ATTEMPT_LOOKBACK)
+
+    return false if prior_attempts.count < PRIOR_ATTEMPT_LOOKBACK
+
     !prior_attempts.all?(&:success?)
   end
 
   private
+
+  def prior_attempts(limit)
+    current_attempt = workout_day_exercise.current_attempt
+
+    ScheduledWorkoutExercise
+      .where(exercise_weight_attempt: current_attempt)
+      .where.not(id:)
+      .order(created_at: :desc)
+      .limit(limit)
+  end
 
   def result_length
     return if result == []

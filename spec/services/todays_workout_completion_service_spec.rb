@@ -46,6 +46,7 @@ RSpec.describe TodaysWorkoutCompletionService do
     user = todays_workout.user
     workout_day = todays_workout.workout_day
     workout_day_exercise = workout_day.exercises.first
+    exercise_weight_attempt = create(:exercise_weight_attempt, workout_day_exercise:)
 
     failed_exercise_id = workout_results.keys.first
     failed_exercise = todays_workout.exercises.find_by(id: failed_exercise_id.to_i)
@@ -57,15 +58,15 @@ RSpec.describe TodaysWorkoutCompletionService do
 
     scheduled_workout_first = create(:scheduled_workout, workout_day:, user:)
     create(:scheduled_workout_exercise, scheduled_workout: scheduled_workout_first, workout_day_exercise:,
-                                        result: successful_result)
+                                        result: successful_result, exercise_weight_attempt:)
 
     scheduled_workout_second = create(:scheduled_workout, workout_day:, user:)
     create(:scheduled_workout_exercise, scheduled_workout: scheduled_workout_second, workout_day_exercise:,
-                                        result: failed_result)
+                                        result: failed_result, exercise_weight_attempt:)
 
     scheduled_workout_third = create(:scheduled_workout, workout_day:, user:)
     create(:scheduled_workout_exercise, scheduled_workout: scheduled_workout_third, workout_day_exercise:,
-                                        result: failed_result)
+                                        result: failed_result, exercise_weight_attempt:)
 
     # Fail this time too
     workout_results[failed_exercise_id]['result'] = failed_exercise.sets.times.map { 0 }

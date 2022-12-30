@@ -14,7 +14,7 @@
               <div class="mr-auto w-1/2">
                 <%= exercise.name %>
               </div>
-              <div>
+              <div class=<%= "text-red-400" if exercise.in_danger? %>>
                 <%= exercise.sets %>x<%= exercise.reps %> @ <%= exercise.weight %><%= exercise.units %>
               </div>
             </div>

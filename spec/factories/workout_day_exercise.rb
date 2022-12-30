@@ -8,5 +8,11 @@ FactoryBot.define do
     reps { Faker::Number.between(from: 5, to: 12) }
     weight { 135 }
     unit { 'lb' }
+
+    trait :with_exercise_weight_attempt do
+      after(:create) do |workout_day_exercise|
+        create(:exercise_weight_attempt, workout_day_exercise:, weight: workout_day_exercise.weight)
+      end
+    end
   end
 end
