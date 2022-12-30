@@ -10,7 +10,7 @@ groups:
       summary: "Instance {{ $labels.instance }} down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
   - alert: HostUnderHighLoad
-    expr: node_load1 > 0.5
+    expr: node_load1 > 0.8
     for: 2m
     labels:
       severity: warning
