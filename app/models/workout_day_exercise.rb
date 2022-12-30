@@ -6,6 +6,9 @@ class WorkoutDayExercise < ApplicationRecord
 
   belongs_to :workout_day
   belongs_to :exercise
+
+  has_many :exercise_weight_attempts, dependent: :destroy
+
   store_accessor :meta, :sets, :reps, :weight, :unit
 
   validates :sets, numericality: { greater_than: 0, only_integer: true }
@@ -21,15 +24,25 @@ class WorkoutDayExercise < ApplicationRecord
     WorkoutDayExercisePolicy
   end
 
+  def current_attempt
+    exercise_weight_attempts.order(created_at: :desc).first
+  end
+
   def increase_weight!
     # TODO: accommodate kg
     self.weight += 5
-    # TODO: create new ExerciseWeightAttempt
+    exercise_weight_attempts.new(
+      weight: self.weight
+    )
+    save!
   end
 
   def decrease_weight!
     # TODO: accommodate kg
     self.weight -= 5
-    # TODO: create new ExerciseWeightAttempt
+    exercise_weight_attempts.new(
+      weight: self.weight
+    )
+    save!
   end
 end

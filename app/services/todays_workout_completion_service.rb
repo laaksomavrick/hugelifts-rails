@@ -24,10 +24,8 @@ class TodaysWorkoutCompletionService
 
         if scheduled_workout_exercise.success?
           workout_day_exercise.increase_weight!
-          workout_day_exercise.save!
         elsif scheduled_workout_exercise.failure_threshold_exceeded?
           workout_day_exercise.decrease_weight!
-          workout_day_exercise.save!
         end
 
         scheduled_workout_exercise.save!

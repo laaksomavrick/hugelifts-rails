@@ -106,7 +106,7 @@ class WorkoutDayExerciseForm
         weight:,
         unit:
       )
-      @workout_day_exercise.save
     end
+    @workout_day_exercise.exercise_weight_attempts.create(weight:)
   end
 end

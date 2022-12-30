@@ -51,11 +51,12 @@ RSpec.describe ScheduledWorkoutExercise, type: :model do
     it 'is not exceedable when prior workouts happened before weight decreased' do
       # When prior attempts occur at the same weight that were failed and then a change happened, we don't want these to
       # be included in the lookback for this method.
-      # In other words, each "attempt" (set of schedueld workout exercises at a specific weight)
+      # In other words, each "attempt" (set of scheduled workout exercises at a specific weight)
       # should be independent of prior "attempts"
+      # We introduced ExerciseWeightAttempt to facilitate this grouping
 
-      # Create priot attempts
-      workout_day_exercise = create(:workout_day_exercise)
+      # Create prior attempts
+      workout_day_exercise = create(:workout_day_exercise, :with_exercise_weight_attempt)
 
       ScheduledWorkoutExercise::PRIOR_ATTEMPT_LOOKBACK.times do
         create(:scheduled_workout_exercise, workout_day_exercise:, sets: workout_day_exercise.sets,
@@ -63,7 +64,8 @@ RSpec.describe ScheduledWorkoutExercise, type: :model do
       end
 
       create(:scheduled_workout_exercise, workout_day_exercise:,
-                                          sets: workout_day_exercise.sets, reps: workout_day_exercise.reps, result: [])
+                                          sets: workout_day_exercise.sets,
+                                          reps: workout_day_exercise.reps, result: [])
 
       # Failed, decrease weight
       workout_day_exercise.decrease_weight!
@@ -83,7 +85,8 @@ RSpec.describe ScheduledWorkoutExercise, type: :model do
 
       # New attempt, failure_threshold_exceedable? should be false
       scheduled_workout_exercise = create(:scheduled_workout_exercise, workout_day_exercise:,
-                                                                       sets: workout_day_exercise.sets, reps: workout_day_exercise.reps, result: [])
+                                                                       sets: workout_day_exercise.sets,
+                                                                       reps: workout_day_exercise.reps, result: [])
 
       expect(scheduled_workout_exercise.failure_threshold_exceedable?).to be(false)
     end
@@ -97,7 +100,8 @@ RSpec.describe ScheduledWorkoutExercise, type: :model do
       end
 
       scheduled_workout_exercise = create(:scheduled_workout_exercise, workout_day_exercise:,
-                                                                       sets: workout_day_exercise.sets, reps: workout_day_exercise.reps, result: [])
+                                                                       sets: workout_day_exercise.sets,
+                                                                       reps: workout_day_exercise.reps, result: [])
 
       expect(scheduled_workout_exercise.failure_threshold_exceedable?).to be(true)
     end

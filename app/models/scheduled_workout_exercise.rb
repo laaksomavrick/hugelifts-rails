@@ -5,6 +5,7 @@ class ScheduledWorkoutExercise < ApplicationRecord
 
   belongs_to :scheduled_workout
   belongs_to :workout_day_exercise
+  belongs_to :exercise_weight_attempt
 
   validates :sets, presence: true
   validates :reps, presence: true
@@ -36,21 +37,11 @@ class ScheduledWorkoutExercise < ApplicationRecord
   private
 
   def prior_attempts_at_current_weight(limit)
-    # TODO: Need to not return prior attempts at this weight upon decrease - see db - we're returning prior failures instead of new failures. Should return [].
-    # attempt_id
-    #
-    # ExerciseWeightAttempt
-    # Create attempt id field as a uuid
-    # Use the same attempt for subsequent scheduled_workout_exercises UNLESS
-    #   weight increased
-    #   weight decreased
-
-    current_weight = workout_day_exercise.weight
+    current_attempt = workout_day_exercise.current_attempt
 
     ScheduledWorkoutExercise
-      .where(workout_day_exercise:)
+      .where(exercise_weight_attempt: current_attempt)
       .where.not(id:)
-      .where(weight: current_weight)
       .order(created_at: :desc)
       .limit(limit)
   end
