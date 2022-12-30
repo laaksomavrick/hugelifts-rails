@@ -24,10 +24,12 @@ class WorkoutDayExercise < ApplicationRecord
   def increase_weight!
     # TODO: accommodate kg
     self.weight += 5
+    # TODO: create new ExerciseWeightAttempt
   end
 
   def decrease_weight!
     # TODO: accommodate kg
     self.weight -= 5
+    # TODO: create new ExerciseWeightAttempt
   end
 end

@@ -66,6 +66,7 @@ class TodaysWorkoutGenerationService
     todays_workout.save!
 
     workout_day.exercises.each do |exercise|
+      # TODO: attempt_id
       scheduled_exercise = ScheduledWorkoutExercise.new(
         sets: exercise.sets,
         reps: exercise.reps,

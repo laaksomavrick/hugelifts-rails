@@ -41,4 +41,65 @@ RSpec.describe ScheduledWorkoutExercise, type: :model do
       expect(scheduled_workout_exercise.success?).to be(false)
     end
   end
+
+  describe 'failure_threshold_exceedable?' do
+    it 'is not exceedable when no prior workouts exist' do
+      scheduled_workout_exercise = create(:scheduled_workout_exercise, sets: 4, reps: 10, result: [10, 10, 8, 7])
+      expect(scheduled_workout_exercise.failure_threshold_exceedable?).to be(false)
+    end
+
+    it 'is not exceedable when prior workouts happened before weight decreased' do
+      # When prior attempts occur at the same weight that were failed and then a change happened, we don't want these to
+      # be included in the lookback for this method.
+      # In other words, each "attempt" (set of schedueld workout exercises at a specific weight)
+      # should be independent of prior "attempts"
+
+      # Create priot attempts
+      workout_day_exercise = create(:workout_day_exercise)
+
+      ScheduledWorkoutExercise::PRIOR_ATTEMPT_LOOKBACK.times do
+        create(:scheduled_workout_exercise, workout_day_exercise:, sets: workout_day_exercise.sets,
+                                            reps: workout_day_exercise.reps, result: [])
+      end
+
+      create(:scheduled_workout_exercise, workout_day_exercise:,
+                                          sets: workout_day_exercise.sets, reps: workout_day_exercise.reps, result: [])
+
+      # Failed, decrease weight
+      workout_day_exercise.decrease_weight!
+      workout_day_exercise.save!
+
+      # Success, increase weight
+      create(:scheduled_workout_exercise, workout_day_exercise:,
+                                          sets: workout_day_exercise.sets,
+                                          reps: workout_day_exercise.reps,
+                                          result: Array(0..workout_day_exercise.sets - 1)
+                                                    .map do
+                                                    workout_day_exercise.reps
+                                                  end)
+
+      workout_day_exercise.increase_weight!
+      workout_day_exercise.save!
+
+      # New attempt, failure_threshold_exceedable? should be false
+      scheduled_workout_exercise = create(:scheduled_workout_exercise, workout_day_exercise:,
+                                                                       sets: workout_day_exercise.sets, reps: workout_day_exercise.reps, result: [])
+
+      expect(scheduled_workout_exercise.failure_threshold_exceedable?).to be(false)
+    end
+
+    it 'is exceedable when prior workouts were not successful' do
+      workout_day_exercise = create(:workout_day_exercise)
+
+      ScheduledWorkoutExercise::PRIOR_ATTEMPT_LOOKBACK.times do
+        create(:scheduled_workout_exercise, workout_day_exercise:, sets: workout_day_exercise.sets,
+                                            reps: workout_day_exercise.reps, result: [])
+      end
+
+      scheduled_workout_exercise = create(:scheduled_workout_exercise, workout_day_exercise:,
+                                                                       sets: workout_day_exercise.sets, reps: workout_day_exercise.reps, result: [])
+
+      expect(scheduled_workout_exercise.failure_threshold_exceedable?).to be(true)
+    end
+  end
 end
