@@ -121,7 +121,7 @@ RSpec.describe WorkoutDayExercise, type: :model do
     end
   end
 
-  describe 'decrease_weight!!' do
+  describe 'decrease_weight!' do
     it 'decreases the weight by 5lbs' do
       former_weight = workout_day_exercise.weight
       workout_day_exercise.decrease_weight!
@@ -136,6 +136,35 @@ RSpec.describe WorkoutDayExercise, type: :model do
 
       expect(former_attempt.id).not_to be(new_attempt.id)
       expect(former_attempt.weight).not_to be(new_attempt.weight)
+    end
+  end
+
+  describe 'current_attempt' do
+    let!(:workout_day_exercise) { create(:workout_day_exercise) }
+
+    it 'retrieves the most recent exercise_weight_attempt' do
+      create(:exercise_weight_attempt, workout_day_exercise:)
+      create(:exercise_weight_attempt, workout_day_exercise:)
+      third_attempt = create(:exercise_weight_attempt, workout_day_exercise:)
+
+      current_attempt = workout_day_exercise.current_attempt
+
+      expect(current_attempt.id).to be(third_attempt.id)
+    end
+
+    it 'creates a exercise_weight_attempt on creation' do
+      current_attempt = workout_day_exercise.current_attempt
+
+      expect(current_attempt).not_to be_nil
+    end
+
+    it 'creates a exercise_weight_attempt if none exists' do
+      # Need this test case and functionality for existing workout_days prior to the
+      # introduction of this model and concept
+      ExerciseWeightAttempt.where(workout_day_exercise:).destroy_all
+      current_attempt = workout_day_exercise.current_attempt
+
+      expect(current_attempt).not_to be_nil
     end
   end
 end

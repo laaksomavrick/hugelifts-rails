@@ -27,7 +27,11 @@ class WorkoutDayExercise < ApplicationRecord
   end
 
   def current_attempt
-    exercise_weight_attempts.order(created_at: :desc).first
+    attempts = exercise_weight_attempts.order(created_at: :desc)
+
+    return create_exercise_weight_attempt if attempts.empty?
+
+    attempts.first
   end
 
   def increase_weight!
