@@ -20,6 +20,12 @@ RSpec.describe WorkoutDayExercise, type: :model do
     expect(workout_day_exercise.valid?).to be(false)
   end
 
+  it 'must have a multiple of five for weight' do
+    workout_day_exercise.weight = 1337
+    expect(workout_day_exercise.valid?).to be(false)
+    expect(workout_day_exercise.errors.full_messages).to include('Weight must be multiple of five')
+  end
+
   it 'must have a unit of lbs or kgs' do
     workout_day_exercise.unit = 'foo'
     expect(workout_day_exercise.valid?).to be(false)

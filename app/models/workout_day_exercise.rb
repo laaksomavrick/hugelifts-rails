@@ -15,9 +15,10 @@ class WorkoutDayExercise < ApplicationRecord
 
   validates :sets, numericality: { greater_than: 0, only_integer: true }
   validates :reps, numericality: { greater_than: 0, only_integer: true }
-  # TODO: validate mod 5 == 0
   validates :weight, numericality: { greater_than: 0, only_integer: true }
   validates :unit, inclusion: { in: %w[lb kg] }
+
+  validate :weight, :multiple_of_five?
 
   delegate :name, to: :exercise
   delegate :workout, to: :workout_day
@@ -60,5 +61,10 @@ class WorkoutDayExercise < ApplicationRecord
 
   def create_exercise_weight_attempt
     exercise_weight_attempts.create(weight: self.weight)
+  end
+
+  def multiple_of_five?
+    ok = (weight % 5).zero?
+    errors.add(:weight, 'must be multiple of five') unless ok
   end
 end
