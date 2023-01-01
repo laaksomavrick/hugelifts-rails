@@ -44,7 +44,7 @@
 
     <div class=<%= form_element_class %>>
       <%= form.label :weight, t('common.weight'), class: form_label_class %>
-      <%= form.number_field :weight, value: model.selected_weight, step: 5, class: form_input_class %>
+      <%= form.number_field :weight, { value: model.selected_weight, step: 5, min: 5, inputmode: "numeric", pattern: "[0-9]*", class: form_input_class } %>
     </div>
 
     <div class=<%= form_element_class %>>
