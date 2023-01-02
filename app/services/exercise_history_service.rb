@@ -2,12 +2,13 @@
 
 class ExerciseHistoryService
   class ExerciseHistoryEntry
-    attr_reader :name, :date, :one_rep_max
+    attr_reader :name, :date, :one_rep_max, :id
 
     def initialize(exercise:, scheduled_workout_exercise:)
       @name = exercise.name
       @date = scheduled_workout_exercise.updated_at
       @one_rep_max = calculate_one_rep_max(scheduled_workout_exercise)
+      @id = scheduled_workout_exercise.id
     end
 
     private
@@ -31,8 +32,9 @@ class ExerciseHistoryService
 
   def call
     ScheduledWorkoutExercise
+      .not_skipped
+      .completed
       .joins(:scheduled_workout, workout_day_exercise: :exercise)
-      .where('scheduled_workout.completed': true)
       .where('scheduled_workout.user_id': @user.id)
       .where('exercise.id': @exercise.id)
       .order(created_at: :asc)

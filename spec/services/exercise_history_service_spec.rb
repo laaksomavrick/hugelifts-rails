@@ -50,4 +50,17 @@ RSpec.describe ExerciseHistoryService do
     expect(history.first.one_rep_max).to be < history.second.one_rep_max
     expect(history.second.one_rep_max).to be < history.third.one_rep_max
   end
+
+  it 'does not include skipped exercises' do
+    skipped_scheduled_workout = create(:scheduled_workout, workout_day:, completed: true, skipped: true, user:)
+    skipped = create(:scheduled_workout_exercise,
+                     scheduled_workout: skipped_scheduled_workout,
+                     workout_day_exercise:, sets: 4, reps: 10, result: [0, 0, 0, 0],
+                     created_at: 0.days.ago)
+
+    history = described_class.new(user:, exercise:).call
+
+    expect(history.length).to be scheduled_workouts.length
+    expect(history.map(&:id)).not_to include(skipped.id)
+  end
 end
