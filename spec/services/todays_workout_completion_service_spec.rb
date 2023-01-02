@@ -29,6 +29,24 @@ RSpec.describe TodaysWorkoutCompletionService do
     expect(successful_exercise.workout_day_exercise.weight).to be successful_exercise_old_weight
   end
 
+  it 'can skip a workout' do
+    exercise_id = workout_results.keys.first
+    successful_exercise = todays_workout.exercises.find_by(id: exercise_id.to_i)
+    successful_exercise_old_weight = successful_exercise.weight
+    workout_results[exercise_id]['result'] = successful_exercise.sets.times.map { successful_exercise.reps }
+
+    service = described_class.new(todays_workout:, workout_results:, skipped: true)
+    ok = service.call
+
+    expect(ok).to be(true)
+
+    the_workout = ScheduledWorkout.find_by(id: todays_workout.id)
+
+    expect(the_workout.completed).to be(true)
+    expect(the_workout.skipped).to be(true)
+    expect(successful_exercise.workout_day_exercise.weight).to be successful_exercise_old_weight
+  end
+
   it 'increments weight when all reps for sets performed' do
     successful_exercise_id = workout_results.keys.first
     successful_exercise = todays_workout.exercises.find_by(id: successful_exercise_id.to_i)
@@ -56,15 +74,15 @@ RSpec.describe TodaysWorkoutCompletionService do
     failed_result = failed_exercise.sets.times.map { 0 }
     successful_result = failed_exercise.sets.times.map { failed_exercise.reps }
 
-    scheduled_workout_first = create(:scheduled_workout, workout_day:, user:)
+    scheduled_workout_first = create(:scheduled_workout, workout_day:, user:, completed: true)
     create(:scheduled_workout_exercise, scheduled_workout: scheduled_workout_first, workout_day_exercise:,
                                         result: successful_result, exercise_weight_attempt:)
 
-    scheduled_workout_second = create(:scheduled_workout, workout_day:, user:)
+    scheduled_workout_second = create(:scheduled_workout, workout_day:, user:, completed: true)
     create(:scheduled_workout_exercise, scheduled_workout: scheduled_workout_second, workout_day_exercise:,
                                         result: failed_result, exercise_weight_attempt:)
 
-    scheduled_workout_third = create(:scheduled_workout, workout_day:, user:)
+    scheduled_workout_third = create(:scheduled_workout, workout_day:, user:, completed: true)
     create(:scheduled_workout_exercise, scheduled_workout: scheduled_workout_third, workout_day_exercise:,
                                         result: failed_result, exercise_weight_attempt:)
 

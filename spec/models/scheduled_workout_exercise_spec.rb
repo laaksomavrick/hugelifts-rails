@@ -112,7 +112,8 @@ RSpec.describe ScheduledWorkoutExercise, type: :model do
     it 'is not exceedable when prior workouts were successful and a skip is included' do
       ScheduledWorkoutExercise::PRIOR_ATTEMPT_LOOKBACK.times do
         create(:scheduled_workout_exercise, workout_day_exercise:, sets: workout_day_exercise.sets,
-                                            reps: workout_day_exercise.reps, result: successful_result, exercise_weight_attempt:)
+                                            reps: workout_day_exercise.reps,
+                                            result: successful_result, exercise_weight_attempt:)
       end
 
       # Create a valid result for a skipped workout
