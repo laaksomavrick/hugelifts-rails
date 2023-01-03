@@ -12,6 +12,9 @@ class ScheduledWorkoutExercise < ApplicationRecord
 
   validate :result_length
 
+  scope :not_skipped, -> { joins(:scheduled_workout).where('scheduled_workout.skipped': false) }
+  scope :completed, -> { joins(:scheduled_workout).where('scheduled_workout.completed': true) }
+
   def empty_result
     sets.times.map { 0 }
   end
@@ -40,8 +43,9 @@ class ScheduledWorkoutExercise < ApplicationRecord
     current_attempt = workout_day_exercise.current_attempt
 
     ScheduledWorkoutExercise
+      .not_skipped
+      .completed
       .where(exercise_weight_attempt: current_attempt)
-      .where.not(id:)
       .order(created_at: :desc)
       .limit(limit)
   end

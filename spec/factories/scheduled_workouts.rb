@@ -5,6 +5,7 @@ FactoryBot.define do
     user factory: :user
     workout_day { create(:workout_day, :with_exercises) }
     completed { false }
+    skipped { false }
 
     trait :with_exercises do
       after(:create) do |scheduled_workout|

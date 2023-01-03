@@ -1,11 +1,10 @@
-<%= render 'shared/page_header', header: t('todays_workout.header') do %>
-  <button data-set-timer-button data-set-timer-active="0" class="<%= default_button_class("ml-auto") %>"><%= t('common.timer') %></button>
-<% end %>
-
+<%= render 'shared/page_header', header: t('todays_workout.header') %>
 
 <% if @todays_workout.workout? %>
-  <%= render 'shared/page_subheader', subheader: @todays_workout.day_name %>
   <%= form_tag todays_workout_path(@todays_workout.id), method: :patch, id: 'todays_workout_form' do |f| %>
+    <%= render 'shared/page_subheader', subheader: @todays_workout.day_name do %>
+      <%= render 'skip_todays_workout_button' %>
+    <% end %>
     <div class="space-y-4 mb-4">
       <% @todays_workout.exercises.each do |exercise| %>
         <%= fields_for "scheduled_workout_exercises[]", exercise.scheduled_workout_exercise do |ef| %>

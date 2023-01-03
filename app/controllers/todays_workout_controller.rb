@@ -12,14 +12,18 @@ class TodaysWorkoutController < ApplicationController
   def update
     todays_workout_id = params[:id]
     workout_results = params[:scheduled_workout_exercises]
+    skipped = params[:skipped].present?
 
     todays_workout = authorize ScheduledWorkout.find_by(id: todays_workout_id)
-    service = TodaysWorkoutCompletionService.new(todays_workout:, workout_results:)
+    service = TodaysWorkoutCompletionService.new(todays_workout:, workout_results:, skipped:)
 
     ok = service.call
 
     if ok == false
       flash[:alert] = I18n.t('todays_workout.update.failure')
+    elsif skipped
+      destroy_progress
+      flash[:notice] = I18n.t('todays_workout.skipped.success')
     else
       destroy_progress
       flash[:notice] = I18n.t('todays_workout.update.success')
