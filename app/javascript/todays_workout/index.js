@@ -20,7 +20,9 @@ export default () => {
     setRepButtonState(repButton);
   }
 
-  skipButton.addEventListener('click', onSkipButtonClick);
+  if (skipButton) {
+    skipButton.addEventListener('click', onSkipButtonClick);
+  }
 
   checkCompleteButton(completeButton, { totalSets });
 };
