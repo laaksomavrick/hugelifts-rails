@@ -19,6 +19,22 @@ RSpec.describe 'Today\'s Workout', type: :system do
       expect(page).to have_content(I18n.t('todays_workout.update.success'))
       expect(page).to have_content(workout.workout_days.second.name)
     end
+
+    it 'can skip a scheduled workout' do
+      sign_in user
+      visit todays_workout_index_path
+
+      page.all(:css, 'div[data-rep-button]').each(&:click)
+
+      skip_button = find 'div[data-skip-todays-workout-button]'
+      skip_button.click
+
+      complete_button = find_button 'Complete'
+      complete_button.click
+
+      expect(page).to have_content(I18n.t('todays_workout.skipped.success'))
+      expect(page).to have_content(workout.workout_days.second.name)
+    end
   end
 
   describe 'index page' do
