@@ -1,2 +1,5 @@
-<div data-skip-todays-workout-button class="<%= outline_button_class %>" %>Skip</div>
-<%= check_box_tag :skipped, true, false, { class: "hidden", data: { "skip-todays-workout-check-box" => "" } } %>
+<% button_class = skipped ? warning_button_class : outline_button_class %>
+<% button_text = skipped ? "Skipped" : "Skip" %>
+
+<div data-skip-todays-workout-button class="<%= button_class %>" %><%= button_text %></div>
+<%= check_box_tag :skipped, true, skipped, { class: "hidden", data: { "skip-todays-workout-check-box" => "" } } %>
