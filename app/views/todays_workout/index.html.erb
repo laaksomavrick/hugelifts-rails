@@ -3,7 +3,7 @@
 <% if @todays_workout.workout? %>
   <%= form_tag todays_workout_path(@todays_workout.id), method: :patch, id: 'todays_workout_form' do |f| %>
     <%= render 'shared/page_subheader', subheader: @todays_workout.day_name do %>
-      <%= render 'skip_todays_workout_button' %>
+      <%= render 'skip_todays_workout_button', skipped: @todays_workout.skipped? %>
     <% end %>
     <div class="space-y-4 mb-4">
       <% @todays_workout.exercises.each do |exercise| %>

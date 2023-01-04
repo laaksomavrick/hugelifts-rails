@@ -26,6 +26,10 @@ class TodaysWorkoutPresenter
     @scheduled_workout.id
   end
 
+  def skipped?
+    @todays_workout_progress.skipped?
+  end
+
   class TodaysWorkoutExercisePresenter
     attr_reader :scheduled_workout_exercise
 

@@ -1,3 +1,6 @@
+import { get } from 'lodash';
+import { patch } from '../api';
+
 const activeClass =
   'bg-yellow-400 hover:bg-yellow-600 text-gray-50 font-bold py-2 px-4 rounded cursor-pointer';
 const inactiveClass =
@@ -39,14 +42,33 @@ const setSkipButtonInactive = () => {
   skipButton.innerHTML = inactiveText;
 };
 
-const onSkipButtonClick = () => {
+const cacheSkipState = async (skipped) => {
+  let csrfToken = document.getElementsByName('csrf-token');
+  if (csrfToken == null) {
+    console.error('No CSRF token found in the DOM');
+    return;
+  }
+  csrfToken = get(csrfToken, '[0].content', null);
+  const url = `/todays_workout_skip`;
+  await patch({
+    url,
+    csrfToken,
+    body: {
+      skipped,
+    },
+  });
+};
+
+const onSkipButtonClick = async () => {
   const checked = getCheckBoxValue();
 
   if (checked) {
     setCheckBoxValue(false);
+    await cacheSkipState(false);
     setSkipButtonInactive();
   } else {
     setCheckBoxValue(true);
+    await cacheSkipState(true);
     setSkipButtonActive();
   }
 };

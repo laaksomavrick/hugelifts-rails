@@ -21,6 +21,10 @@ module ApplicationHelper
     "bg-white hover:bg-gray-100 border border-gray-300 font-bold py-2 px-4 rounded cursor-pointer #{css_class_string}"
   end
 
+  def warning_button_class(css_class_string = '')
+    "bg-yellow-400 hover:bg-yellow-600 text-gray-50 font-bold py-2 px-4 rounded cursor-pointer #{css_class_string}"
+  end
+
   def page_header_class(css_class_string = '')
     "flex items-center mb-4 #{css_class_string}"
   end
