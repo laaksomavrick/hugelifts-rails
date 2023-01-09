@@ -13,7 +13,7 @@
 
   <% if devise_mapping.rememberable? %>
     <div class="<%= form_element_class("flex flex-row items-center") %>">
-      <%= f.check_box :remember_me, class: form_check_box_class %>
+      <%= f.check_box :remember_me, checked: true, class: form_check_box_class %>
       <%= f.label :remember_me, class: form_label_class("mb-0 ml-2") %>
     </div>
   <% end %>

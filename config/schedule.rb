@@ -9,3 +9,7 @@ set :output, "#{path}/log/cron.log"
 every 1.day, at: '12:00 am' do
   rake 'operations:backup_database'
 end
+
+every 1.week, at: '12:00 am' do
+  rake 'db:sessions:trim'
+end
