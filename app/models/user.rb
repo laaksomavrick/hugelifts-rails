@@ -2,14 +2,14 @@
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :timeoutable
 
   has_many :exercises, dependent: :destroy
   has_many :workouts, dependent: :destroy
   has_many :scheduled_workouts, dependent: :destroy
 
-  after_save :set_default_exercises
-  after_save :set_default_workouts
+  after_create :set_default_exercises
+  after_create :set_default_workouts
 
   def active_workout
     workouts.where(active: true).first
