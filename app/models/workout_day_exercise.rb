@@ -15,7 +15,7 @@ class WorkoutDayExercise < ApplicationRecord
 
   validates :sets, numericality: { greater_than: 0, only_integer: true }
   validates :reps, numericality: { greater_than: 0, only_integer: true }
-  validates :weight, numericality: { greater_than: 0, only_integer: true }
+  validates :weight, numericality: { greater_than: -1, only_integer: true }
   validates :unit, inclusion: { in: %w[lb kg] }
 
   validate :weight, :multiple_of_five?
