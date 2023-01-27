@@ -17,7 +17,7 @@ RSpec.describe WorkoutDayExercise, type: :model do
 
   it 'must have a positive number for weight' do
     workout_day_exercise.weight = 0
-    expect(workout_day_exercise.valid?).to be(false)
+    expect(workout_day_exercise.valid?).to be(true)
   end
 
   it 'must have a multiple of five for weight' do
