@@ -2,7 +2,7 @@
   "name": "hugelifts",
   "private": "true",
   "engines": {
-    "node": "^16",
+    "node": "^18",
     "npm": "^7"
   },
   "dependencies": {
