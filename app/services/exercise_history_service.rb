@@ -30,19 +30,20 @@ class ExerciseHistoryService
     @exercise = exercise
   end
 
-  def call
+  def call(amount = 10)
     ScheduledWorkoutExercise
       .not_skipped
       .completed
       .joins(:scheduled_workout, workout_day_exercise: :exercise)
       .where('scheduled_workout.user_id': @user.id)
       .where('exercise.id': @exercise.id)
-      .order(created_at: :asc)
-      .limit(10)
+      .order(created_at: :desc)
+      .limit(amount)
       .all
       .map do |scheduled_workout_exercise|
       ExerciseHistoryEntry.new(exercise: @exercise,
                                scheduled_workout_exercise:)
     end
+      .sort_by(&:date)
   end
 end

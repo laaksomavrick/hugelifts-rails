@@ -51,6 +51,14 @@ RSpec.describe ExerciseHistoryService do
     expect(history.second.one_rep_max).to be < history.third.one_rep_max
   end
 
+  it 'retrieves the most recent workout histories for an exercise' do
+    exercises = ScheduledWorkoutExercise.order(created_at: :asc).all
+    history = described_class.new(user:, exercise:).call(2)
+
+    expect(history.first.id).to eq exercises.second.id
+    expect(history.second.id).to eq exercises.third.id
+  end
+
   it 'does not include skipped exercises' do
     skipped_scheduled_workout = create(:scheduled_workout, workout_day:, completed: true, skipped: true, user:)
     skipped = create(:scheduled_workout_exercise,
