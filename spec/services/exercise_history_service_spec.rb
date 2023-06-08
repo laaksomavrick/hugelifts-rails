@@ -15,26 +15,26 @@ RSpec.describe ExerciseHistoryService do
     second = scheduled_workouts.second
     third = scheduled_workouts.third
 
-    first.scheduled_workout_exercises = [
+    first.scheduled_workout_exercises = 1.times.map do
       create(:scheduled_workout_exercise,
              scheduled_workout: first,
              workout_day_exercise:, sets: 4, reps: 10, result: [7, 5, 4, 2],
              created_at: 3.days.ago)
-    ]
-    second.scheduled_workout_exercises = [
+    end
+    second.scheduled_workout_exercises = 1.times.map do
       create(:scheduled_workout_exercise,
              scheduled_workout: second,
              workout_day_exercise:,
              sets: 4, reps: 10, result: [8, 7, 6, 6],
              created_at: 2.days.ago)
-    ]
-    third.scheduled_workout_exercises = [
+    end
+    third.scheduled_workout_exercises = 1.times.map do
       create(:scheduled_workout_exercise,
              scheduled_workout: third,
              workout_day_exercise:,
              sets: 4, reps: 10, result: [10, 9, 8, 7],
              created_at: 1.day.ago)
-    ]
+    end
   end
 
   it 'retrieves the workout history of an exercise' do

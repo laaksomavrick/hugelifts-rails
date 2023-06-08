@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Exercises', type: :system do
+RSpec.describe 'Exercises' do
   let!(:user) { create(:user) }
   let!(:exercise) { create(:exercise, user:) }
 

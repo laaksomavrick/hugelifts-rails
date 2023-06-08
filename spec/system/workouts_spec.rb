@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Workouts', type: :system do
+RSpec.describe 'Workouts' do
   let!(:user) { create(:user) }
   let!(:workout) { user.workouts.where(active: true).first }
 

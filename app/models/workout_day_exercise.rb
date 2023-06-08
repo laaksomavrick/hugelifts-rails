@@ -23,6 +23,8 @@ class WorkoutDayExercise < ApplicationRecord
   delegate :name, to: :exercise
   delegate :workout, to: :workout_day
 
+  acts_as_list scope: :workout_day, top_of_list: 0, column: :ordinal
+
   def self.policy_class
     WorkoutDayExercisePolicy
   end

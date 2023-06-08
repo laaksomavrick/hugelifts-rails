@@ -7,7 +7,7 @@ class WorkoutDay < ApplicationRecord
   belongs_to :workout
 
   # TODO: ordinal
-  has_many :workout_day_exercises, -> { order(created_at: :asc) }, dependent: :destroy, inverse_of: :workout_day
+  has_many :workout_day_exercises, -> { order(ordinal: :asc) }, dependent: :destroy, inverse_of: :workout_day
   has_many :scheduled_workouts, dependent: :nullify
 
   alias_attribute :exercises, :workout_day_exercises
@@ -22,6 +22,7 @@ class WorkoutDay < ApplicationRecord
     WorkoutDayPolicy
   end
 
+  # TODO: deprecate in favour of acts_as_list
   # TODO: can extract this to a common module when needs to be generalized
   def self.swap_ordinal!(obj, new_ordinal)
     transaction do

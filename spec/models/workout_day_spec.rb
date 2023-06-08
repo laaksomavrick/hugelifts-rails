@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe WorkoutDay, type: :model do
+RSpec.describe WorkoutDay do
   describe 'reordering' do
     let!(:workout) { create(:workout, :with_days) }
 

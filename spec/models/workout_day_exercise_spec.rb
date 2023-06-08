@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe WorkoutDayExercise, type: :model do
+RSpec.describe WorkoutDayExercise do
   let!(:workout_day_exercise) { create(:workout_day_exercise, :with_exercise_weight_attempt) }
 
   it 'must have a positive number of sets' do

@@ -6,7 +6,7 @@ FactoryBot.define do
   factory :workout do
     name { workout_names.sample }
     active { false }
-    association :user, factory: :user
+    user factory: %i[user]
 
     trait :with_days do
       after(:create) do |workout|

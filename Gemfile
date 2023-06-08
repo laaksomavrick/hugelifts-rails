@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.1'
 
 gem 'activerecord-session_store'
+gem 'acts_as_list'
 gem 'aws-sdk-s3'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'

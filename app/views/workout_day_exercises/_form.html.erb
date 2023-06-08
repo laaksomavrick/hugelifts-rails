@@ -31,6 +31,11 @@
     <%= form.select :exercise, model.exercise_options, {selected: model.selected_exercise }, class: form_input_class %>
   </div>
 
+  <div class=<%= form_element_class %>>
+    <%= form.label :ordinal, t('common.ordinal'), class: form_label_class %>
+    <%= form.select :ordinal, model.ordinal_options, { selected: model.ordinal }, class: form_input_class %>
+  </div>
+
   <div class="grid grid-cols-2 gap-x-4">
     <div class=<%= form_element_class %>>
       <%= form.label :sets, t('common.sets'), class: form_label_class%>

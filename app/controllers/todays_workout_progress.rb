@@ -31,11 +31,9 @@ module TodaysWorkoutProgress
     session[:todays_workout_progress][exercise_id][ordinal] = reps
   end
 
-  # rubocop:disable Naming/AccessorMethodName
   def set_skipped(skipped:)
     session[:todays_workout_skipped] = skipped
   end
-  # rubocop:enable Naming/AccessorMethodName
 
   def destroy_progress
     session[:todays_workout_progress] = nil

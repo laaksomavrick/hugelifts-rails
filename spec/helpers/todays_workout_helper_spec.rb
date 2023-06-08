@@ -12,6 +12,6 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe TodaysWorkoutHelper, type: :helper do
+RSpec.describe TodaysWorkoutHelper do
   pending "add some examples to (or delete) #{__FILE__}"
 end
