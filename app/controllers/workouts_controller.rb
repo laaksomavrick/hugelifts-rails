@@ -9,6 +9,13 @@ class WorkoutsController < ApplicationController
     @workout = authorize Workout.new
   end
 
+  def edit
+    workout_id = params[:id].to_i
+    @workout = authorize Workout
+               .includes(:workout_days)
+               .find_by(id: workout_id)
+  end
+
   def create
     params = create_workout_params
     name = params[:name]
@@ -25,17 +32,10 @@ class WorkoutsController < ApplicationController
       @workout.save!
     end
 
-    flash[:notice] = t('workouts.create.success')
+    flash[:notice] = t('.success')
     redirect_to(edit_workout_path(@workout.id))
   rescue ActiveRecord::RecordInvalid
     render 'new', status: :unprocessable_entity
-  end
-
-  def edit
-    workout_id = params[:id].to_i
-    @workout = authorize Workout
-               .includes(:workout_days)
-               .find_by(id: workout_id)
   end
 
   def update
@@ -51,7 +51,7 @@ class WorkoutsController < ApplicationController
 
     @workout.save_with_active!(user_id: current_user.id)
 
-    flash[:notice] = t('workouts.update.success')
+    flash[:notice] = t('.success')
     redirect_to(edit_workout_path(@workout.id))
   rescue ActiveRecord::RecordInvalid
     render 'edit', status: :unprocessable_entity
@@ -63,11 +63,11 @@ class WorkoutsController < ApplicationController
     workout = authorize Workout.find_by(id: workout_id)
 
     if workout.active?
-      flash[:alert] = t('workouts.destroy.cannot_delete_workout')
+      flash[:alert] = t('.cannot_delete_workout')
       redirect_to(edit_workout_path(workout_id))
     else
       workout.destroy
-      flash[:notice] = t('workouts.destroy.success')
+      flash[:notice] = t('.success')
       redirect_to(workouts_path)
     end
   end

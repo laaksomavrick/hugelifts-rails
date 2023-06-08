@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_09_010533) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_201443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_09_010533) do
     t.jsonb "meta", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ordinal", default: 0, null: false
     t.index ["exercise_id"], name: "index_workout_day_exercises_on_exercise_id"
     t.index ["workout_day_id"], name: "index_workout_day_exercises_on_workout_day_id"
   end

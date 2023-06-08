@@ -9,8 +9,19 @@ class ExercisesController < ApplicationController
     @exercises = @exercises.prefix_search_by_name(search) if search.present?
   end
 
+  def show
+    exercise_id = params[:id].to_i
+    @exercise = authorize Exercise.find_by(id: exercise_id)
+    @history = ExerciseHistoryService.new(user: current_user, exercise: @exercise).call
+  end
+
   def new
     @exercise = authorize Exercise.new
+  end
+
+  def edit
+    exercise_id = params[:id].to_i
+    @exercise = authorize Exercise.find_by(id: exercise_id)
   end
 
   def create
@@ -22,21 +33,10 @@ class ExercisesController < ApplicationController
     @exercise.name = name
     @exercise.save!
 
-    flash[:notice] = t('exercises.create.success')
+    flash[:notice] = t('.success')
     redirect_to edit_exercise_path(@exercise.id)
   rescue ActiveRecord::RecordInvalid
     render 'new', status: :unprocessable_entity
-  end
-
-  def show
-    exercise_id = params[:id].to_i
-    @exercise = authorize Exercise.find_by(id: exercise_id)
-    @history = ExerciseHistoryService.new(user: current_user, exercise: @exercise).call
-  end
-
-  def edit
-    exercise_id = params[:id].to_i
-    @exercise = authorize Exercise.find_by(id: exercise_id)
   end
 
   def update
@@ -49,7 +49,7 @@ class ExercisesController < ApplicationController
     @exercise.name = name
     @exercise.save!
 
-    flash[:notice] = t('exercises.update.success')
+    flash[:notice] = t('.success')
     redirect_to edit_exercise_path(@exercise.id)
   rescue ActiveRecord::RecordInvalid
     render 'edit', status: :unprocessable_entity
@@ -61,7 +61,7 @@ class ExercisesController < ApplicationController
     @exercise = authorize Exercise.find_by(id: exercise_id)
     @exercise.destroy
 
-    flash[:notice] = t('exercises.destroy.success')
+    flash[:notice] = t('.success')
     redirect_to(exercises_path)
   end
 

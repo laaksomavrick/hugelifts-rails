@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ScheduledWorkoutExercise, type: :model do
+RSpec.describe ScheduledWorkoutExercise do
   it 'can create a scheduled_workout_exercise' do
     scheduled_workout_exercise = create(:scheduled_workout_exercise)
     expect(scheduled_workout_exercise.valid?).to be(true)

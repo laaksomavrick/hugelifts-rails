@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Workout Days', type: :system do
+RSpec.describe 'Workout Days' do
   let!(:user) { create(:user) }
   let!(:workout) { user.workouts.first }
   let!(:workout_day) { workout.workout_days.first }

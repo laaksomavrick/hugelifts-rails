@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Workout Day Exercises', type: :system do
+RSpec.describe 'Workout Day Exercises' do
   let!(:user) { create(:user) }
   let!(:exercise) { create(:exercise, user:) }
   let!(:workout) { create(:workout, user:) }

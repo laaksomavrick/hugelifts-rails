@@ -9,6 +9,15 @@ class WorkoutDaysController < ApplicationController
     @form = WorkoutDayForm.new(workout_id:)
   end
 
+  def edit
+    workout_day_id = params[:id].to_i
+    workout_id = params[:workout_id].to_i
+
+    @form = WorkoutDayForm.new(workout_id:, workout_day_id:)
+
+    authorize @form.workout_day
+  end
+
   def create
     workout_id = params[:workout_id].to_i
 
@@ -23,15 +32,6 @@ class WorkoutDaysController < ApplicationController
       flash[:notice] = 'Successfully saved'
       redirect_to(edit_workout_path(@form.workout))
     end
-  end
-
-  def edit
-    workout_day_id = params[:id].to_i
-    workout_id = params[:workout_id].to_i
-
-    @form = WorkoutDayForm.new(workout_id:, workout_day_id:)
-
-    authorize @form.workout_day
   end
 
   def update

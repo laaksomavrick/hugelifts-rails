@@ -11,7 +11,7 @@ class WorkoutDayExerciseForm
     @workout_day_id = workout_day_id
     @current_user_id = current_user_id
     @workout_day_exercise = workout_day_exercise
-    @workout_day_exercise_id = workout_day_exercise ? workout_day_exercise.id : nil
+    @workout_day_exercise_id = workout_day_exercise&.id
   end
 
   def workout
@@ -80,33 +80,62 @@ class WorkoutDayExerciseForm
     ['lb']
   end
 
+  def ordinal
+    return @workout_day.exercises.count if new?
+
+    @workout_day_exercise.ordinal
+  end
+
+  def ordinal_options
+    max_ordinal = if new?
+                    @workout_day.exercises.count
+                  else
+                    @workout_day.exercises.count - 1
+                  end
+    [*0..max_ordinal]
+  end
+
   def process(params = {})
     exercise_id = params[:exercise].to_i
     sets = params[:sets].to_i
     reps = params[:reps].to_i
     weight = params[:weight].to_i
     unit = params[:unit]
+    ordinal = params[:ordinal].to_i
 
-    exercise = Exercise.find(exercise_id)
+    WorkoutDayExercise.transaction do
+      exercise = Exercise.find(exercise_id)
 
-    if @workout_day_exercise_id
-      @workout_day_exercise.update(
-        exercise:,
-        sets:,
-        reps:,
-        weight:,
-        unit:
-      )
-    else
-      @workout_day_exercise = WorkoutDayExercise.create(
-        workout_day:,
-        exercise:,
-        sets:,
-        reps:,
-        weight:,
-        unit:
-      )
+      if @workout_day_exercise_id
+        @workout_day_exercise.update(
+          exercise:,
+          sets:,
+          reps:,
+          weight:,
+          unit:
+        )
+      else
+        @workout_day_exercise = WorkoutDayExercise.create(
+          workout_day:,
+          exercise:,
+          sets:,
+          reps:,
+          weight:,
+          unit:
+        )
+      end
+
+      @workout_day_exercise.insert_at(ordinal)
+
+      @workout_day_exercise.exercise_weight_attempts.create(weight:)
     end
-    @workout_day_exercise.exercise_weight_attempts.create(weight:)
+
+    @workout_day_exercise
+  end
+
+  private
+
+  def new?
+    workout_day_exercise.id.nil?
   end
 end

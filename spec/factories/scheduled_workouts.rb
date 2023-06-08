@@ -3,7 +3,9 @@
 FactoryBot.define do
   factory :scheduled_workout do
     user factory: :user
+    # rubocop:disable FactoryBot/FactoryAssociationWithStrategy
     workout_day { create(:workout_day, :with_exercises) }
+    # rubocop:enable FactoryBot/FactoryAssociationWithStrategy
     completed { false }
     skipped { false }
 

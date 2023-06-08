@@ -12,6 +12,18 @@ class WorkoutDayExercisesController < ApplicationController
     @form = WorkoutDayExerciseForm.new(workout_id:, workout_day_id:, current_user_id:)
   end
 
+  def edit
+    params = edit_workout_day_exercise_params
+    workout_id = params[:workout_id]
+    workout_day_id = params[:workout_day_id]
+    workout_day_exercise_id = params[:id]
+    current_user_id = current_user.id
+
+    workout_day_exercise = authorize WorkoutDayExercise.find(workout_day_exercise_id)
+
+    @form = WorkoutDayExerciseForm.new(workout_id:, workout_day_id:, current_user_id:, workout_day_exercise:)
+  end
+
   def create
     params = create_workout_day_exercise_params
 
@@ -32,18 +44,6 @@ class WorkoutDayExercisesController < ApplicationController
     end
   end
 
-  def edit
-    params = edit_workout_day_exercise_params
-    workout_id = params[:workout_id]
-    workout_day_id = params[:workout_day_id]
-    workout_day_exercise_id = params[:id]
-    current_user_id = current_user.id
-
-    workout_day_exercise = authorize WorkoutDayExercise.find(workout_day_exercise_id)
-
-    @form = WorkoutDayExerciseForm.new(workout_id:, workout_day_id:, current_user_id:, workout_day_exercise:)
-  end
-
   def update
     params = update_workout_day_exercise_params
 
@@ -60,7 +60,7 @@ class WorkoutDayExercisesController < ApplicationController
     if saved == false
       render 'new', status: :unprocessable_entity
     else
-      flash[:notice] = t('workout_day_exercises.update.success')
+      flash[:notice] = t('.success')
       redirect_to(edit_workout_workout_day_path(workout_id, workout_day_id))
     end
   end
@@ -90,12 +90,13 @@ class WorkoutDayExercisesController < ApplicationController
   end
 
   def create_workout_day_exercise_params
-    params.require(:workout_day_exercise_form).permit(:workout, :workout_day, :exercise, :sets, :reps, :weight, :unit)
+    params.require(:workout_day_exercise_form).permit(:workout, :workout_day, :exercise, :sets, :reps, :weight, :unit,
+                                                      :ordinal)
   end
 
   def update_workout_day_exercise_params
     params.require(:workout_day_exercise_form).permit(:workout, :workout_day, :workout_day_exercise, :exercise, :sets,
-                                                      :reps, :weight, :unit)
+                                                      :reps, :weight, :unit, :ordinal)
   end
 
   def destroy_workout_day_exercise_params
