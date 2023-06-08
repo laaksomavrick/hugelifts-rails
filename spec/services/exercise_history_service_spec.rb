@@ -15,12 +15,14 @@ RSpec.describe ExerciseHistoryService do
     second = scheduled_workouts.second
     third = scheduled_workouts.third
 
-    first.scheduled_workout_exercises = 1.times.map do
-      create(:scheduled_workout_exercise,
-             scheduled_workout: first,
-             workout_day_exercise:, sets: 4, reps: 10, result: [7, 5, 4, 2],
-             created_at: 3.days.ago)
-    end
+    # rubocop:disable Lint/UselessTimes
+    first.scheduled_workout_exercises =
+      1.times.map do
+        create(:scheduled_workout_exercise,
+               scheduled_workout: first,
+               workout_day_exercise:, sets: 4, reps: 10, result: [7, 5, 4, 2],
+               created_at: 3.days.ago)
+      end
     second.scheduled_workout_exercises = 1.times.map do
       create(:scheduled_workout_exercise,
              scheduled_workout: second,
@@ -35,6 +37,7 @@ RSpec.describe ExerciseHistoryService do
              sets: 4, reps: 10, result: [10, 9, 8, 7],
              created_at: 1.day.ago)
     end
+    # rubocop:enable Lint/UselessTimes
   end
 
   it 'retrieves the workout history of an exercise' do

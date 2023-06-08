@@ -106,8 +106,6 @@ class WorkoutDayExerciseForm
     WorkoutDayExercise.transaction do
       exercise = Exercise.find(exercise_id)
 
-      @workout_day_exercise.insert_at(ordinal)
-
       if @workout_day_exercise_id
         @workout_day_exercise.update(
           exercise:,
@@ -126,6 +124,9 @@ class WorkoutDayExerciseForm
           unit:
         )
       end
+
+      @workout_day_exercise.insert_at(ordinal)
+
       @workout_day_exercise.exercise_weight_attempts.create(weight:)
     end
 
