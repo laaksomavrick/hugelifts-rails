@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set DOCKER_IMAGE_TAG environment variable
-        run: echo "DOCKER_IMAGE_TAG=$(cat ../../../version)" >> $GITHUB_ENV
+        run: echo "DOCKER_IMAGE_TAG=$(cat ../../version)" >> $GITHUB_ENV
 
       - name: Pull and deploy docker image
         uses: appleboy/ssh-action@master
