@@ -74,8 +74,11 @@ jobs:
     needs: build-and-push-docker-image
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+
       - name: Set DOCKER_IMAGE_TAG environment variable
-        run: echo "DOCKER_IMAGE_TAG=$(cat ../../version)" >> $GITHUB_ENV
+        run: echo "DOCKER_IMAGE_TAG=$(cat version)" >> $GITHUB_ENV
 
       - name: Pull and deploy docker image
         uses: appleboy/ssh-action@master
