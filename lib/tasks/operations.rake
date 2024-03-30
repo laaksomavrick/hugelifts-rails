@@ -42,4 +42,19 @@ namespace :operations do
   rescue StandardError => e
     logger.error e
   end
+
+  desc 'Delete production.log file'
+  task delete_logs: :environment do
+    prod_log_location = Rails.root.join('log/production.log')
+    operation_log_location = Rails.root.join('log/operations.log')
+    cron_log_location = Rails.root.join('log/cron.log')
+
+    log_locations = [prod_log_location, operation_log_location, cron_log_location]
+
+    log_locations.each do |log_location|
+      FileUtils.rm_f(log_location)
+    end
+  rescue StandardError => e
+    logger.error e
+  end
 end
