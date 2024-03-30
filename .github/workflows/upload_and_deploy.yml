@@ -1,11 +1,7 @@
 name: Upload container image and deploy
 
-# on:
-#   push:
-#     branches: [ main ]
-
 on:
-  pull_request:
+  push:
     branches: [ main ]
 
 env:
@@ -89,7 +85,7 @@ jobs:
           username: ${{ secrets.HUGELIFTS_DROPLET_SSH_USERNAME }}
           key: ${{ secrets.HUGELIFTS_DROPLET_SSH_KEY }}
           port: ${{ secrets.HUGELIFTS_DROPLET_SSH_PORT }}
-          envs: DOCKER_IMAGE_TAG,DOCKER_IMAGE_TAG,DOCKER_REGISTRY_URL
+          envs: DOCKER_IMAGE_TAG,DOCKER_REPO_URL,DOCKER_REGISTRY_URL
           script: |
             cd /home/hugelifts/hugelifts
             git pull
