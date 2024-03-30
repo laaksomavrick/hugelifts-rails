@@ -86,10 +86,11 @@ jobs:
           username: ${{ secrets.HUGELIFTS_DROPLET_SSH_USERNAME }}
           key: ${{ secrets.HUGELIFTS_DROPLET_SSH_KEY }}
           port: ${{ secrets.HUGELIFTS_DROPLET_SSH_PORT }}
-          envs: DOCKER_IMAGE_TAG,DOCKER_IMAGE_TAG
+          envs: DOCKER_IMAGE_TAG,DOCKER_IMAGE_TAG,DOCKER_REGISTRY_URL
           script: |
             cd /home/hugelifts/hugelifts
             git pull
+            aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY_URL
             docker pull $DOCKER_REPO_URL:$DOCKER_IMAGE_TAG
             docker tag $DOCKER_REPO_URL:$DOCKER_IMAGE_TAG hugelifts:latest
             docker-compose up -d --no-deps --build app
