@@ -13,7 +13,6 @@ services:
     depends_on:
       - app
       - db
-      - grafana
     volumes:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
