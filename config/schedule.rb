@@ -6,10 +6,10 @@ ENV.each { |k, v| env(k, v) }
 set :environment, ENV.fetch('RAILS_ENV', nil)
 set :output, "#{path}/log/cron.log"
 
-every 1.day, at: '12:00 am' do
-  rake 'operations:backup_database'
+every 1.week, at: '12:00 am' do
+  rake 'db:sessions:trim'
 end
 
 every 1.week, at: '12:00 am' do
-  rake 'db:sessions:trim'
+  rake 'operations:delete_logs'
 end
